@@ -1,24 +1,17 @@
 version: '3.9'
 
 services:
-  djangoapp:
-    container_name: djangoapp
-    build:
-      context: .
+  web:
+    build: .
+    command: python djangoapp/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
     ports:
-      - 8000:8000
-    volumes:
-      - ./djangoapp:/djangoapp
-      - ./data/web/static:/data/web/static/
-      - ./data/web/media:/data/web/media/
-    env_file:
-      - ./dotenv_files/.env
-    depends_on:
-      - unasus_psql
-  unasus_psql:
-    container_name: unasus_psql
-    image: postgres:13-alpine
-    volumes:
-      - ./data/postgres/data:/var/lib/postgresql/data/
-    env_file:
-      - ./dotenv_files/.env
+      - "8000:8000"
+    networks:
+      - net1
+
+networks:
+  net1:
+    external:
+      name: unasus_network
