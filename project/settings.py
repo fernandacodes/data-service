@@ -3,7 +3,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Carregar as variáveis de ambiente do arquivo .env
-load_dotenv(os.path.join(Path(__file__).resolve().parent.parent.parent, 'djangoapp', '.env'))
+# Definir o caminho base do projeto
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carregar o arquivo .env
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,12 +70,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
+        'PORT': os.getenv('POSTGRES_PORT'),  # Porta interna do contêiner do PostgreSQL
     }
 }
 

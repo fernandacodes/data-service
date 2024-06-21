@@ -3,15 +3,30 @@ version: '3.9'
 services:
   web:
     build: .
-    command:  python djangoapp/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     networks:
-      - net1
+      - unasus_network
+
+  db:
+    image: postgres:13.0-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 13002:5432
+    networks:
+      - unasus_network
 
 networks:
-  net1:
-    external:
-      name: unasus_network
+    unasus_network:
+      driver: bridge
+volumes:
+  postgres_data:
