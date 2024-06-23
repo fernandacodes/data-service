@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import django
+from django.utils.encoding import smart_str
+django.utils.encoding.smart_text = smart_str
+from django.utils.translation import gettext
+django.utils.translation.ugettext = gettext
 
 # Carregar as variáveis de ambiente do arquivo .env
 # Definir o caminho base do projeto
@@ -64,6 +69,24 @@ TEMPLATES = [
     },
 ]
 
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+import datetime
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_ALLOW_REFRESH': True,
+}
+
+
 WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
@@ -107,6 +130,10 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 
 USE_TZ = True
+
+# settings.py
+AUTH_USER_MODEL = 'unasus_registros.CustomUser'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

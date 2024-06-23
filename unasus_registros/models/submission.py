@@ -1,6 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-
-from..models.student_model import Student
+from ..models.student_model import Student
 
 class Submission(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -27,4 +27,12 @@ class Submission(models.Model):
     def __str__(self):
         return f"Submission by {self.student.Name}"
 
-    
+    def clean(self):
+        # Verifica se já existe uma submissão para o estudante
+        if Submission.objects.filter(student=self.student).exists():
+            raise ValidationError('Este estudante já fez uma submissão.')
+
+    def save(self, *args, **kwargs):
+        # Chama o método clean antes de salvar
+        self.clean()
+        super().save(*args, **kwargs)
