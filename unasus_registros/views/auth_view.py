@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import Group
 from ..models.user_model import CustomUser, Admin
 from ..utils.serializer import UserSerializer
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 
 @api_view(['POST'])
@@ -21,3 +22,12 @@ def register_user(request):
         user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user(request):
+    if request.user.is_authenticated:
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+    else:
+        return Response({"error": "Usuário não autenticado"}, status=status.HTTP_401_UNAUTHORIZED)

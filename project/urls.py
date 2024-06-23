@@ -16,6 +16,7 @@ from unasus_registros.views.student_view import (
 urlpatterns = [
     path('api/register/', register_user),
     path('api/token/', obtain_jwt_token),
+    path('api/user/', get_user, name='get_user'),
     path('api/token/refresh/', refresh_jwt_token),
     path('api/token/verify/', verify_jwt_token),
     path('admin/', admin.site.urls),

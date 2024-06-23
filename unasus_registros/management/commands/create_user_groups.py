@@ -15,57 +15,56 @@ class Command(BaseCommand):
         # Cria ou obtém o grupo de administradores
         admin_group, created = Group.objects.get_or_create(name='Admins')
 
-        # with open('students.csv', newline='') as csvfile:
+        # with open('/code/unasus_registros/data/students.csv', newline='') as csvfile:
         #     reader = csv.DictReader(csvfile)
         #     for row in reader:
         #         user = CustomUser.objects.create_user(
         #             username=row['CPF'],
-        #             password=row['EnrollmentNumber'],
+        #             password='',  # Usando a matrícula como senha
         #             cpf=row['CPF'],
-        #             first_name=row['Name'].split()[0],  # Usando o primeiro nome
-        #             last_name=" ".join(row['Name'].split()[1:]),  # Usando o restante como sobrenome
+        #             first_name=row['Nome'].split()[0],  # Usando o primeiro nome
+        #             last_name=" ".join(row['Nome'].split()[1:]),  # Usando o restante como sobrenome
         #             email=row['Email'],
         #             role='student'
         #         )
         #         student = Student.objects.create(
-        #             user=user,
         #             CPF=row['CPF'],
-        #             Name=row['Name'],
+        #             Name=row['Nome'],
         #             Email=row['Email'],
-        #             Phone=row['Phone'],
-        #             Municipality=row['Municipality'],
-        #             State=row['State'],
-        #             Status=row['Status'],
-        #             Cycle=row['Cycle'],
-        #             List=row['List'],
-        #             DSEI=row['DSEI'].lower() in ['true', '1', 't', 'yes', 'y'],
-        #             EnrollmentNumber=row['EnrollmentNumber'],
-        #             TutorClass=row['TutorClass'],
-        #             Date=row['Date'],
-        #             Condition=row['Condition'],
+        #             Phone=row['Telefone'],
+        #             Municipality=row['Município'],
+        #             State=row['UF'],
+        #             Status=row['Situação'],
+        #             Cycle=row['Ciclo'],
+        #             List=row['Lista'],
+        #             DSEI=row['DSEI'].lower() in ['true', '1', 't', 'yes', 'y', 'sim', 's'],
+        #             EnrollmentNumber=row['Matricula'],
+        #             TutorClass=row['TurmaTutor'],
+        #             Date=row['Data'],
+        #             Condition=row['Condição'],
         #             RequestChangeDate=row.get('RequestChangeDate')  # Pode ser None
         #         )
         #         user.groups.add(student_group)
         #         user.save()
 
-        # with open('admins.csv', newline='') as csvfile:
+        # with open('/code/unasus_registros/data/admins.csv', newline='') as csvfile:
         #     reader = csv.DictReader(csvfile)
         #     for row in reader:
         #         user = CustomUser.objects.create_user(
         #             username=row['CPF'],
         #             password='adminpassword',  # ou qualquer outra lógica para a senha
         #             cpf=row['CPF'],
-        #             first_name=row['Name'].split()[0],  # Usando o primeiro nome
-        #             last_name=" ".join(row['Name'].split()[1:]),  # Usando o restante como sobrenome
+        #             first_name=row['Nome'].split()[0],  # Usando o primeiro nome
+        #             last_name=" ".join(row['Nome'].split()[1:]),  # Usando o restante como sobrenome
         #             email=row['Email'],
         #             role='admin'
         #         )
         #         admin = Admin.objects.create(
         #             user=user,
-        #             department=row['Department'],
-        #             phone_number=row['Phone']
+        #             department=row['Departamento'],
+        #             phone_number=row['Telefone']
         #         )
         #         user.groups.add(admin_group)
         #         user.save()
 
-        self.stdout.write(self.style.SUCCESS('Usuários importados com sucesso'))
+        # self.stdout.write(self.style.SUCCESS('Usuários importados com sucesso'))
