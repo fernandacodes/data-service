@@ -9,7 +9,6 @@ from ..models.submission import *
 def create_submission(request):
     if request.method == 'POST':
         try:
-            # Receber dados do formulário multipart/form-data
             student_cpf = request.POST.get('cpf')
             term_accepted = request.POST.get('term_accepted')
             guardian_name = request.POST.get('guardian_name')

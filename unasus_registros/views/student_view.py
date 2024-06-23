@@ -92,3 +92,13 @@ def update_student(request, student_id):
             return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
+    
+@csrf_exempt
+def search_student_by_name(request):
+    name = request.GET.get('name', None)
+    if not name:
+        return JsonResponse({"error": "No name provided."}, status=400)
+
+    students = Student.objects.filter(Name__icontains=name)
+    students_list = list(students.values())
+    return JsonResponse({"students": students_list}, safe=False)
