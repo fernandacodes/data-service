@@ -21,7 +21,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - 13002:5432
+      - "13002:5432"
     networks:
       - unasus_network
 
@@ -35,8 +35,17 @@ services:
     networks:
       - unasus_network
 
+  app:
+    build:
+      dockerfile: frontend/frontv1/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - unasus_network
+
 networks:
-    unasus_network:
-      driver: bridge
+  unasus_network:
+    driver: bridge
+
 volumes:
   postgres_data:

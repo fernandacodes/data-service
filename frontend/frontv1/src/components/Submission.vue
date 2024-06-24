@@ -179,7 +179,7 @@ import axios from 'axios';
 import { notify } from 'notiwind';
 
 export default {
-  name: 'SubmissionForm',
+  name: 'Submission',
   data() {
     return {
       term_accepted: false,

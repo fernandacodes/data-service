@@ -19,7 +19,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',
@@ -59,8 +60,8 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  // Verifica se a rota requer autenticação
+router.beforeEach(async (to : any, from : any, next) => {
+  console.log(from);
   if (to.meta.requiresAuth) {
     const authenticated = await isAuthenticated();
     if (!authenticated) {
