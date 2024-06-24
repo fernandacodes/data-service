@@ -108,4 +108,43 @@ def get_submission_by_id(request, submission_id):
             return JsonResponse({"error": f"Submission with ID {submission_id} does not exist."}, status=404)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
+    
+@csrf_exempt
+def get_submission_by_cpf(request, student_cpf):
+    if request.method == 'GET':
+        try:
+            student = Student.objects.get(CPF=student_cpf)
+            submission = Submission.objects.filter(student=student).first()  # Pega a primeira submissão encontrada
+            if submission:
+                return JsonResponse({
+                    "submission": {
+                        "id": submission.id,
+                        "student": submission.student.to_dict(),
+                        "term_accepted": submission.term_accepted,
+                        "guardian_name": submission.guardian_name,
+                        "mother_name": submission.mother_name,
+                        "father_name": submission.father_name,
+                        "birth_date": submission.birth_date,
+                        "phone": submission.phone,
+                        "email": submission.email,
+                        "cpf": submission.cpf,
+                        "rg_number": submission.rg_number,
+                        "rg_issuer": submission.rg_issuer,
+                        "state": submission.state,
+                        "university": submission.university,
+                        "neighborhood": submission.neighborhood,
+                        "city": submission.city,
+                        "uf": submission.uf,
+                        "total_score": submission.total_score,
+                        "partial_score": submission.partial_score,
+                        "document": request.build_absolute_uri(submission.document.url),  # Construindo URL absoluta para o documento
+                        "created_at": submission.created_at,
+                    }
+                }, safe=False)
+            else:
+                return JsonResponse({"error": "No submission found for this CPF."}, status=404)
+        except Student.DoesNotExist:
+            return JsonResponse({"error": "Student not found."}, status=404)
+    else:
+        return JsonResponse({"error": "Invalid method"}, status=405)
 

@@ -102,3 +102,15 @@ def search_student_by_name(request):
     students = Student.objects.filter(Name__icontains=name)
     students_list = list(students.values())
     return JsonResponse({"students": students_list}, safe=False)
+
+@csrf_exempt
+def search_students_with_submissions(request):
+    if request.method == 'GET':
+        try:
+            students_with_submissions = Student.objects.filter(submission__isnull=False).distinct()
+            students_list = list(students_with_submissions.values())
+            return JsonResponse({"students": students_list}, safe=False)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Method not allowed."}, status=405)

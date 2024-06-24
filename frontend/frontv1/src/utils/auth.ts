@@ -1,19 +1,25 @@
+// utils/auth.js
+
 import axios from 'axios';
+import { API_BASE_URL } from '../environment/environment';
 
 export const isAuthenticated = async () => {
   const token = localStorage.getItem('token');
   if (!token) {
     return false;
   }
-
   try {
-    // Verificar se o token é válido
-    const response = await axios.post('http://localhost:8000/api/token/verify/', { token });
+    const response = await axios.post(`${API_BASE_URL}/api/token/verify/`, { token });
     return response.status === 200;
   } catch (error) {
     console.error('Erro ao verificar token:', error);
     return false;
   }
+};
+
+export const isAdm = async () => {
+  const userData = await getUserData();
+  return userData.role === 'admin';
 };
 
 export const getUserData = async () => {
@@ -23,8 +29,7 @@ export const getUserData = async () => {
   }
 
   try {
-    // Fazer a requisição para obter os dados do usuário
-    const response = await axios.get('http://localhost:8000/api/user/', {
+    const response = await axios.get(`${API_BASE_URL}/api/user/`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -36,6 +41,7 @@ export const getUserData = async () => {
     throw error;
   }
 };
+
 export const logout = () => {
-  localStorage.removeItem('token');  
+  localStorage.removeItem('token');
 };
