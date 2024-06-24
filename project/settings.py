@@ -26,13 +26,17 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 1
-
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+ALLOWED_HOSTS = ["http://localhost:5173", 'http://web', 'http://localhos', 'http://127.0.0.1', 'web', 'localhost']
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", 'http://web', 'http://localhost', 'http://127.0.0.1']
 # Application definition
 
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+}
+
 INSTALLED_APPS = [
-    'rest_framework',
-    'corsheaders',
     'unasus_registros',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +83,7 @@ TEMPLATES = [
 # settings.py
 REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.IsAuthenticated',
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
         ],
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'rest_framework.authentication.BasicAuthentication',  # enables simple command line authentication

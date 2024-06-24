@@ -12,6 +12,7 @@
     "@headlessui/vue": "^1.7.22",
     "@heroicons/vue": "^2.1.4",
     "axios": "^1.7.2",
+    "notiwind": "^2.0.2",
     "vue": "^3.4.29",
     "vue-material": "^0.8.1",
     "vue-router": "^4.0.13",
