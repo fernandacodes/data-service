@@ -100,7 +100,9 @@ const fetchStudent = async () => {
       text: 'Student loaded sucessfully'
     });
     const cpf = route.params.cpf;
-    const response = await axios.get(`${API_BASE_URL}/students/${cpf}/`);
+    const response = await axios.post(`${API_BASE_URL}/students/cpf/`, {
+      cpf : cpf
+    });
     student.value = response.data.student;
   } catch (error) {
     notify({

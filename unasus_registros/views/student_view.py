@@ -10,8 +10,7 @@ def create_student(request):
         try:
             body = request.body
             data = json.loads(body.decode('utf-8'))
-            
-            cpf = data.get('CPF')
+            cpf = str(data.get('CPF'))
             name = data.get('Name')
             email = data.get('Email')
             phone = data.get('Phone')
@@ -63,13 +62,18 @@ def get_all_students(request):
 
 # Função para listar um aluno por ID
 @csrf_exempt
-def get_student_by_cpf(request, cpf):
-    if request.method == 'GET':
+def get_student_by_cpf(request):
+    if request.method == 'POST':
         try:
+            body = request.body
+            data = json.loads(body.decode('utf-8'))
+            cpf = str(data.get('cpf'))
             student = Student.objects.get(CPF=cpf)
             return JsonResponse({"student": student.to_dict()}, safe=False)
         except Student.DoesNotExist:
             return JsonResponse({"error": f"Student with CPF {cpf} does not exist."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
 

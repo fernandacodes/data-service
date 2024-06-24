@@ -177,7 +177,7 @@
 import { getUserData } from '../utils/auth';
 import axios from 'axios';
 import { notify } from 'notiwind';
-
+import { API_BASE_URL } from '../environment/environment';
 export default {
   name: 'Submission',
   data() {

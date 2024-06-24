@@ -61,7 +61,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to : any, from : any, next) => {
-  console.log(from);
+  if(from){
+    from
+  }
   if (to.meta.requiresAuth) {
     const authenticated = await isAuthenticated();
     if (!authenticated) {

@@ -40,7 +40,6 @@
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="student in students" :key="student.CPF" class="py-4">
           <router-link :to="{ name: 'StudentDetails', params: { cpf: student.CPF } }" class="flex items-center">
-            <img :src="student.imageUrl" alt="" class="h-10 w-10 rounded-full bg-gray-100 flex-shrink-0" />
             <div class="ml-3">
               <p class="text-sm font-medium text-gray-900">{{ student.Name }}</p>
               <p class="text-sm text-gray-500">{{ student.Email }}</p>

@@ -1,6 +1,7 @@
 dev:
 	docker compose up db -d
-	docker compose up web
+	docker compose up web -d
+	docker compose up app
 dbclean:
 	docker stop data-service-db-1
 	docker rm data-service-db-1
@@ -8,7 +9,11 @@ dbclean:
 webclean:
 	docker rm data-service-web-1
 	docker rmi data-service-web
+	docker rm data-service-app-1
+	docker rmi data-service-app
 db:
 	docker compose up db -d
 web:
 	docker compose up web
+app:
+	docker compose up app
