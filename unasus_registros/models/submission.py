@@ -30,7 +30,7 @@ class Submission(models.Model):
     def clean(self):
         # Verifica se já existe uma submissão para o estudante
         if Submission.objects.filter(student=self.student).exists():
-            raise ValidationError('Este estudante já fez uma submissão.')
+            raise ValidationError('allready submited')
 
     def save(self, *args, **kwargs):
         # Chama o método clean antes de salvar

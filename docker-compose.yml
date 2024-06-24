@@ -25,6 +25,16 @@ services:
     networks:
       - unasus_network
 
+  charge:
+    build: .
+    command: python charge/charge.py
+    volumes:
+      - .:/code
+    depends_on:
+      - web
+    networks:
+      - unasus_network
+
 networks:
     unasus_network:
       driver: bridge
