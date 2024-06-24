@@ -67,7 +67,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router';
 import { notify } from 'notiwind'; // Importar notify do notiwind
-
+import { API_BASE_URL } from '../environment/environment';
 const cpf = ref('');
 const password = ref('');
 
@@ -78,7 +78,7 @@ const removeCpfFormatting = (cpf) => {
 const login = async () => {
   var cpfFormatted = removeCpfFormatting(cpf.value);
   try {
-    const response = await axios.post('http://localhost:8000/api/token/', {
+    const response = await axios.post(`${API_BASE_URL}/api/token/`, {
       username: cpfFormatted,
       password: password.value
     });

@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Header />
-
     <div class="container mx-auto mt-8 px-4">
       <form @submit.prevent="handleSubmit()">
         <div class="space-y-12">
@@ -177,15 +175,11 @@
 
 <script>
 import { getUserData } from '../utils/auth';
-import Header from './Header.vue';
 import axios from 'axios';
 import { notify } from 'notiwind';
 
 export default {
   name: 'SubmissionForm',
-  components: {
-    Header,
-  },
   data() {
     return {
       term_accepted: false,
@@ -234,7 +228,7 @@ export default {
       }
 
       try {
-        const response = await axios.post('http://localhost:8000/submissions/', formData, {
+        const response = await axios.post(`${API_BASE_URL}/submissions/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
