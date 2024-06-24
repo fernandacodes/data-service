@@ -8,6 +8,8 @@ import Home from '../components/Home.vue';
 import { isAuthenticated, isAdm } from '../utils/auth';
 import Profile from '../components/Profile.vue';
 import StudentDetail from '../components/StudentDetail.vue';
+import SubmissionDetail from '../components/SubmissionDetail.vue';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
@@ -32,11 +34,18 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true, requiresAdmin: true}
   },
   {
+    path: '/submission/:cpf',
+    name: 'SubmissionDetails',
+    component:SubmissionDetail,
+    meta: { requiresAuth: true, requiresAdmin: true}
+  },
+  {
     path: '/submission',
     name: 'Submission',
     component: Submission,
     meta: { requiresAuth: true }
   },
+  
   {
     path: '/students',
     name: 'Students',

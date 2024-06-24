@@ -19,6 +19,10 @@
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.Email }}</dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">CPF</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.CPF }}</dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt class="text-sm font-medium leading-6 text-gray-900">Telefone</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.Phone }}</dd>
           </div>
@@ -67,6 +71,9 @@
             <dt class="text-sm font-medium leading-6 text-gray-900">Data da Solicitação de Alteração</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.RequestChangeDate }}</dd>
           </div>
+          <router-link :to="{ name: 'SubmissionDetails', params: { cpf: student.CPF } }" class="text-indigo-600 hover:text-indigo-500">
+                Ver Detalhes da Submissão
+              </router-link>
         </dl>
       </div>
     </div>
