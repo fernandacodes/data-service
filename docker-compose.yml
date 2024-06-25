@@ -39,7 +39,7 @@ services:
     build:
       dockerfile: frontend/frontv1/Dockerfile
     ports:
-      - "8080:8080"
+      - "3000:3000"
     networks:
       - unasus_network
 
