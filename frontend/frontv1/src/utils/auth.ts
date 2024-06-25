@@ -12,7 +12,6 @@ export const isAuthenticated = async () => {
     const response = await axios.post(`${API_BASE_URL}/api/token/verify/`, { token });
     return response.status === 200;
   } catch (error) {
-    console.error('Erro ao verificar token:', error);
     return false;
   }
 };
@@ -37,7 +36,6 @@ export const getUserData = async () => {
 
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter dados do usuário:', error);
     throw error;
   }
 };

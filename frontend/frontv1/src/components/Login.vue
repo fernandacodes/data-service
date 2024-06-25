@@ -92,7 +92,6 @@ const login = async () => {
       text: 'Logged in successfully!'
     });
   } catch (error) {
-    console.error('Erro ao fazer login:', error);
 
     // Exibir mensagem de erro
     notify({

@@ -128,7 +128,6 @@ onMounted(async () => {
         showStudentsLink.value = true; // Mostrar o link de Students apenas para administradores
       }
     } catch (error) {
-      console.error('Erro ao carregar dados do usuário:', error);
     }
   }
 });

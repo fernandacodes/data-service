@@ -84,7 +84,6 @@ const searchStudents = async () => {
     }
     students.value = response.data.students;
   } catch (error) {
-    console.error('Erro ao buscar estudantes:', error);
     students.value = [];
   }
   isLoading.value = false;
@@ -95,7 +94,6 @@ const loadStudents = async () => {
     const response = await axios.get(`${API_BASE_URL}/students/all/`);
     students.value = response.data.students;
   } catch (error) {
-    console.error('Erro ao carregar todos os estudantes:', error);
     students.value = [];
   }
   isLoading.value = false;

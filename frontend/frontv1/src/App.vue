@@ -77,7 +77,6 @@ onMounted(async () => {
       const userData = await getUserData();
       user.value = userData;
     } catch (error) {
-      console.error('Erro ao carregar dados do usuário:', error);
     }
   }
 });
