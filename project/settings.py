@@ -26,8 +26,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 1
-ALLOWED_HOSTS = ["http://localhost:5173", 'http://web', 'http://127.0.0.1:5173', 'http://127.0.0.1', 'web', 'localhost', 'http://127.0.0.1:8080']
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173", 'http://web', 'http://localhost', 'http://127.0.0.1', 'http://127.0.0.1:5173','http://127.0.0.1:8080']
+ALLOWED_HOSTS = ["http://localhost:5173", 'http://web', 'http://127.0.0.1:5173', 'http://127.0.0.1', 'web', 'localhost', 'http://127.0.0.1:3000']
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", 'http://web', 'http://localhost', 'http://127.0.0.1', 'http://127.0.0.1:5173','http://127.0.0.1:3000']
 # Application definition
 
 SIMPLE_JWT = {

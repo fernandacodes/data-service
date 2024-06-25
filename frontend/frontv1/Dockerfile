@@ -2,7 +2,7 @@
 FROM node:22.1.0
 
 # Install http-server globally (assuming you want to serve the built Vue app)
-RUN npm install -g http-server
+RUN npm install -g serve
 
 # Set the working directory inside the container
 WORKDIR /code
@@ -26,7 +26,7 @@ RUN npm install
 RUN npm run build
 
 # Expose the port that http-server will run on (default is 8080)
-EXPOSE 8080
+EXPOSE 3000
 
 # Command to serve the built Vue application using http-server
-CMD [ "http-server", "dist" ]
+CMD [ "serve", "-s", "dist" ]
