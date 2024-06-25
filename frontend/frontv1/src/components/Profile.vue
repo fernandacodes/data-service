@@ -52,7 +52,6 @@
   
       userProfile.value = response.data;
     } catch (error) {
-      console.error('Erro ao buscar dados do usuário:', error);
     }
   });
   </script>
