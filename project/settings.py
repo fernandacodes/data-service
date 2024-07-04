@@ -26,8 +26,20 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 1
-ALLOWED_HOSTS = ["http://localhost:5173", 'http://web', 'http://127.0.0.1:5173', 'http://127.0.0.1', 'web', 'localhost', 'http://127.0.0.1:3000' , 'http://18.230.148.244']
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173", 'http://web', 'http://localhost', 'http://127.0.0.1', 'http://127.0.0.1:5173','http://127.0.0.1:3000', 'http://18.230.148.244']
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "web",
+    "18.230.148.244"  # IP público da instância EC2
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1",
+    "http://18.230.148.244"  # IP público da instância EC2 com protocolo
+]
 # Application definition
 
 SIMPLE_JWT = {
