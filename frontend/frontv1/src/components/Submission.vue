@@ -4,122 +4,125 @@
       <form @submit.prevent="handleSubmit()">
         <div class="space-y-12">
           <div class="border-b border-gray-900/10 pb-12">
-            <h2 class="text-base font-semibold leading-7 text-gray-900">Submission Form</h2>
-            <p class="mt-1 text-sm leading-6 text-gray-600">Please fill out the form below.</p>
+            <h2 class="text-base font-semibold leading-7 text-gray-900">Formulário de Envio</h2>
+            <p class="mt-1 text-sm leading-6 text-gray-600">Por favor, preencha o formulário abaixo.</p>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-              <!-- Full Name -->
+              <!-- Nome Completo -->
               <div class="sm:col-span-3">
-                <label for="full_name" class="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
+                <label for="full_name" class="block text-sm font-medium leading-6 text-gray-900">Nome Completo</label>
                 <div class="mt-2">
                   <input type="text" name="full_name" id="full_name" maxlength="100" v-model="full_name"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Mother Name -->
+              <!-- Nome da Mãe -->
               <div class="sm:col-span-3">
-                <label for="mother_name" class="block text-sm font-medium leading-6 text-gray-900">Mother's Name</label>
+                <label for="mother_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da Mãe</label>
                 <div class="mt-2">
                   <input type="text" name="mother_name" id="mother_name" maxlength="100" v-model="mother_name"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Father Name -->
+              <!-- Nome do Pai -->
               <div class="sm:col-span-3">
-                <label for="father_name" class="block text-sm font-medium leading-6 text-gray-900">Father's Name</label>
+                <label for="father_name" class="block text-sm font-medium leading-6 text-gray-900">Nome do Pai</label>
                 <div class="mt-2">
                   <input type="text" name="father_name" id="father_name" maxlength="100" v-model="father_name"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Blood Type -->
+              <!-- Tipo Sanguíneo -->
               <div class="sm:col-span-3">
-                <label for="blood_type" class="block text-sm font-medium leading-6 text-gray-900">Blood Type</label>
+                <label for="blood_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo Sanguíneo</label>
                 <div class="mt-2">
                   <input type="text" name="blood_type" id="blood_type" maxlength="3" v-model="blood_type"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- RH Factor -->
+              <!-- Fator RH -->
               <div class="sm:col-span-3">
-                <label for="rh_factor" class="block text-sm font-medium leading-6 text-gray-900">RH Factor</label>
+                <label for="rh_factor" class="block text-sm font-medium leading-6 text-gray-900">Fator RH</label>
                 <div class="mt-2">
                   <input type="text" name="rh_factor" id="rh_factor" maxlength="3" v-model="rh_factor"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Gender -->
+              <!-- Gênero -->
               <div class="sm:col-span-3">
-                <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Gender</label>
+                <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Gênero</label>
                 <div class="mt-2">
                   <input type="text" name="gender" id="gender" maxlength="10" v-model="gender"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Race -->
+              <!-- Raça -->
               <div class="sm:col-span-3">
-                <label for="race" class="block text-sm font-medium leading-6 text-gray-900">Race</label>
+                <label for="race" class="block text-sm font-medium leading-6 text-gray-900">Raça</label>
                 <div class="mt-2">
                   <input type="text" name="race" id="race" maxlength="20" v-model="race"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Birth Date -->
+              <!-- Data de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Birth Date</label>
+                <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Data de
+                  Nascimento</label>
                 <div class="mt-2">
                   <input type="date" name="birth_date" id="birth_date" v-model="birth_date"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Nationality -->
+              <!-- Nacionalidade -->
               <div class="sm:col-span-3">
-                <label for="nationality" class="block text-sm font-medium leading-6 text-gray-900">Nationality</label>
+                <label for="nationality" class="block text-sm font-medium leading-6 text-gray-900">Nacionalidade</label>
                 <div class="mt-2">
                   <input type="text" name="nationality" id="nationality" maxlength="50" v-model="nationality"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Birth City -->
+              <!-- Cidade de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="birth_city" class="block text-sm font-medium leading-6 text-gray-900">Birth City</label>
+                <label for="birth_city" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
+                  Nascimento</label>
                 <div class="mt-2">
                   <input type="text" name="birth_city" id="birth_city" maxlength="50" v-model="birth_city"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Birth State -->
+              <!-- Estado de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="birth_state" class="block text-sm font-medium leading-6 text-gray-900">Birth State</label>
+                <label for="birth_state" class="block text-sm font-medium leading-6 text-gray-900">Estado de
+                  Nascimento</label>
                 <div class="mt-2">
                   <input type="text" name="birth_state" id="birth_state" maxlength="2" v-model="birth_state"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Birth Country -->
+              <!-- País de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="birth_country" class="block text-sm font-medium leading-6 text-gray-900">Birth
-                  Country</label>
+                <label for="birth_country" class="block text-sm font-medium leading-6 text-gray-900">País de
+                  Nascimento</label>
                 <div class="mt-2">
                   <input type="text" name="birth_country" id="birth_country" maxlength="50" v-model="birth_country"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Phone -->
+              <!-- Telefone -->
               <div class="sm:col-span-3">
-                <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Phone</label>
+                <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
                 <div class="mt-2">
                   <input type="text" name="phone" id="phone" maxlength="15" v-model="phone"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
@@ -130,214 +133,23 @@
               <div class="sm:col-span-3">
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
                 <div class="mt-2">
-                  <input type="email" name="email" id="email" maxlength="100" v-model="email"
+                  <input type="email" name="email" id="email" v-model="email"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Address -->
-              <div class="sm:col-span-6">
-                <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Address</label>
-                <div class="mt-2">
-                  <input type="text" name="address" id="address" maxlength="255" v-model="address"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Neighborhood -->
-              <div class="sm:col-span-3">
-                <label for="neighborhood" class="block text-sm font-medium leading-6 text-gray-900">Neighborhood</label>
-                <div class="mt-2">
-                  <input type="text" name="neighborhood" id="neighborhood" maxlength="100" v-model="neighborhood"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Address Complement -->
-              <div class="sm:col-span-3">
-                <label for="address_complement" class="block text-sm font-medium leading-6 text-gray-900">Address
-                  Complement</label>
-                <div class="mt-2">
-                  <input type="text" name="address_complement" id="address_complement" maxlength="255"
-                    v-model="address_complement"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Address City -->
-              <div class="sm:col-span-3">
-                <label for="address_city" class="block text-sm font-medium leading-6 text-gray-900">Address City</label>
-                <div class="mt-2">
-                  <input type="text" name="address_city" id="address_city" maxlength="50" v-model="address_city"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <div class="sm:col-span-3">
-                <label for="marital_status" class="block text-sm font-medium leading-6 text-gray-900">Marital
-                  Status</label>
-                <div class="mt-2">
-                  <input type="text" name="marital_status" id="marital_status" maxlength="20" v-model="marital_status"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- CPF -->
-              <div class="sm:col-span-3">
-                <label for="cpf" class="block text-sm font-medium leading-6 text-gray-900">CPF</label>
-                <div class="mt-2">
-                  <input type="text" name="cpf" id="cpf" maxlength="11" v-model="cpf"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- RG Number -->
-              <div class="sm:col-span-3">
-                <label for="rg_number" class="block text-sm font-medium leading-6 text-gray-900">RG Number</label>
-                <div class="mt-2">
-                  <input type="text" name="rg_number" id="rg_number" maxlength="20" v-model="rg_number"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- RG Issuer -->
-              <div class="sm:col-span-3">
-                <label for="rg_issuer" class="block text-sm font-medium leading-6 text-gray-900">RG Issuer</label>
-                <div class="mt-2">
-                  <input type="text" name="rg_issuer" id="rg_issuer" maxlength="50" v-model="rg_issuer"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- RG State -->
-              <div class="sm:col-span-3">
-                <label for="rg_state" class="block text-sm font-medium leading-6 text-gray-900">RG State</label>
-                <div class="mt-2">
-                  <input type="text" name="rg_state" id="rg_state" maxlength="2" v-model="rg_state"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- High School Graduation Year -->
-              <div class="sm:col-span-3">
-                <label for="high_school_graduation_year" class="block text-sm font-medium leading-6 text-gray-900">High
-                  School Graduation Year</label>
-                <div class="mt-2">
-                  <input type="text" name="high_school_graduation_year" id="high_school_graduation_year" maxlength="4"
-                    v-model="high_school_graduation_year"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- University Name -->
-              <div class="sm:col-span-3">
-                <label for="university_name" class="block text-sm font-medium leading-6 text-gray-900">University
-                  Name</label>
-                <div class="mt-2">
-                  <input type="text" name="university_name" id="university_name" maxlength="100"
-                    v-model="university_name"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Work City -->
-              <div class="sm:col-span-3">
-                <label for="work_city" class="block text-sm font-medium leading-6 text-gray-900">Work City</label>
-                <div class="mt-2">
-                  <input type="text" name="work_city" id="work_city" maxlength="50" v-model="work_city"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Work State -->
-              <div class="sm:col-span-3">
-                <label for="work_state" class="block text-sm font-medium leading-6 text-gray-900">Work State</label>
-                <div class="mt-2">
-                  <input type="text" name="work_state" id="work_state" maxlength="2" v-model="work_state"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Address State -->
-              <div class="sm:col-span-3">
-                <label for="address_state" class="block text-sm font-medium leading-6 text-gray-900">Address
-                  State</label>
-                <div class="mt-2">
-                  <input type="text" name="address_state" id="address_state" maxlength="2" v-model="address_state"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Address Zip Code -->
-              <div class="sm:col-span-3">
-                <label for="address_zip_code" class="block text-sm font-medium leading-6 text-gray-900">Address Zip
-                  Code</label>
-                <div class="mt-2">
-                  <input type="text" name="address_zip_code" id="address_zip_code" maxlength="10"
-                    v-model="address_zip_code"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Indigenous Ethnicity -->
-              <div class="sm:col-span-3">
-                <label for="indigenous_ethnicity" class="block text-sm font-medium leading-6 text-gray-900">Indigenous
-                  Ethnicity</label>
-                <div class="mt-2">
-                  <input type="text" name="indigenous_ethnicity" id="indigenous_ethnicity" maxlength="50"
-                    v-model="indigenous_ethnicity"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Disability Degree -->
-              <div>
-                <div class="sm:col-span-3">
-                  <label for="disability" class="block text-sm font-medium leading-6 text-gray-900">Do you have a
-                    disability?</label>
-                  <div class="mt-2">
-                    <input type="checkbox" id="disability" v-model="disability" @change="toggleDisability">
-                    <label for="disability" class="ml-2">Yes</label>
-                  </div>
-                </div>
-
-                <div class="sm:col-span-3" v-if="disability">
-                  <label for="disability_degree" class="block text-sm font-medium leading-6 text-gray-900">Disability
-                    Degree</label>
-                  <div class="mt-2">
-                    <select name="disability_degree" id="disability_degree" v-model="disability_degree"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      <option value="total">Total Disability</option>
-                      <option value="partial">Partial Disability</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="sm:col-span-6">
-                <label for="document" class="block text-sm font-medium leading-6 text-gray-900">Document</label>
-                <div class="mt-2">
-                  <input type="file" name="document" id="document" ref="document"
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="term_accepted" class="block text-sm font-medium leading-6 text-gray-900">Term Accepted</label>
-          <div class="mt-2">
-            <input type="checkbox" id="term_accepted" name="term_accepted"
-              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+
+          <!-- Botão de envio -->
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
+            <button type="submit"
+              class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Salvar</button>
           </div>
         </div>
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" @click="handleCancel()"
-            class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-          <button type="submit"
-            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-        </div>
       </form>
+
     </div>
   </div>
 </template>
@@ -555,7 +367,6 @@ export default {
         formData.append('document', this.$refs.document.files[0]);
       }
 
-
       try {
         const response = await axios.post(`${API_BASE_URL}/submissions/`, formData, {
           headers: {
@@ -565,33 +376,21 @@ export default {
 
         notify({
           group: 'foo',
-          title: 'Success',
-          text: 'Submission created successfully!',
+          title: 'Sucesso',
+          text: 'Inscrição criada com sucesso!',
         });
 
         // Clear form after successful submission
         this.clearForm();
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.error === "['Student has already submitted']") {
-          notify({
-            group: 'error',
-            title: 'Error',
-            text: 'You have already submitted the form.',
-            type: 'error',
-          });
-        } else {
-          notify({
-            group: 'error',
-            title: 'Error',
-            text: 'Failed to create submission.',
-            type: 'error',
-          });
-        }
+        notify({
+          group: 'foo',
+          title: 'Erro',
+          text: 'Erro ao enviar a inscrição. Por favor, tente novamente.',
+        });
       }
     },
-
     clearForm() {
-      // Clear all form fields after successful submission
       this.term_accepted = false;
       this.full_name = '';
       this.mother_name = '';
@@ -627,10 +426,9 @@ export default {
       this.disability = false;
       this.disability_degree = '';
       this.created_at = '';
-
-      // Remove form data from localStorage
       localStorage.removeItem('formData');
     },
   },
 };
+
 </script>

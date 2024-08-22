@@ -9,6 +9,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - mongo
     networks:
       - unasus_network
 
@@ -22,6 +23,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "13002:5432"
+    networks:
+      - unasus_network
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGODB_DB}
+    ports:
+      - "27017:27017"
     networks:
       - unasus_network
 
