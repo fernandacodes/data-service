@@ -10,6 +10,8 @@ COPY requirements.txt /code/
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install djongo
+
 # Copy the rest of the working directory contents into the container
 COPY . /code/
 
