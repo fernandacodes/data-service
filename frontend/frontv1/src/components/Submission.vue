@@ -8,11 +8,41 @@
             <p class="mt-1 text-sm leading-6 text-gray-600">Por favor, preencha o formulário abaixo.</p>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-              <!-- Nome Completo -->
+              <!-- Cidade de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="full_name" class="block text-sm font-medium leading-6 text-gray-900">Nome Completo</label>
+                <label for="birthplace" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
+                  Nascimento</label>
                 <div class="mt-2">
-                  <input type="text" name="full_name" id="full_name" maxlength="100" v-model="full_name"
+                  <input type="text" name="birthplace" id="birthplace" maxlength="100" v-model="birthplace"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Nacionalidade -->
+              <div class="sm:col-span-3">
+                <label for="nationality" class="block text-sm font-medium leading-6 text-gray-900">Nacionalidade</label>
+                <div class="mt-2">
+                  <input type="text" name="nationality" id="nationality" maxlength="50" v-model="nationality"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Data de Nascimento -->
+              <div class="sm:col-span-3">
+                <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Data de
+                  Nascimento</label>
+                <div class="mt-2">
+                  <input type="date" name="birth_date" id="birth_date" v-model="birth_date"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Estado Civil -->
+              <div class="sm:col-span-3">
+                <label for="marital_status" class="block text-sm font-medium leading-6 text-gray-900">Estado
+                  Civil</label>
+                <div class="mt-2">
+                  <input type="text" name="marital_status" id="marital_status" maxlength="20" v-model="marital_status"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
@@ -35,24 +65,6 @@
                 </div>
               </div>
 
-              <!-- Tipo Sanguíneo -->
-              <div class="sm:col-span-3">
-                <label for="blood_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo Sanguíneo</label>
-                <div class="mt-2">
-                  <input type="text" name="blood_type" id="blood_type" maxlength="3" v-model="blood_type"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <!-- Fator RH -->
-              <div class="sm:col-span-3">
-                <label for="rh_factor" class="block text-sm font-medium leading-6 text-gray-900">Fator RH</label>
-                <div class="mt-2">
-                  <input type="text" name="rh_factor" id="rh_factor" maxlength="3" v-model="rh_factor"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
               <!-- Gênero -->
               <div class="sm:col-span-3">
                 <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Gênero</label>
@@ -62,30 +74,145 @@
                 </div>
               </div>
 
-              <!-- Raça -->
+              <!-- Tipo Sanguíneo -->
               <div class="sm:col-span-3">
-                <label for="race" class="block text-sm font-medium leading-6 text-gray-900">Raça</label>
+                <label for="blood_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo Sanguíneo</label>
                 <div class="mt-2">
-                  <input type="text" name="race" id="race" maxlength="20" v-model="race"
+                  <input type="text" name="blood_type" id="blood_type" maxlength="10" v-model="blood_type"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Data de Nascimento -->
+              <!-- Fator RH -->
               <div class="sm:col-span-3">
-                <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Data de
-                  Nascimento</label>
+                <label for="rh_factor" class="block text-sm font-medium leading-6 text-gray-900">Fator RH</label>
                 <div class="mt-2">
-                  <input type="date" name="birth_date" id="birth_date" v-model="birth_date"
+                  <input type="text" name="rh_factor" id="rh_factor" maxlength="5" v-model="rh_factor"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Nacionalidade -->
+              <!-- Etnia -->
               <div class="sm:col-span-3">
-                <label for="nationality" class="block text-sm font-medium leading-6 text-gray-900">Nacionalidade</label>
+                <label for="ethnicity" class="block text-sm font-medium leading-6 text-gray-900">Etnia</label>
                 <div class="mt-2">
-                  <input type="text" name="nationality" id="nationality" maxlength="50" v-model="nationality"
+                  <input type="text" name="ethnicity" id="ethnicity" maxlength="50" v-model="ethnicity"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Deficiência Física -->
+              <div class="sm:col-span-3">
+                <label for="physical_disability" class="block text-sm font-medium leading-6 text-gray-900">Deficiência
+                  Física</label>
+                <div class="mt-2">
+                  <input type="checkbox" name="physical_disability" id="physical_disability"
+                    v-model="physical_disability"
+                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-600" />
+                </div>
+              </div>
+
+              <!-- Detalhes da Deficiência -->
+              <div class="sm:col-span-3" v-if="physical_disability">
+                <label for="disability_details" class="block text-sm font-medium leading-6 text-gray-900">Detalhes da
+                  Deficiência</label>
+                <div class="mt-2">
+                  <input type="text" name="disability_details" id="disability_details" maxlength="100"
+                    v-model="disability_details"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Grau de Deficiência -->
+              <div class="sm:col-span-3" v-if="physical_disability">
+                <label for="disability_degree" class="block text-sm font-medium leading-6 text-gray-900">Grau de
+                  Deficiência</label>
+                <div class="mt-2">
+                  <input type="text" name="disability_degree" id="disability_degree" maxlength="50"
+                    v-model="disability_degree"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Transtorno Psicológico -->
+              <div class="sm:col-span-3">
+                <label for="psychological_disorder" class="block text-sm font-medium leading-6 text-gray-900">Transtorno
+                  Psicológico</label>
+                <div class="mt-2">
+                  <input type="text" name="psychological_disorder" id="psychological_disorder" maxlength="100"
+                    v-model="psychological_disorder"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Endereço -->
+              <div class="sm:col-span-3">
+                <label for="street_address" class="block text-sm font-medium leading-6 text-gray-900">Endereço</label>
+                <div class="mt-2">
+                  <input type="text" name="street_address" id="street_address" maxlength="255" v-model="street_address"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Número -->
+              <div class="sm:col-span-3">
+                <label for="number" class="block text-sm font-medium leading-6 text-gray-900">Número</label>
+                <div class="mt-2">
+                  <input type="text" name="number" id="number" maxlength="10" v-model="number"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Complemento -->
+              <div class="sm:col-span-3">
+                <label for="complement" class="block text-sm font-medium leading-6 text-gray-900">Complemento</label>
+                <div class="mt-2">
+                  <input type="text" name="complement" id="complement" maxlength="100" v-model="complement"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Bairro -->
+              <div class="sm:col-span-3">
+                <label for="neighborhood" class="block text-sm font-medium leading-6 text-gray-900">Bairro</label>
+                <div class="mt-2">
+                  <input type="text" name="neighborhood" id="neighborhood" maxlength="100" v-model="neighborhood"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Cidade -->
+              <div class="sm:col-span-3">
+                <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Cidade</label>
+                <div class="mt-2">
+                  <input type="text" name="city" id="city" maxlength="100" v-model="city"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Estado -->
+              <div class="sm:col-span-3">
+                <label for="state" class="block text-sm font-medium leading-6 text-gray-900">Estado</label>
+                <div class="mt-2">
+                  <input type="text" name="state" id="state" maxlength="2" v-model="state"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- CEP -->
+              <div class="sm:col-span-3">
+                <label for="postal_code" class="block text-sm font-medium leading-6 text-gray-900">CEP</label>
+                <div class="mt-2">
+                  <input type="text" name="postal_code" id="postal_code" maxlength="10" v-model="postal_code"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- RG -->
+              <div class="sm:col-span-3">
+                <label for="rg" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
+                <div class="mt-2">
+                  <input type="text" name="rg" id="rg" maxlength="20" v-model="rg"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
@@ -95,7 +222,7 @@
                 <label for="birth_city" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
                   Nascimento</label>
                 <div class="mt-2">
-                  <input type="text" name="birth_city" id="birth_city" maxlength="50" v-model="birth_city"
+                  <input type="text" name="birth_city" id="birth_city" maxlength="100" v-model="birth_city"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
@@ -110,46 +237,188 @@
                 </div>
               </div>
 
-              <!-- País de Nascimento -->
+              <!-- Ano de Conclusão do Ensino Médio -->
               <div class="sm:col-span-3">
-                <label for="birth_country" class="block text-sm font-medium leading-6 text-gray-900">País de
-                  Nascimento</label>
+                <label for="high_school_graduation_year" class="block text-sm font-medium leading-6 text-gray-900">Ano
+                  de Conclusão do Ensino Médio</label>
                 <div class="mt-2">
-                  <input type="text" name="birth_country" id="birth_country" maxlength="50" v-model="birth_country"
+                  <input type="text" name="high_school_graduation_year" id="high_school_graduation_year" maxlength="4"
+                    v-model="high_school_graduation_year"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Telefone -->
+              <!-- Nome da Universidade -->
               <div class="sm:col-span-3">
-                <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
+                <label for="university_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da
+                  Universidade</label>
                 <div class="mt-2">
-                  <input type="text" name="phone" id="phone" maxlength="15" v-model="phone"
+                  <input type="text" name="university_name" id="university_name" maxlength="100"
+                    v-model="university_name"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
-              <!-- Email -->
+              <!-- Ano de Conclusão da Graduação -->
               <div class="sm:col-span-3">
-                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                <label for="graduation_year" class="block text-sm font-medium leading-6 text-gray-900">Ano de Conclusão
+                  da Graduação</label>
                 <div class="mt-2">
-                  <input type="email" name="email" id="email" v-model="email"
+                  <input type="text" name="graduation_year" id="graduation_year" maxlength="4" v-model="graduation_year"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
 
+              <!-- Curso de Graduação -->
+              <div class="sm:col-span-3">
+                <label for="graduation_course" class="block text-sm font-medium leading-6 text-gray-900">Curso de
+                  Graduação</label>
+                <div class="mt-2">
+                  <input type="text" name="graduation_course" id="graduation_course" maxlength="100"
+                    v-model="graduation_course"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Nome da UBS Atual -->
+              <div class="sm:col-span-3">
+                <label for="current_ubs_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da UBS
+                  Atual</label>
+                <div class="mt-2">
+                  <input type="text" name="current_ubs_name" id="current_ubs_name" maxlength="100"
+                    v-model="current_ubs_name"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Tipo de UBS -->
+              <div class="sm:col-span-3">
+                <label for="ubs_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo de UBS</label>
+                <div class="mt-2">
+                  <input type="text" name="ubs_type" id="ubs_type" maxlength="50" v-model="ubs_type"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Documentos -->
+              <div class="sm:col-span-3">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Documentos</label>
+                <div class="mt-2 space-y-4">
+                  <!-- RG/CPF -->
+                  <div>
+                    <label for="rg_cpf_copy" class="block text-sm font-medium leading-6 text-gray-900">Cópia do
+                      RG/CPF</label>
+                    <input type="file" name="rg_cpf_copy" id="rg_cpf_copy" accept=".pdf"
+                      @change="handleFileChange('rg_cpf_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Reservista -->
+                  <div>
+                    <label for="reservista_cert_copy"
+                      class="block text-sm font-medium leading-6 text-gray-900">Certificado de Reservista</label>
+                    <input type="file" name="reservista_cert_copy" id="reservista_cert_copy" accept=".pdf"
+                      @change="handleFileChange('reservista_cert_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Diploma -->
+                  <div>
+                    <label for="diploma_copy" class="block text-sm font-medium leading-6 text-gray-900">Diploma</label>
+                    <input type="file" name="diploma_copy" id="diploma_copy" accept=".pdf"
+                      @change="handleFileChange('diploma_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Certidão de Casamento -->
+                  <div>
+                    <label for="marriage_certificate_copy"
+                      class="block text-sm font-medium leading-6 text-gray-900">Certidão de Casamento</label>
+                    <input type="file" name="marriage_certificate_copy" id="marriage_certificate_copy" accept=".pdf"
+                      @change="handleFileChange('marriage_certificate_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Comprovante de Endereço -->
+                  <div>
+                    <label for="address_proof_copy"
+                      class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Endereço</label>
+                    <input type="file" name="address_proof_copy" id="address_proof_copy" accept=".pdf"
+                      @change="handleFileChange('address_proof_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Comprovante de Residência e Internet -->
+                  <div>
+                    <label for="residence_internet_copy"
+                      class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Residência e
+                      Internet</label>
+                    <input type="file" name="residence_internet_copy" id="residence_internet_copy" accept=".pdf"
+                      @change="handleFileChange('residence_internet_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+
+                  <!-- Comprovante de UBS -->
+                  <div>
+                    <label for="ubs_internet_copy" class="block text-sm font-medium leading-6 text-gray-900">Comprovante
+                      de UBS</label>
+                    <input type="file" name="ubs_internet_copy" id="ubs_internet_copy" accept=".pdf"
+                      @change="handleFileChange('ubs_internet_copy', $event)"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Velocidade da Internet -->
+              <div class="sm:col-span-3">
+                <label for="internet_speed" class="block text-sm font-medium leading-6 text-gray-900">Velocidade da
+                  Internet</label>
+                <div class="mt-2">
+                  <input type="text" name="internet_speed" id="internet_speed" maxlength="10" v-model="internet_speed"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Disponibilidade de Internet -->
+              <div class="sm:col-span-3">
+                <label for="internet_availability"
+                  class="block text-sm font-medium leading-6 text-gray-900">Disponibilidade de Internet</label>
+                <div class="mt-2">
+                  <input type="text" name="internet_availability" id="internet_availability" maxlength="50"
+                    v-model="internet_availability"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Disponibilidade de Energia -->
+              <div class="sm:col-span-3">
+                <label for="energy_availability"
+                  class="block text-sm font-medium leading-6 text-gray-900">Disponibilidade de Energia</label>
+                <div class="mt-2">
+                  <input type="text" name="energy_availability" id="energy_availability" maxlength="50"
+                    v-model="energy_availability"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+              </div>
+
+              <!-- Termos Aceitos -->
+              <div class="sm:col-span-3">
+                <div class="flex items-center gap-x-3">
+                  <input id="terms_accepted" name="terms_accepted" type="checkbox" v-model="terms_accepted"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                  <label for="terms_accepted" class="text-sm font-medium leading-6 text-gray-900">Aceito os termos e
+                    condições</label>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Botão de envio -->
-          <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
+          <div class="pt-5">
             <button type="submit"
-              class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Salvar</button>
+              class="inline-block rounded-md bg-indigo-600 px-3.5 py-1.5 text-sm font-semibold leading-6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">Enviar</button>
           </div>
         </div>
       </form>
-
     </div>
   </div>
 </template>
@@ -165,39 +434,37 @@ export default {
   data() {
     return {
       term_accepted: false,
-      full_name: '',
       mother_name: '',
       father_name: '',
       blood_type: '',
       rh_factor: '',
       gender: '',
-      race: '',
+      ethnicity: '',
       birth_date: '',
       nationality: '',
       birth_city: '',
       birth_state: '',
-      birth_country: '',
-      phone: '',
-      email: '',
-      marital_status: '',
-      cpf: '',
-      rg_number: '',
-      rg_issuer: '',
-      rg_state: '',
-      document: null,
+      street_address: '',
+      number: '',
+      complement: '',
+      neighborhood: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      rg: '',
+      birth_city: '',
+      birth_state: '',
       high_school_graduation_year: '',
       university_name: '',
-      work_city: '',
-      work_state: '',
-      address: '',
-      neighborhood: '',
-      address_complement: '',
-      address_city: '',
-      address_state: '',
-      address_zip_code: '',
-      indigenous_ethnicity: '',
-      disability: false,
-      disability_degree: '',
+      graduation_year: '',
+      graduation_course: '',
+      current_ubs_name: '',
+      ubs_type: '',
+      rg_cpf_copy: null,
+      reservista_cert_copy: null,
+      military_certificate_copy: null,
+      title_copy: null,
+      proof_of_residence_copy: null,
       created_at: '',
     };
   },
@@ -205,41 +472,36 @@ export default {
     this.loadFormData();
   },
   watch: {
-    // Watch each form data property to save it in localStorage when it changes
     term_accepted(val) { this.saveFormData(); },
-    full_name(val) { this.saveFormData(); },
     mother_name(val) { this.saveFormData(); },
     father_name(val) { this.saveFormData(); },
     blood_type(val) { this.saveFormData(); },
     rh_factor(val) { this.saveFormData(); },
     gender(val) { this.saveFormData(); },
-    race(val) { this.saveFormData(); },
+    ethnicity(val) { this.saveFormData(); },
     birth_date(val) { this.saveFormData(); },
     nationality(val) { this.saveFormData(); },
     birth_city(val) { this.saveFormData(); },
     birth_state(val) { this.saveFormData(); },
-    birth_country(val) { this.saveFormData(); },
-    phone(val) { this.saveFormData(); },
-    email(val) { this.saveFormData(); },
-    marital_status(val) { this.saveFormData(); },
-    cpf(val) { this.saveFormData(); },
-    rg_number(val) { this.saveFormData(); },
-    rg_issuer(val) { this.saveFormData(); },
-    rg_state(val) { this.saveFormData(); },
-    document(val) { this.saveFormData(); },
+    street_address(val) { this.saveFormData(); },
+    number(val) { this.saveFormData(); },
+    complement(val) { this.saveFormData(); },
+    neighborhood(val) { this.saveFormData(); },
+    city(val) { this.saveFormData(); },
+    state(val) { this.saveFormData(); },
+    postal_code(val) { this.saveFormData(); },
+    rg(val) { this.saveFormData(); },
     high_school_graduation_year(val) { this.saveFormData(); },
     university_name(val) { this.saveFormData(); },
-    work_city(val) { this.saveFormData(); },
-    work_state(val) { this.saveFormData(); },
-    address(val) { this.saveFormData(); },
-    neighborhood(val) { this.saveFormData(); },
-    address_complement(val) { this.saveFormData(); },
-    address_city(val) { this.saveFormData(); },
-    address_state(val) { this.saveFormData(); },
-    address_zip_code(val) { this.saveFormData(); },
-    indigenous_ethnicity(val) { this.saveFormData(); },
-    disability(val) { this.saveFormData(); },
-    disability_degree(val) { this.saveFormData(); },
+    graduation_year(val) { this.saveFormData(); },
+    graduation_course(val) { this.saveFormData(); },
+    current_ubs_name(val) { this.saveFormData(); },
+    ubs_type(val) { this.saveFormData(); },
+    rg_cpf_copy(val) { this.saveFormData(); },
+    reservista_cert_copy(val) { this.saveFormData(); },
+    military_certificate_copy(val) { this.saveFormData(); },
+    title_copy(val) { this.saveFormData(); },
+    proof_of_residence_copy(val) { this.saveFormData(); },
     created_at(val) { this.saveFormData(); },
   },
   methods: {
@@ -247,38 +509,35 @@ export default {
       // Save form data to localStorage
       const formData = {
         term_accepted: this.term_accepted,
-        full_name: this.full_name,
         mother_name: this.mother_name,
         father_name: this.father_name,
         blood_type: this.blood_type,
         rh_factor: this.rh_factor,
         gender: this.gender,
-        race: this.race,
+        ethnicity: this.ethnicity,
         birth_date: this.birth_date,
         nationality: this.nationality,
         birth_city: this.birth_city,
         birth_state: this.birth_state,
-        birth_country: this.birth_country,
-        phone: this.phone,
-        email: this.email,
-        marital_status: this.marital_status,
-        cpf: this.cpf,
-        rg_number: this.rg_number,
-        rg_issuer: this.rg_issuer,
-        rg_state: this.rg_state,
+        street_address: this.street_address,
+        number: this.number,
+        complement: this.complement,
+        neighborhood: this.neighborhood,
+        city: this.city,
+        state: this.state,
+        postal_code: this.postal_code,
+        rg: this.rg,
         high_school_graduation_year: this.high_school_graduation_year,
         university_name: this.university_name,
-        work_city: this.work_city,
-        work_state: this.work_state,
-        address: this.address,
-        neighborhood: this.neighborhood,
-        address_complement: this.address_complement,
-        address_city: this.address_city,
-        address_state: this.address_state,
-        address_zip_code: this.address_zip_code,
-        indigenous_ethnicity: this.indigenous_ethnicity,
-        disability: this.disability,
-        disability_degree: this.disability_degree,
+        graduation_year: this.graduation_year,
+        graduation_course: this.graduation_course,
+        current_ubs_name: this.current_ubs_name,
+        ubs_type: this.ubs_type,
+        rg_cpf_copy: this.rg_cpf_copy,
+        reservista_cert_copy: this.reservista_cert_copy,
+        military_certificate_copy: this.military_certificate_copy,
+        title_copy: this.title_copy,
+        proof_of_residence_copy: this.proof_of_residence_copy,
         created_at: this.created_at,
       };
       localStorage.setItem('formData', JSON.stringify(formData));
@@ -288,39 +547,35 @@ export default {
       const formData = JSON.parse(localStorage.getItem('formData'));
       if (formData) {
         this.term_accepted = formData.term_accepted;
-        this.full_name = formData.full_name;
         this.mother_name = formData.mother_name;
         this.father_name = formData.father_name;
         this.blood_type = formData.blood_type;
         this.rh_factor = formData.rh_factor;
         this.gender = formData.gender;
-        this.race = formData.race;
+        this.ethnicity = formData.ethnicity;
         this.birth_date = formData.birth_date;
         this.nationality = formData.nationality;
         this.birth_city = formData.birth_city;
         this.birth_state = formData.birth_state;
-        this.birth_country = formData.birth_country;
-        this.phone = formData.phone;
-        this.email = formData.email;
-        this.marital_status = formData.marital_status;
-        this.cpf = formData.cpf;
-        this.rg_number = formData.rg_number;
-        this.rg_issuer = formData.rg_issuer;
-        this.rg_state = formData.rg_state;
-        this.document = formData.document;
+        this.street_address = formData.street_address;
+        this.number = formData.number;
+        this.complement = formData.complement;
+        this.neighborhood = formData.neighborhood;
+        this.city = formData.city;
+        this.state = formData.state;
+        this.postal_code = formData.postal_code;
+        this.rg = formData.rg;
         this.high_school_graduation_year = formData.high_school_graduation_year;
         this.university_name = formData.university_name;
-        this.work_city = formData.work_city;
-        this.work_state = formData.work_state;
-        this.address = formData.address;
-        this.neighborhood = formData.neighborhood;
-        this.address_complement = formData.address_complement;
-        this.address_city = formData.address_city;
-        this.address_state = formData.address_state;
-        this.address_zip_code = formData.address_zip_code;
-        this.indigenous_ethnicity = formData.indigenous_ethnicity;
-        this.disability = formData.disability;
-        this.disability_degree = formData.disability_degree;
+        this.graduation_year = formData.graduation_year;
+        this.graduation_course = formData.graduation_course;
+        this.current_ubs_name = formData.current_ubs_name;
+        this.ubs_type = formData.ubs_type;
+        this.rg_cpf_copy = formData.rg_cpf_copy;
+        this.reservista_cert_copy = formData.reservista_cert_copy;
+        this.military_certificate_copy = formData.military_certificate_copy;
+        this.title_copy = formData.title_copy;
+        this.proof_of_residence_copy = formData.proof_of_residence_copy;
         this.created_at = formData.created_at;
       }
     },
@@ -330,42 +585,36 @@ export default {
       const formData = new FormData();
       formData.append('student', user.id);
       formData.append('term_accepted', this.term_accepted ? 'True' : 'False');
-      formData.append('full_name', this.full_name);
       formData.append('mother_name', this.mother_name);
       formData.append('father_name', this.father_name);
       formData.append('blood_type', this.blood_type);
       formData.append('rh_factor', this.rh_factor);
       formData.append('gender', this.gender);
-      formData.append('race', this.race);
+      formData.append('ethnicity', this.ethnicity);
       formData.append('birth_date', this.birth_date);
       formData.append('nationality', this.nationality);
       formData.append('birth_city', this.birth_city);
       formData.append('birth_state', this.birth_state);
-      formData.append('birth_country', this.birth_country);
-      formData.append('phone', this.phone);
-      formData.append('email', this.email);
-      formData.append('marital_status', this.marital_status);
-      formData.append('cpf', this.cpf);
-      formData.append('rg_number', this.rg_number);
-      formData.append('rg_issuer', this.rg_issuer);
-      formData.append('rg_state', this.rg_state);
+      formData.append('street_address', this.street_address);
+      formData.append('number', this.number);
+      formData.append('complement', this.complement);
+      formData.append('neighborhood', this.neighborhood);
+      formData.append('city', this.city);
+      formData.append('state', this.state);
+      formData.append('postal_code', this.postal_code);
+      formData.append('rg', this.rg);
       formData.append('high_school_graduation_year', this.high_school_graduation_year);
       formData.append('university_name', this.university_name);
-      formData.append('work_city', this.work_city);
-      formData.append('work_state', this.work_state);
-      formData.append('address', this.address);
-      formData.append('neighborhood', this.neighborhood);
-      formData.append('address_complement', this.address_complement);
-      formData.append('address_city', this.address_city);
-      formData.append('address_state', this.address_state);
-      formData.append('address_zip_code', this.address_zip_code);
-      formData.append('indigenous_ethnicity', this.indigenous_ethnicity);
-      formData.append('disability', this.disability);
-      formData.append('disability_degree', this.disability_degree);
+      formData.append('graduation_year', this.graduation_year);
+      formData.append('graduation_course', this.graduation_course);
+      formData.append('current_ubs_name', this.current_ubs_name);
+      formData.append('ubs_type', this.ubs_type);
 
-      if (this.$refs.document && this.$refs.document.files.length > 0) {
-        formData.append('document', this.$refs.document.files[0]);
-      }
+      if (this.rg_cpf_copy) formData.append('rg_cpf_copy', this.rg_cpf_copy);
+      if (this.reservista_cert_copy) formData.append('reservista_cert_copy', this.reservista_cert_copy);
+      if (this.military_certificate_copy) formData.append('military_certificate_copy', this.military_certificate_copy);
+      if (this.title_copy) formData.append('title_copy', this.title_copy);
+      if (this.proof_of_residence_copy) formData.append('proof_of_residence_copy', this.proof_of_residence_copy);
 
       try {
         const response = await axios.post(`${API_BASE_URL}/submissions/`, formData, {
@@ -392,43 +641,38 @@ export default {
     },
     clearForm() {
       this.term_accepted = false;
-      this.full_name = '';
       this.mother_name = '';
       this.father_name = '';
       this.blood_type = '';
       this.rh_factor = '';
       this.gender = '';
-      this.race = '';
+      this.ethnicity = '';
       this.birth_date = '';
       this.nationality = '';
       this.birth_city = '';
       this.birth_state = '';
-      this.birth_country = '';
-      this.phone = '';
-      this.email = '';
-      this.marital_status = '';
-      this.cpf = '';
-      this.rg_number = '';
-      this.rg_issuer = '';
-      this.rg_state = '';
-      this.document = null;
+      this.street_address = '';
+      this.number = '';
+      this.complement = '';
+      this.neighborhood = '';
+      this.city = '';
+      this.state = '';
+      this.postal_code = '';
+      this.rg = '';
       this.high_school_graduation_year = '';
       this.university_name = '';
-      this.work_city = '';
-      this.work_state = '';
-      this.address = '';
-      this.neighborhood = '';
-      this.address_complement = '';
-      this.address_city = '';
-      this.address_state = '';
-      this.address_zip_code = '';
-      this.indigenous_ethnicity = '';
-      this.disability = false;
-      this.disability_degree = '';
+      this.graduation_year = '';
+      this.graduation_course = '';
+      this.current_ubs_name = '';
+      this.ubs_type = '';
+      this.rg_cpf_copy = null;
+      this.reservista_cert_copy = null;
+      this.military_certificate_copy = null;
+      this.title_copy = null;
+      this.proof_of_residence_copy = null;
       this.created_at = '';
       localStorage.removeItem('formData');
     },
   },
 };
-
 </script>

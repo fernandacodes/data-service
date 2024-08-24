@@ -13,10 +13,10 @@ def create_submission(request):
             student_cpf = data.get('cpf')
             
             # Encontrar o estudante pelo CPF
-            student = Student.objects.get(CPF=student_cpf)
+            student = Student.objects.get(cpf=student_cpf)
             
             # Receber o arquivo PDF enviado
-            document_file = request.FILES['document']
+            document_file = request.FILES.get('document')
 
             # Criar uma nova submissão
             submission = Submission.objects.create(
@@ -28,37 +28,41 @@ def create_submission(request):
                 blood_type=data.get('blood_type'),
                 rh_factor=data.get('rh_factor'),
                 gender=data.get('gender'),
-                race=data.get('race'),
-                birth_date=data.get('birth_date'),
-                nationality=data.get('nationality'),
+                ethnicity=data.get('ethnicity'),
+                physical_disability=data.get('physical_disability') == 'True',
+                disability_details=data.get('disability_details'),
+                disability_degree=data.get('disability_degree'),
+                psychological_disorder=data.get('psychological_disorder'),
+                street_address=data.get('street_address'),
+                number=data.get('number'),
+                complement=data.get('complement'),
+                neighborhood=data.get('neighborhood'),
+                city=data.get('city'),
+                state=data.get('state'),
+                postal_code=data.get('postal_code'),
+                rg=data.get('rg'),
                 birth_city=data.get('birth_city'),
                 birth_state=data.get('birth_state'),
-                birth_country=data.get('birth_country'),
-                phone=data.get('phone'),
-                email=data.get('email'),
-                marital_status=data.get('marital_status'),
-                cpf=data.get('cpf'),
-                rg_number=data.get('rg_number'),
-                rg_issuer=data.get('rg_issuer'),
-                rg_state=data.get('rg_state'),
-                document=document_file,
                 high_school_graduation_year=data.get('high_school_graduation_year'),
                 university_name=data.get('university_name'),
-                work_city=data.get('work_city'),
-                work_state=data.get('work_state'),
-                address=data.get('address'),
-                neighborhood=data.get('neighborhood'),
-                address_complement=data.get('address_complement'),
-                address_city=data.get('address_city'),
-                address_state=data.get('address_state'),
-                address_zip_code=data.get('address_zip_code'),
-                indigenous_ethnicity=data.get('indigenous_ethnicity'),
-                disability=data.get('disability') == 'True',
-                disability_degree=data.get('disability_degree'),
+                graduation_year=data.get('graduation_year'),
+                graduation_course=data.get('graduation_course'),
+                current_ubs_name=data.get('current_ubs_name'),
+                ubs_type=data.get('ubs_type'),
+                rg_cpf_copy=document_file if 'rg_cpf_copy' in request.FILES else None,
+                reservista_cert_copy=document_file if 'reservista_cert_copy' in request.FILES else None,
+                diploma_copy=document_file if 'diploma_copy' in request.FILES else None,
+                marriage_certificate_copy=document_file if 'marriage_certificate_copy' in request.FILES else None,
+                address_proof_copy=document_file if 'address_proof_copy' in request.FILES else None,
+                residence_internet_copy=document_file if 'residence_internet_copy' in request.FILES else None,
+                ubs_internet_copy=document_file if 'ubs_internet_copy' in request.FILES else None,
+                internet_speed=data.get('internet_speed'),
+                internet_availability=data.get('internet_availability'),
+                energy_availability=data.get('energy_availability'),
             )
 
             # Retornar a URL de download do documento
-            document_url = request.build_absolute_uri(submission.document.url)
+            document_url = request.build_absolute_uri(submission.rg_cpf_copy.url) if submission.rg_cpf_copy else None
 
             return JsonResponse({"Message": "Successfully", "document_url": document_url}, status=201)
         except Student.DoesNotExist:
@@ -93,33 +97,37 @@ def get_submission_by_id(request, submission_id):
                     "blood_type": submission.blood_type,
                     "rh_factor": submission.rh_factor,
                     "gender": submission.gender,
-                    "race": submission.race,
-                    "birth_date": submission.birth_date,
-                    "nationality": submission.nationality,
+                    "ethnicity": submission.ethnicity,
+                    "physical_disability": submission.physical_disability,
+                    "disability_details": submission.disability_details,
+                    "disability_degree": submission.disability_degree,
+                    "psychological_disorder": submission.psychological_disorder,
+                    "street_address": submission.street_address,
+                    "number": submission.number,
+                    "complement": submission.complement,
+                    "neighborhood": submission.neighborhood,
+                    "city": submission.city,
+                    "state": submission.state,
+                    "postal_code": submission.postal_code,
+                    "rg": submission.rg,
                     "birth_city": submission.birth_city,
                     "birth_state": submission.birth_state,
-                    "birth_country": submission.birth_country,
-                    "phone": submission.phone,
-                    "email": submission.email,
-                    "marital_status": submission.marital_status,
-                    "cpf": submission.cpf,
-                    "rg_number": submission.rg_number,
-                    "rg_issuer": submission.rg_issuer,
-                    "rg_state": submission.rg_state,
                     "high_school_graduation_year": submission.high_school_graduation_year,
                     "university_name": submission.university_name,
-                    "work_city": submission.work_city,
-                    "work_state": submission.work_state,
-                    "address": submission.address,
-                    "neighborhood": submission.neighborhood,
-                    "address_complement": submission.address_complement,
-                    "address_city": submission.address_city,
-                    "address_state": submission.address_state,
-                    "address_zip_code": submission.address_zip_code,
-                    "indigenous_ethnicity": submission.indigenous_ethnicity,
-                    "disability": submission.disability,
-                    "disability_degree": submission.disability_degree,
-                    "document": request.build_absolute_uri(submission.document.url),  # Construindo URL absoluta para o documento
+                    "graduation_year": submission.graduation_year,
+                    "graduation_course": submission.graduation_course,
+                    "current_ubs_name": submission.current_ubs_name,
+                    "ubs_type": submission.ubs_type,
+                    "rg_cpf_copy": request.build_absolute_uri(submission.rg_cpf_copy.url) if submission.rg_cpf_copy else None,
+                    "reservista_cert_copy": request.build_absolute_uri(submission.reservista_cert_copy.url) if submission.reservista_cert_copy else None,
+                    "diploma_copy": request.build_absolute_uri(submission.diploma_copy.url) if submission.diploma_copy else None,
+                    "marriage_certificate_copy": request.build_absolute_uri(submission.marriage_certificate_copy.url) if submission.marriage_certificate_copy else None,
+                    "address_proof_copy": request.build_absolute_uri(submission.address_proof_copy.url) if submission.address_proof_copy else None,
+                    "residence_internet_copy": request.build_absolute_uri(submission.residence_internet_copy.url) if submission.residence_internet_copy else None,
+                    "ubs_internet_copy": request.build_absolute_uri(submission.ubs_internet_copy.url) if submission.ubs_internet_copy else None,
+                    "internet_speed": submission.internet_speed,
+                    "internet_availability": submission.internet_availability,
+                    "energy_availability": submission.energy_availability,
                     "created_at": submission.created_at,
                 }
             }, safe=False)
@@ -132,7 +140,7 @@ def get_submission_by_id(request, submission_id):
 def get_submission_by_cpf(request, student_cpf):
     if request.method == 'GET':
         try:
-            student = Student.objects.get(CPF=student_cpf)
+            student = Student.objects.get(cpf=student_cpf)
             submission = Submission.objects.filter(student=student).first()  # Pega a primeira submissão encontrada
             if submission:
                 return JsonResponse({
@@ -146,33 +154,37 @@ def get_submission_by_cpf(request, student_cpf):
                         "blood_type": submission.blood_type,
                         "rh_factor": submission.rh_factor,
                         "gender": submission.gender,
-                        "race": submission.race,
-                        "birth_date": submission.birth_date,
-                        "nationality": submission.nationality,
+                        "ethnicity": submission.ethnicity,
+                        "physical_disability": submission.physical_disability,
+                        "disability_details": submission.disability_details,
+                        "disability_degree": submission.disability_degree,
+                        "psychological_disorder": submission.psychological_disorder,
+                        "street_address": submission.street_address,
+                        "number": submission.number,
+                        "complement": submission.complement,
+                        "neighborhood": submission.neighborhood,
+                        "city": submission.city,
+                        "state": submission.state,
+                        "postal_code": submission.postal_code,
+                        "rg": submission.rg,
                         "birth_city": submission.birth_city,
                         "birth_state": submission.birth_state,
-                        "birth_country": submission.birth_country,
-                        "phone": submission.phone,
-                        "email": submission.email,
-                        "marital_status": submission.marital_status,
-                        "cpf": submission.cpf,
-                        "rg_number": submission.rg_number,
-                        "rg_issuer": submission.rg_issuer,
-                        "rg_state": submission.rg_state,
                         "high_school_graduation_year": submission.high_school_graduation_year,
                         "university_name": submission.university_name,
-                        "work_city": submission.work_city,
-                        "work_state": submission.work_state,
-                        "address": submission.address,
-                        "neighborhood": submission.neighborhood,
-                        "address_complement": submission.address_complement,
-                        "address_city": submission.address_city,
-                        "address_state": submission.address_state,
-                        "address_zip_code": submission.address_zip_code,
-                        "indigenous_ethnicity": submission.indigenous_ethnicity,
-                        "disability": submission.disability,
-                        "disability_degree": submission.disability_degree,
-                        "document": request.build_absolute_uri(submission.document.url),  # Construindo URL absoluta para o documento
+                        "graduation_year": submission.graduation_year,
+                        "graduation_course": submission.graduation_course,
+                        "current_ubs_name": submission.current_ubs_name,
+                        "ubs_type": submission.ubs_type,
+                        "rg_cpf_copy": request.build_absolute_uri(submission.rg_cpf_copy.url) if submission.rg_cpf_copy else None,
+                        "reservista_cert_copy": request.build_absolute_uri(submission.reservista_cert_copy.url) if submission.reservista_cert_copy else None,
+                        "diploma_copy": request.build_absolute_uri(submission.diploma_copy.url) if submission.diploma_copy else None,
+                        "marriage_certificate_copy": request.build_absolute_uri(submission.marriage_certificate_copy.url) if submission.marriage_certificate_copy else None,
+                        "address_proof_copy": request.build_absolute_uri(submission.address_proof_copy.url) if submission.address_proof_copy else None,
+                        "residence_internet_copy": request.build_absolute_uri(submission.residence_internet_copy.url) if submission.residence_internet_copy else None,
+                        "ubs_internet_copy": request.build_absolute_uri(submission.ubs_internet_copy.url) if submission.ubs_internet_copy else None,
+                        "internet_speed": submission.internet_speed,
+                        "internet_availability": submission.internet_availability,
+                        "energy_availability": submission.energy_availability,
                         "created_at": submission.created_at,
                     }
                 }, safe=False)
@@ -182,4 +194,3 @@ def get_submission_by_cpf(request, student_cpf):
             return JsonResponse({"error": "Student not found."}, status=404)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
-
