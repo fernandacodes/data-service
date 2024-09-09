@@ -3,7 +3,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from ..models.submission import Submission
 from ..models.student_model import Student
-import json
 
 @csrf_exempt
 def create_submission(request):
@@ -11,21 +10,20 @@ def create_submission(request):
         try:
             data = request.POST
             student_cpf = data.get('cpf')
-            
-            # Encontrar o estudante pelo CPF
-            student = Student.objects.get(cpf=student_cpf)
-            
-            # Receber o arquivo PDF enviado
-            document_file = request.FILES.get('document')
+            student = Student.objects.get(CPF=student_cpf)
+
+            # Verificar se já existe uma submissão para o estudante
+            if Submission.objects.filter(student=student).exists():
+                return JsonResponse({"error": "Student has already submitted."}, status=400)
 
             # Criar uma nova submissão
             submission = Submission.objects.create(
                 student=student,
                 term_accepted=data.get('term_accepted') == 'True',
-                full_name=data.get('full_name'),
                 mother_name=data.get('mother_name'),
                 father_name=data.get('father_name'),
                 blood_type=data.get('blood_type'),
+                birth_date=data.get('birth_date'),
                 rh_factor=data.get('rh_factor'),
                 gender=data.get('gender'),
                 ethnicity=data.get('ethnicity'),
@@ -49,28 +47,33 @@ def create_submission(request):
                 graduation_course=data.get('graduation_course'),
                 current_ubs_name=data.get('current_ubs_name'),
                 ubs_type=data.get('ubs_type'),
-                rg_cpf_copy=document_file if 'rg_cpf_copy' in request.FILES else None,
-                reservista_cert_copy=document_file if 'reservista_cert_copy' in request.FILES else None,
-                diploma_copy=document_file if 'diploma_copy' in request.FILES else None,
-                marriage_certificate_copy=document_file if 'marriage_certificate_copy' in request.FILES else None,
-                address_proof_copy=document_file if 'address_proof_copy' in request.FILES else None,
-                residence_internet_copy=document_file if 'residence_internet_copy' in request.FILES else None,
-                ubs_internet_copy=document_file if 'ubs_internet_copy' in request.FILES else None,
                 internet_speed=data.get('internet_speed'),
                 internet_availability=data.get('internet_availability'),
                 energy_availability=data.get('energy_availability'),
             )
 
-            # Retornar a URL de download do documento
-            document_url = request.build_absolute_uri(submission.rg_cpf_copy.url) if submission.rg_cpf_copy else None
+            # Salvar arquivos
+            document_links = {}
+            document_fields = [
+                'rg_cpf_copy', 'reservista_cert_copy', 'diploma_copy',
+                'marriage_certificate_copy', 'address_proof_copy',
+                'residence_internet_copy', 'ubs_internet_copy'
+            ]
+            for field_name in document_fields:
+                file = request.FILES.get(field_name)
+                if file:
+                    setattr(submission, field_name, file)
+                    submission.save()
+                    document_links[field_name] = request.build_absolute_uri(getattr(submission, field_name).url)
 
-            return JsonResponse({"Message": "Successfully", "document_url": document_url}, status=201)
+            return JsonResponse({"Message": "Successfully created submission", "document_links": document_links}, status=201)
         except Student.DoesNotExist:
             return JsonResponse({"error": "Student not found."}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Method not allowed."}, status=405)
+
 
 @csrf_exempt
 def get_all_submissions(request):
@@ -86,12 +89,18 @@ def get_submission_by_id(request, submission_id):
     if request.method == 'GET':
         try:
             submission = Submission.objects.get(id=submission_id)
+            document_fields = [
+                'rg_cpf_copy', 'reservista_cert_copy', 'diploma_copy',
+                'marriage_certificate_copy', 'address_proof_copy',
+                'residence_internet_copy', 'ubs_internet_copy'
+            ]
+            document_links = {field: request.build_absolute_uri(getattr(submission, field).url) if getattr(submission, field) else None for field in document_fields}
+
             return JsonResponse({
                 "submission": {
                     "id": submission.id,
                     "student": submission.student.to_dict(),
                     "term_accepted": submission.term_accepted,
-                    "full_name": submission.full_name,
                     "mother_name": submission.mother_name,
                     "father_name": submission.father_name,
                     "blood_type": submission.blood_type,
@@ -118,13 +127,7 @@ def get_submission_by_id(request, submission_id):
                     "graduation_course": submission.graduation_course,
                     "current_ubs_name": submission.current_ubs_name,
                     "ubs_type": submission.ubs_type,
-                    "rg_cpf_copy": request.build_absolute_uri(submission.rg_cpf_copy.url) if submission.rg_cpf_copy else None,
-                    "reservista_cert_copy": request.build_absolute_uri(submission.reservista_cert_copy.url) if submission.reservista_cert_copy else None,
-                    "diploma_copy": request.build_absolute_uri(submission.diploma_copy.url) if submission.diploma_copy else None,
-                    "marriage_certificate_copy": request.build_absolute_uri(submission.marriage_certificate_copy.url) if submission.marriage_certificate_copy else None,
-                    "address_proof_copy": request.build_absolute_uri(submission.address_proof_copy.url) if submission.address_proof_copy else None,
-                    "residence_internet_copy": request.build_absolute_uri(submission.residence_internet_copy.url) if submission.residence_internet_copy else None,
-                    "ubs_internet_copy": request.build_absolute_uri(submission.ubs_internet_copy.url) if submission.ubs_internet_copy else None,
+                    **document_links,
                     "internet_speed": submission.internet_speed,
                     "internet_availability": submission.internet_availability,
                     "energy_availability": submission.energy_availability,
@@ -135,6 +138,7 @@ def get_submission_by_id(request, submission_id):
             return JsonResponse({"error": f"Submission with ID {submission_id} does not exist."}, status=404)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
+
 
 @csrf_exempt
 def get_submission_by_cpf(request, student_cpf):

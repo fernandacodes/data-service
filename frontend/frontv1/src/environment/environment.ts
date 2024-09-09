@@ -1,4 +1,4 @@
-let environment = "production";
+let environment = "development";
 const BASE_URL_DEV = 'http://localhost:8000';
 const BASE_URL_PRD = 'http://18.230.148.244:8000';
 
