@@ -2,17 +2,27 @@ import csv
 import requests
 import logging
 from tqdm import tqdm
+from tratar_dados import TratarCidadesBrasil
 
-# Configuração básica de logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Função para enviar requisições HTTP para registrar alunos
+def get_api_url():
+    base_url = 'http://localhost:8000/api/register/' 
+    environment = 'local' 
+    
+    if environment == 'docker':
+        base_url = 'http://app:8000/api/register/' 
+    
+    return base_url
+
+tratar_cidades = TratarCidadesBrasil()
+
 def register_students(data):
-    url = 'http://localhost:8000/api/register/'  # Substitua pela URL correta do seu endpoint
+    url = get_api_url()
     try:
         response = requests.post(url, json=data)
-        response.raise_for_status()  # Lança exceção se houver erro HTTP
+        response.raise_for_status() 
         return response
     except requests.exceptions.RequestException as e:
         logger.error(f"Erro ao enviar requisição para {url}: {e}")
@@ -20,25 +30,22 @@ def register_students(data):
             logger.error(f"Resposta do servidor: {e.response.content}")
         return None
 
-# Função para gerar senha
 def generate_password(row):
     if row['Matricula']:
         return row['Matricula']
     else:
         return row['CPF'] + row['Data'].replace('-', '')
 
-# Função para gerar o número de matrícula (Enrollment Number)
 def generate_enrollment_number(row):
     if row['Matricula']:
         return row['Matricula']
     else:
         return 'X'
 
-# Função para ler dados de um arquivo CSV e enviar requisições para cada linha
 def send_requests_from_csv(csv_file):
     with open(csv_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
-        total_rows = sum(1 for row in reader)  # Conta o número total de linhas no CSV
+        total_rows = sum(1 for row in reader) 
 
     with open(csv_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -47,14 +54,20 @@ def send_requests_from_csv(csv_file):
         for row in reader:
             password = generate_password(row)
             enrollment_number = generate_enrollment_number(row)
+            
+            municipio_padronizado = tratar_cidades.tratar_cidade(
+                tratar_cidades.listar_cidades(), 
+                row['Município']
+            )
+            
             student_data = {
                 'user': {
-                    'username': row['CPF'],  # Usando CPF como username
-                    'password': password,  # Usando a lógica para gerar senha
+                    'username': row['CPF'],  
+                    'password': password, 
                     'email': row['Email'],
                     'cpf': row['CPF'],
-                    'first_name': row['Nome'].split()[0],  # Usando o primeiro nome
-                    'last_name': " ".join(row['Nome'].split()[1:]),  # Usando o restante como sobrenome
+                    'first_name': row['Nome'].split()[0],
+                    'last_name': " ".join(row['Nome'].split()[1:]),
                     'role': 'student'
                 },
                 'student': {
@@ -62,7 +75,7 @@ def send_requests_from_csv(csv_file):
                     'Name': row['Nome'],
                     'Email': row['Email'],
                     'Phone': row['Telefone'],
-                    'Municipality': row['Município'],
+                    'Municipality': municipio_padronizado,
                     'State': row['UF'],
                     'Status': row['Situação'],
                     'Cycle': row['Ciclo'],
@@ -79,13 +92,11 @@ def send_requests_from_csv(csv_file):
             logger.info(f"Enviando dados do aluno: {student_data}")
             response = register_students(student_data)
 
-            # Exemplo de verificação do status da resposta
-            if response and response.status_code == 201:  # 201 Created
+            if response and response.status_code == 201:
                 progress_bar.set_postfix({'status': 'success'})
             else:
                 progress_bar.set_postfix({'status': 'error'})
 
-                # Exibir mais detalhes do erro no log
                 if response:
                     logger.error(f"Erro ao registrar aluno {row['Nome']}: {response.status_code} - {response.content}")
                 else:
@@ -96,5 +107,5 @@ def send_requests_from_csv(csv_file):
         progress_bar.close()
 
 if __name__ == '__main__':
-    csv_file_path = './data/students.csv'  # Substitua pelo caminho correto do seu arquivo CSV
+    csv_file_path = '/code/charge/data/students.csv'
     send_requests_from_csv(csv_file_path)

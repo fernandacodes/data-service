@@ -318,7 +318,6 @@
                     <label for="rg_cpf_copy" class="block text-sm font-medium leading-6 text-gray-900">Cópia do
                       RG/CPF</label>
                     <input type="file" name="rg_cpf_copy" id="rg_cpf_copy" accept=".pdf"
-                      @change="handleFileChange('rg_cpf_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -327,7 +326,6 @@
                     <label for="reservista_cert_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Certificado de Reservista</label>
                     <input type="file" name="reservista_cert_copy" id="reservista_cert_copy" accept=".pdf"
-                      @change="handleFileChange('reservista_cert_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -335,7 +333,6 @@
                   <div>
                     <label for="diploma_copy" class="block text-sm font-medium leading-6 text-gray-900">Diploma</label>
                     <input type="file" name="diploma_copy" id="diploma_copy" accept=".pdf"
-                      @change="handleFileChange('diploma_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -344,7 +341,6 @@
                     <label for="marriage_certificate_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Certidão de Casamento</label>
                     <input type="file" name="marriage_certificate_copy" id="marriage_certificate_copy" accept=".pdf"
-                      @change="handleFileChange('marriage_certificate_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -353,7 +349,6 @@
                     <label for="address_proof_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Endereço</label>
                     <input type="file" name="address_proof_copy" id="address_proof_copy" accept=".pdf"
-                      @change="handleFileChange('address_proof_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -363,7 +358,6 @@
                       class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Residência e
                       Internet</label>
                     <input type="file" name="residence_internet_copy" id="residence_internet_copy" accept=".pdf"
-                      @change="handleFileChange('residence_internet_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -372,11 +366,11 @@
                     <label for="ubs_internet_copy" class="block text-sm font-medium leading-6 text-gray-900">Comprovante
                       de UBS</label>
                     <input type="file" name="ubs_internet_copy" id="ubs_internet_copy" accept=".pdf"
-                      @change="handleFileChange('ubs_internet_copy', $event)"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
               </div>
+
 
               <!-- Velocidade da Internet -->
               <div class="sm:col-span-3">
@@ -388,26 +382,22 @@
                 </div>
               </div>
 
-              <!-- Disponibilidade de Internet -->
               <div class="sm:col-span-3">
-                <label for="internet_availability"
-                  class="block text-sm font-medium leading-6 text-gray-900">Disponibilidade de Internet</label>
-                <div class="mt-2">
-                  <input type="text" name="internet_availability" id="internet_availability" maxlength="50"
-                    v-model="internet_availability"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
+                <label for="internet_availability">Disponibilidade de Internet:</label>
+                <select v-model="internet_availability" id="internet_availability">
+                  <option v-for="(label, value) in InternetAvailabilityOptions" :key="value" :value="value">
+                    {{ label }}
+                  </option>
+                </select>
               </div>
 
-              <!-- Disponibilidade de Energia -->
               <div class="sm:col-span-3">
-                <label for="energy_availability"
-                  class="block text-sm font-medium leading-6 text-gray-900">Disponibilidade de Energia</label>
-                <div class="mt-2">
-                  <input type="text" name="energy_availability" id="energy_availability" maxlength="50"
-                    v-model="energy_availability"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                </div>
+                <label for="energy_availability">Disponibilidade de Energia:</label>
+                <select v-model="energy_availability" id="energy_availability">
+                  <option v-for="(label, value) in EnergyAvailabilityOptions" :key="value" :value="value">
+                    {{ label }}
+                  </option>
+                </select>
               </div>
 
               <!-- Termos Aceitos -->
@@ -468,11 +458,15 @@ export default {
       graduation_course: '',
       current_ubs_name: '',
       ubs_type: '',
-      marital_status: '', // Adicionado aqui
-      physical_disability: '', // Adicionado aqui
-      disability_details: '', // Adicionado aqui
-      disability_degree: '', // Adicionado aqui
-      psychological_disorder: '', // Adicionado aqui
+      marital_status: '',
+      physical_disability: '',
+      disability_details: '',
+      disability_degree: '',
+      psychological_disorder: '',
+      internet_availability: '', // Adicionado aqui
+      energy_availability: '', // Adicionado aqui
+      internet_availability: '', // Adicionado aqui
+      energy_availability: '', // Adicionado aqui
       rg_cpf_copy: null,
       reservista_cert_copy: null,
       military_certificate_copy: null,
@@ -557,6 +551,8 @@ export default {
         disability_degree: this.disability_degree, // Adicionado aqui
         psychological_disorder: this.psychological_disorder, // Adicionado aqui
         rg_cpf_copy: this.rg_cpf_copy,
+        internet_availability: this.internet_availability, // Adicionado aqui
+        energy_availability: this.energy_availability, // Adicionado aqui
         reservista_cert_copy: this.reservista_cert_copy,
         military_certificate_copy: this.military_certificate_copy,
         title_copy: this.title_copy,
@@ -600,6 +596,8 @@ export default {
         this.disability_degree = formData.disability_degree; // Adicionado aqui
         this.psychological_disorder = formData.psychological_disorder; // Adicionado aqui
         this.rg_cpf_copy = formData.rg_cpf_copy;
+        this.internet_availability = formData.internet_availability; // Adicionado aqui
+        this.energy_availability = formData.energy_availability; // Adicionado aqui
         this.reservista_cert_copy = formData.reservista_cert_copy;
         this.military_certificate_copy = formData.military_certificate_copy;
         this.title_copy = formData.title_copy;
@@ -608,51 +606,80 @@ export default {
       }
     },
     async handleSubmit() {
-      // Validar campos e preparar formData
-      let user = await getUserData();
-      const formData = new FormData();
-      formData.append('student', user.id);
-      formData.append('term_accepted', this.term_accepted ? 'True' : 'False');
-      formData.append('mother_name', this.mother_name);
-      formData.append('father_name', this.father_name);
-      formData.append('blood_type', this.blood_type);
-      formData.append('rh_factor', this.rh_factor);
-      formData.append('gender', this.gender);
-      formData.append('ethnicity', this.ethnicity);
-      formData.append('birth_date', this.birth_date);
-      formData.append('nationality', this.nationality);
-      formData.append('birth_city', this.birth_city);
-      formData.append('birth_state', this.birth_state);
-      formData.append('street_address', this.street_address);
-      formData.append('number', this.number);
-      formData.append('complement', this.complement);
-      formData.append('neighborhood', this.neighborhood);
-      formData.append('city', this.city);
-      formData.append('state', this.state);
-      formData.append('postal_code', this.postal_code);
-      formData.append('rg', this.rg);
-      formData.append('high_school_graduation_year', this.high_school_graduation_year);
-      formData.append('university_name', this.university_name);
-      formData.append('graduation_year', this.graduation_year);
-      formData.append('graduation_course', this.graduation_course);
-      formData.append('current_ubs_name', this.current_ubs_name);
-      formData.append('ubs_type', this.ubs_type);
-      formData.append('marital_status', this.marital_status); // Adicionado aqui
-      formData.append('physical_disability', this.physical_disability); // Adicionado aqui
-      formData.append('disability_details', this.disability_details); // Adicionado aqui
-      formData.append('disability_degree', this.disability_degree); // Adicionado aqui
-      formData.append('psychological_disorder', this.psychological_disorder); // Adicionado aqui
-
-      if (this.rg_cpf_copy) formData.append('rg_cpf_copy', this.rg_cpf_copy);
-      if (this.reservista_cert_copy) formData.append('reservista_cert_copy', this.reservista_cert_copy);
-      if (this.military_certificate_copy) formData.append('military_certificate_copy', this.military_certificate_copy);
-      if (this.title_copy) formData.append('title_copy', this.title_copy);
-      if (this.proof_of_residence_copy) formData.append('proof_of_residence_copy', this.proof_of_residence_copy);
-
       try {
+        // Obter dados do usuário
+        let user = await getUserData();
+
+        // Obter o CPF do perfil do usuário
+        const token = localStorage.getItem('token');
+        const profileResponse = await axios.get(`${API_BASE_URL}/api/user/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const cpf = profileResponse.data.cpf;
+
+        // Preparar formData
+        const formData = new FormData();
+        formData.append('student', user.id);
+        formData.append('term_accepted', this.term_accepted ? 'True' : 'False');
+        formData.append('mother_name', this.mother_name);
+        formData.append('father_name', this.father_name);
+        formData.append('blood_type', this.blood_type);
+        formData.append('rh_factor', this.rh_factor);
+        formData.append('gender', this.gender);
+        formData.append('ethnicity', this.ethnicity);
+        formData.append('birth_date', this.birth_date);
+        formData.append('nationality', this.nationality);
+        formData.append('birth_city', this.birth_city);
+        formData.append('birth_state', this.birth_state);
+        formData.append('street_address', this.street_address);
+        formData.append('number', this.number);
+        formData.append('complement', this.complement);
+        formData.append('neighborhood', this.neighborhood);
+        formData.append('city', this.city);
+        formData.append('state', this.state);
+        formData.append('postal_code', this.postal_code);
+        formData.append('rg', this.rg);
+        formData.append('high_school_graduation_year', this.high_school_graduation_year);
+        formData.append('university_name', this.university_name);
+        formData.append('graduation_year', this.graduation_year);
+        formData.append('graduation_course', this.graduation_course);
+        formData.append('current_ubs_name', this.current_ubs_name);
+        formData.append('ubs_type', this.ubs_type);
+        formData.append('internet_availability', this.internet_availability); // Adicionado aqui
+        formData.append('energy_availability', this.energy_availability); // Adicionado aqui
+        formData.append('marital_status', this.marital_status);
+        formData.append('physical_disability', this.physical_disability);
+        formData.append('disability_details', this.disability_details);
+        formData.append('disability_degree', this.disability_degree);
+        formData.append('psychological_disorder', this.psychological_disorder);
+
+        // Adicionar CPF
+        formData.append('cpf', cpf);
+
+        // Adicionar documentos, se disponíveis
+        if (this.$refs.rg_cpf_copy && this.$refs.rg_cpf_copy.files.length > 0) {
+          formData.append('rg_cpf_copy', this.$refs.rg_cpf_copy.files[0]);
+        }
+        if (this.$refs.reservista_cert_copy && this.$refs.reservista_cert_copy.files.length > 0) {
+          formData.append('reservista_cert_copy', this.$refs.reservista_cert_copy.files[0]);
+        }
+        if (this.$refs.military_certificate_copy && this.$refs.military_certificate_copy.files.length > 0) {
+          formData.append('military_certificate_copy', this.$refs.military_certificate_copy.files[0]);
+        }
+        if (this.$refs.title_copy && this.$refs.title_copy.files.length > 0) {
+          formData.append('title_copy', this.$refs.title_copy.files[0]);
+        }
+        if (this.$refs.proof_of_residence_copy && this.$refs.proof_of_residence_copy.files.length > 0) {
+          formData.append('proof_of_residence_copy', this.$refs.proof_of_residence_copy.files[0]);
+        }
+
+        // Enviar a requisição
         const response = await axios.post(`${API_BASE_URL}/submissions/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
           },
         });
 
@@ -664,11 +691,26 @@ export default {
 
         this.clearForm();
       } catch (error) {
-        console.log(error);
+        // Captura detalhes do erro
+        let errorMessage = 'Erro ao enviar a inscrição. Por favor, tente novamente.';
+        if (error.response) {
+          // O servidor respondeu com um status code fora do intervalo 2xx
+          errorMessage = `Erro: ${error.response.status} - ${error.response.data.message || errorMessage}`;
+          console.error('Erro na resposta do servidor:', error.response);
+        } else if (error.request) {
+          // A requisição foi feita, mas nenhuma resposta foi recebida
+          errorMessage = 'Não foi possível obter resposta do servidor.';
+          console.error('Erro na requisição:', error.request);
+        } else {
+          // Alguma outra coisa aconteceu
+          errorMessage = `Erro: ${error.message}`;
+          console.error('Erro desconhecido:', error.message);
+        }
+
         notify({
           group: 'error',
           title: 'Erro',
-          text: 'Erro ao enviar a inscrição. Por favor, tente novamente.',
+          text: errorMessage,
         });
       }
     },
@@ -743,6 +785,21 @@ export default {
         'SP': 'São Paulo',
         'SE': 'Sergipe',
         'TO': 'Tocantins',
+      };
+    },
+
+    InternetAvailabilityOptions() {
+      return {
+        'available': 'Disponível',
+        'not_available': 'Não Disponível',
+        'unknown': 'Desconhecido',
+      };
+    },
+    EnergyAvailabilityOptions() {
+      return {
+        'available': 'Disponível',
+        'not_available': 'Não Disponível',
+        'unknown': 'Desconhecido',
       };
     },
 
