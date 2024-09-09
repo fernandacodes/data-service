@@ -12,7 +12,7 @@ def get_api_url():
     environment = 'production' 
     
     if environment == 'production':
-        base_url = 'http://15.228.45.143/api/register/' 
+        base_url = 'http://15.228.45.143:8000/api/register/' 
     
     return base_url
 
