@@ -29,9 +29,10 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "web",
-    "http://localhost:3000"
-    "15.228.45.143:8000" 
+    "http://localhost:3000",
+    "15.228.45.143"
 ]
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
