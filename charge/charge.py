@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 # Função para enviar requisições HTTP para registrar alunos
 def register_students(data):
-    url = 'http://web:8000/api/register/'  # Substitua pela URL correta do seu endpoint
+    url = 'http://localhost:8000/api/register/'  # Substitua pela URL correta do seu endpoint
     try:
         response = requests.post(url, json=data)
         response.raise_for_status()  # Lança exceção se houver erro HTTP
@@ -96,5 +96,5 @@ def send_requests_from_csv(csv_file):
         progress_bar.close()
 
 if __name__ == '__main__':
-    csv_file_path = '/code/charge/data/students.csv'  # Substitua pelo caminho correto do seu arquivo CSV
+    csv_file_path = './data/students.csv'  # Substitua pelo caminho correto do seu arquivo CSV
     send_requests_from_csv(csv_file_path)

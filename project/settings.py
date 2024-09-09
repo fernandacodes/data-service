@@ -29,11 +29,13 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "web",
+    "http://localhost:3000"
     "18.230.148.244"  # IP público da instância EC2
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:3000",
     "http://127.0.0.1:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1",
@@ -58,7 +60,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'djongo',  # Adicionado para suporte ao MongoDB
 ]
 
 MIDDLEWARE = [
@@ -120,18 +121,6 @@ DATABASES = {
         'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': os.getenv('POSTGRES_PORT'),
     },
-    'mongo': {
-        'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGODB_DB'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': os.getenv('MONGODB_HOST'),
-            'port': int(os.getenv('MONGODB_PORT')),
-            'username': os.getenv('MONGODB_USER'),
-            'password': os.getenv('MONGODB_PASSWORD'),
-            'authSource': 'admin',
-        }
-    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [

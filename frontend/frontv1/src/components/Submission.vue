@@ -8,7 +8,6 @@
             <p class="mt-1 text-sm leading-6 text-gray-600">Por favor, preencha o formulário abaixo.</p>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-              <!-- Cidade de Nascimento -->
               <div class="sm:col-span-3">
                 <label for="birthplace" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
                   Nascimento</label>
@@ -18,16 +17,18 @@
                 </div>
               </div>
 
-              <!-- Nacionalidade -->
               <div class="sm:col-span-3">
                 <label for="nationality" class="block text-sm font-medium leading-6 text-gray-900">Nacionalidade</label>
                 <div class="mt-2">
-                  <input type="text" name="nationality" id="nationality" maxlength="50" v-model="nationality"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="nationality" id="nationality" v-model="nationality"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione a Nacionalidade</option>
+                    <option v-for="(label, value) in Nationalities" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Data de Nascimento -->
+
               <div class="sm:col-span-3">
                 <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Data de
                   Nascimento</label>
@@ -37,17 +38,17 @@
                 </div>
               </div>
 
-              <!-- Estado Civil -->
               <div class="sm:col-span-3">
                 <label for="marital_status" class="block text-sm font-medium leading-6 text-gray-900">Estado
                   Civil</label>
                 <div class="mt-2">
-                  <input type="text" name="marital_status" id="marital_status" maxlength="20" v-model="marital_status"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="marital_status" id="marital_status" v-model="marital_status"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o estado civil</option>
+                    <option v-for="(label, value) in MaritalStatus" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
-
-              <!-- Nome da Mãe -->
               <div class="sm:col-span-3">
                 <label for="mother_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da Mãe</label>
                 <div class="mt-2">
@@ -56,7 +57,6 @@
                 </div>
               </div>
 
-              <!-- Nome do Pai -->
               <div class="sm:col-span-3">
                 <label for="father_name" class="block text-sm font-medium leading-6 text-gray-900">Nome do Pai</label>
                 <div class="mt-2">
@@ -65,55 +65,67 @@
                 </div>
               </div>
 
-              <!-- Gênero -->
               <div class="sm:col-span-3">
                 <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Gênero</label>
                 <div class="mt-2">
-                  <input type="text" name="gender" id="gender" maxlength="10" v-model="gender"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="gender" id="gender" v-model="gender"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o Gênero</option>
+                    <option v-for="(label, value) in Gender" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Tipo Sanguíneo -->
               <div class="sm:col-span-3">
                 <label for="blood_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo Sanguíneo</label>
                 <div class="mt-2">
-                  <input type="text" name="blood_type" id="blood_type" maxlength="10" v-model="blood_type"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="blood_type" id="blood_type" v-model="blood_type"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o tipo sanguíneo</option>
+                    <option v-for="(label, value) in BloodType" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Fator RH -->
+
               <div class="sm:col-span-3">
                 <label for="rh_factor" class="block text-sm font-medium leading-6 text-gray-900">Fator RH</label>
                 <div class="mt-2">
-                  <input type="text" name="rh_factor" id="rh_factor" maxlength="5" v-model="rh_factor"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="rh_factor" id="rh_factor" v-model="rh_factor"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o Fator RH</option>
+                    <option v-for="(label, value) in RhFactor" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Etnia -->
+
               <div class="sm:col-span-3">
                 <label for="ethnicity" class="block text-sm font-medium leading-6 text-gray-900">Etnia</label>
                 <div class="mt-2">
-                  <input type="text" name="ethnicity" id="ethnicity" maxlength="50" v-model="ethnicity"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="ethnicity" id="ethnicity" v-model="ethnicity"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione a etnia</option>
+                    <option v-for="(label, value) in Ethnicity" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Deficiência Física -->
+
               <div class="sm:col-span-3">
                 <label for="physical_disability" class="block text-sm font-medium leading-6 text-gray-900">Deficiência
                   Física</label>
                 <div class="mt-2">
-                  <input type="checkbox" name="physical_disability" id="physical_disability"
-                    v-model="physical_disability"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-600" />
+                  <select name="physical_disability" id="physical_disability" v-model="physical_disability"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Detalhes da Deficiência -->
-              <div class="sm:col-span-3" v-if="physical_disability">
+              <div class="sm:col-span-3" v-if="physical_disability === 'true'">
                 <label for="disability_details" class="block text-sm font-medium leading-6 text-gray-900">Detalhes da
                   Deficiência</label>
                 <div class="mt-2">
@@ -123,18 +135,20 @@
                 </div>
               </div>
 
-              <!-- Grau de Deficiência -->
-              <div class="sm:col-span-3" v-if="physical_disability">
+              <div class="sm:col-span-3" v-if="physical_disability === 'true'">
                 <label for="disability_degree" class="block text-sm font-medium leading-6 text-gray-900">Grau de
                   Deficiência</label>
                 <div class="mt-2">
-                  <input type="text" name="disability_degree" id="disability_degree" maxlength="50"
-                    v-model="disability_degree"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="disability_degree" id="disability_degree" v-model="disability_degree"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o Grau</option>
+                    <option value="leve">Leve</option>
+                    <option value="moderado">Moderado</option>
+                    <option value="grave">Grave</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Transtorno Psicológico -->
               <div class="sm:col-span-3">
                 <label for="psychological_disorder" class="block text-sm font-medium leading-6 text-gray-900">Transtorno
                   Psicológico</label>
@@ -145,7 +159,7 @@
                 </div>
               </div>
 
-              <!-- Endereço -->
+
               <div class="sm:col-span-3">
                 <label for="street_address" class="block text-sm font-medium leading-6 text-gray-900">Endereço</label>
                 <div class="mt-2">
@@ -154,7 +168,6 @@
                 </div>
               </div>
 
-              <!-- Número -->
               <div class="sm:col-span-3">
                 <label for="number" class="block text-sm font-medium leading-6 text-gray-900">Número</label>
                 <div class="mt-2">
@@ -163,7 +176,6 @@
                 </div>
               </div>
 
-              <!-- Complemento -->
               <div class="sm:col-span-3">
                 <label for="complement" class="block text-sm font-medium leading-6 text-gray-900">Complemento</label>
                 <div class="mt-2">
@@ -172,7 +184,6 @@
                 </div>
               </div>
 
-              <!-- Bairro -->
               <div class="sm:col-span-3">
                 <label for="neighborhood" class="block text-sm font-medium leading-6 text-gray-900">Bairro</label>
                 <div class="mt-2">
@@ -181,7 +192,6 @@
                 </div>
               </div>
 
-              <!-- Cidade -->
               <div class="sm:col-span-3">
                 <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Cidade</label>
                 <div class="mt-2">
@@ -190,16 +200,18 @@
                 </div>
               </div>
 
-              <!-- Estado -->
               <div class="sm:col-span-3">
                 <label for="state" class="block text-sm font-medium leading-6 text-gray-900">Estado</label>
                 <div class="mt-2">
-                  <input type="text" name="state" id="state" maxlength="2" v-model="state"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="state" id="state" v-model="state"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o Estado</option>
+                    <option v-for="(label, value) in States" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- CEP -->
+
               <div class="sm:col-span-3">
                 <label for="postal_code" class="block text-sm font-medium leading-6 text-gray-900">CEP</label>
                 <div class="mt-2">
@@ -208,7 +220,6 @@
                 </div>
               </div>
 
-              <!-- RG -->
               <div class="sm:col-span-3">
                 <label for="rg" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
                 <div class="mt-2">
@@ -217,7 +228,6 @@
                 </div>
               </div>
 
-              <!-- Cidade de Nascimento -->
               <div class="sm:col-span-3">
                 <label for="birth_city" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
                   Nascimento</label>
@@ -227,17 +237,17 @@
                 </div>
               </div>
 
-              <!-- Estado de Nascimento -->
               <div class="sm:col-span-3">
-                <label for="birth_state" class="block text-sm font-medium leading-6 text-gray-900">Estado de
-                  Nascimento</label>
+                <label for="state" class="block text-sm font-medium leading-6 text-gray-900">Estado</label>
                 <div class="mt-2">
-                  <input type="text" name="birth_state" id="birth_state" maxlength="2" v-model="birth_state"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="state" id="state" v-model="birth_state"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o Estado</option>
+                    <option v-for="(label, value) in States" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
 
-              <!-- Ano de Conclusão do Ensino Médio -->
               <div class="sm:col-span-3">
                 <label for="high_school_graduation_year" class="block text-sm font-medium leading-6 text-gray-900">Ano
                   de Conclusão do Ensino Médio</label>
@@ -248,7 +258,6 @@
                 </div>
               </div>
 
-              <!-- Nome da Universidade -->
               <div class="sm:col-span-3">
                 <label for="university_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da
                   Universidade</label>
@@ -259,7 +268,6 @@
                 </div>
               </div>
 
-              <!-- Ano de Conclusão da Graduação -->
               <div class="sm:col-span-3">
                 <label for="graduation_year" class="block text-sm font-medium leading-6 text-gray-900">Ano de Conclusão
                   da Graduação</label>
@@ -269,7 +277,6 @@
                 </div>
               </div>
 
-              <!-- Curso de Graduação -->
               <div class="sm:col-span-3">
                 <label for="graduation_course" class="block text-sm font-medium leading-6 text-gray-900">Curso de
                   Graduação</label>
@@ -280,7 +287,6 @@
                 </div>
               </div>
 
-              <!-- Nome da UBS Atual -->
               <div class="sm:col-span-3">
                 <label for="current_ubs_name" class="block text-sm font-medium leading-6 text-gray-900">Nome da UBS
                   Atual</label>
@@ -291,14 +297,17 @@
                 </div>
               </div>
 
-              <!-- Tipo de UBS -->
               <div class="sm:col-span-3">
                 <label for="ubs_type" class="block text-sm font-medium leading-6 text-gray-900">Tipo de UBS</label>
                 <div class="mt-2">
-                  <input type="text" name="ubs_type" id="ubs_type" maxlength="50" v-model="ubs_type"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <select name="ubs_type" id="ubs_type" v-model="ubs_type"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="" disabled selected>Selecione o tipo de UBS</option>
+                    <option v-for="(label, value) in UbsType" :key="value" :value="value">{{ label }}</option>
+                  </select>
                 </div>
               </div>
+
 
               <!-- Documentos -->
               <div class="sm:col-span-3">
@@ -428,6 +437,7 @@ import { getUserData } from '../utils/auth';
 import axios from 'axios';
 import { notify } from 'notiwind';
 import { API_BASE_URL } from '../environment/environment';
+import { UbsType } from '../enums/submission.enum';
 
 export default {
   name: 'Submission',
@@ -452,14 +462,17 @@ export default {
       state: '',
       postal_code: '',
       rg: '',
-      birth_city: '',
-      birth_state: '',
       high_school_graduation_year: '',
       university_name: '',
       graduation_year: '',
       graduation_course: '',
       current_ubs_name: '',
       ubs_type: '',
+      marital_status: '', // Adicionado aqui
+      physical_disability: '', // Adicionado aqui
+      disability_details: '', // Adicionado aqui
+      disability_degree: '', // Adicionado aqui
+      psychological_disorder: '', // Adicionado aqui
       rg_cpf_copy: null,
       reservista_cert_copy: null,
       military_certificate_copy: null,
@@ -497,6 +510,11 @@ export default {
     graduation_course(val) { this.saveFormData(); },
     current_ubs_name(val) { this.saveFormData(); },
     ubs_type(val) { this.saveFormData(); },
+    marital_status(val) { this.saveFormData(); }, // Adicionado aqui
+    physical_disability(val) { this.saveFormData(); }, // Adicionado aqui
+    disability_details(val) { this.saveFormData(); }, // Adicionado aqui
+    disability_degree(val) { this.saveFormData(); }, // Adicionado aqui
+    psychological_disorder(val) { this.saveFormData(); }, // Adicionado aqui
     rg_cpf_copy(val) { this.saveFormData(); },
     reservista_cert_copy(val) { this.saveFormData(); },
     military_certificate_copy(val) { this.saveFormData(); },
@@ -506,7 +524,7 @@ export default {
   },
   methods: {
     saveFormData() {
-      // Save form data to localStorage
+      // Salvar dados do formulário no localStorage
       const formData = {
         term_accepted: this.term_accepted,
         mother_name: this.mother_name,
@@ -533,6 +551,11 @@ export default {
         graduation_course: this.graduation_course,
         current_ubs_name: this.current_ubs_name,
         ubs_type: this.ubs_type,
+        marital_status: this.marital_status, // Adicionado aqui
+        physical_disability: this.physical_disability, // Adicionado aqui
+        disability_details: this.disability_details, // Adicionado aqui
+        disability_degree: this.disability_degree, // Adicionado aqui
+        psychological_disorder: this.psychological_disorder, // Adicionado aqui
         rg_cpf_copy: this.rg_cpf_copy,
         reservista_cert_copy: this.reservista_cert_copy,
         military_certificate_copy: this.military_certificate_copy,
@@ -543,7 +566,7 @@ export default {
       localStorage.setItem('formData', JSON.stringify(formData));
     },
     loadFormData() {
-      // Load form data from localStorage
+      // Carregar dados do formulário do localStorage
       const formData = JSON.parse(localStorage.getItem('formData'));
       if (formData) {
         this.term_accepted = formData.term_accepted;
@@ -571,6 +594,11 @@ export default {
         this.graduation_course = formData.graduation_course;
         this.current_ubs_name = formData.current_ubs_name;
         this.ubs_type = formData.ubs_type;
+        this.marital_status = formData.marital_status; // Adicionado aqui
+        this.physical_disability = formData.physical_disability; // Adicionado aqui
+        this.disability_details = formData.disability_details; // Adicionado aqui
+        this.disability_degree = formData.disability_degree; // Adicionado aqui
+        this.psychological_disorder = formData.psychological_disorder; // Adicionado aqui
         this.rg_cpf_copy = formData.rg_cpf_copy;
         this.reservista_cert_copy = formData.reservista_cert_copy;
         this.military_certificate_copy = formData.military_certificate_copy;
@@ -580,7 +608,7 @@ export default {
       }
     },
     async handleSubmit() {
-      // Validate fields and prepare formData
+      // Validar campos e preparar formData
       let user = await getUserData();
       const formData = new FormData();
       formData.append('student', user.id);
@@ -609,6 +637,11 @@ export default {
       formData.append('graduation_course', this.graduation_course);
       formData.append('current_ubs_name', this.current_ubs_name);
       formData.append('ubs_type', this.ubs_type);
+      formData.append('marital_status', this.marital_status); // Adicionado aqui
+      formData.append('physical_disability', this.physical_disability); // Adicionado aqui
+      formData.append('disability_details', this.disability_details); // Adicionado aqui
+      formData.append('disability_degree', this.disability_degree); // Adicionado aqui
+      formData.append('psychological_disorder', this.psychological_disorder); // Adicionado aqui
 
       if (this.rg_cpf_copy) formData.append('rg_cpf_copy', this.rg_cpf_copy);
       if (this.reservista_cert_copy) formData.append('reservista_cert_copy', this.reservista_cert_copy);
@@ -629,17 +662,18 @@ export default {
           text: 'Inscrição criada com sucesso!',
         });
 
-        // Clear form after successful submission
         this.clearForm();
       } catch (error) {
+        console.log(error);
         notify({
-          group: 'foo',
+          group: 'error',
           title: 'Erro',
           text: 'Erro ao enviar a inscrição. Por favor, tente novamente.',
         });
       }
     },
     clearForm() {
+      // Limpar os dados do formulário e localStorage
       this.term_accepted = false;
       this.mother_name = '';
       this.father_name = '';
@@ -665,6 +699,11 @@ export default {
       this.graduation_course = '';
       this.current_ubs_name = '';
       this.ubs_type = '';
+      this.marital_status = ''; // Adicionado aqui
+      this.physical_disability = ''; // Adicionado aqui
+      this.disability_details = ''; // Adicionado aqui
+      this.disability_degree = ''; // Adicionado aqui
+      this.psychological_disorder = ''; // Adicionado aqui
       this.rg_cpf_copy = null;
       this.reservista_cert_copy = null;
       this.military_certificate_copy = null;
@@ -672,6 +711,104 @@ export default {
       this.proof_of_residence_copy = null;
       this.created_at = '';
       localStorage.removeItem('formData');
+    },
+  },
+  computed: {
+    States() {
+      return {
+        'AC': 'Acre',
+        'AL': 'Alagoas',
+        'AP': 'Amapá',
+        'AM': 'Amazonas',
+        'BA': 'Bahia',
+        'CE': 'Ceará',
+        'DF': 'Distrito Federal',
+        'ES': 'Espírito Santo',
+        'GO': 'Goiás',
+        'MA': 'Maranhão',
+        'MT': 'Mato Grosso',
+        'MS': 'Mato Grosso do Sul',
+        'MG': 'Minas Gerais',
+        'PA': 'Pará',
+        'PB': 'Paraíba',
+        'PR': 'Paraná',
+        'PE': 'Pernambuco',
+        'PI': 'Piauí',
+        'RJ': 'Rio de Janeiro',
+        'RN': 'Rio Grande do Norte',
+        'RS': 'Rio Grande do Sul',
+        'RO': 'Rondônia',
+        'RR': 'Roraima',
+        'SC': 'Santa Catarina',
+        'SP': 'São Paulo',
+        'SE': 'Sergipe',
+        'TO': 'Tocantins',
+      };
+    },
+
+    MaritalStatus() {
+      return {
+        'solteiro': 'Solteiro',
+        'casado': 'Casado',
+        'divorciado': 'Divorciado',
+        'viuvo': 'Viúvo',
+        'separado': 'Separado',
+      };
+    },
+    Nationalities() {
+      return {
+        'Brasileiro': 'Brasileira',
+        'Estrangeira': 'Estrangeira',
+      };
+    },
+    BloodType() {
+      return {
+        'A+': 'A Positivo',
+        'A-': 'A Negativo',
+        'B+': 'B Positivo',
+        'B-': 'B Negativo',
+        'AB+': 'AB Positivo',
+        'AB-': 'AB Negativo',
+        'O+': 'O Positivo',
+        'O-': 'O Negativo',
+      };
+    },
+    RhFactor() {
+      return {
+        '+': 'Positivo',
+        '-': 'Negativo',
+      };
+    },
+    Gender() {
+      return {
+        'M': 'Masculino',
+        'F': 'Feminino',
+        'O': 'Outro',
+      };
+    },
+    Ethnicity() {
+      return {
+        'W': 'Branco',
+        'B': 'Negro',
+        'P': 'Pardo',
+        'A': 'Amarelo',
+        'I': 'Indígena',
+      };
+    },
+    State() {
+      return {
+        'SP': 'São Paulo',
+        'RJ': 'Rio de Janeiro',
+        'MG': 'Minas Gerais',
+        'ES': 'Espírito Santo',
+      };
+    },
+    UbsType() {
+      return {
+        "PRIMARY": 'Unidade Básica de Saúde',
+        "SECONDARY": 'Unidade de Saúde Secundária',
+        "TERTIARY": 'Unidade de Saúde Terciária',
+      };
     },
   },
 };

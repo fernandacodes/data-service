@@ -7,16 +7,26 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <!-- Conteúdo da página inicial -->
-        <p>Conteúdo da página inicial...</p>
+        <!-- Exibe o mapa de calor diretamente como HTML -->
+        <div v-html="mapHtml"></div>
       </div>
     </main>
   </div>
 </template>
 
 <script setup>
-</script>
+import { ref, onMounted } from 'vue'
+import { API_BASE_URL } from '../environment/environment'
 
-<style>
-/* Estilos opcionais */
-</style>
+const mapHtml = ref('')
+
+onMounted(async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/generate_heatmap/`)
+    const data = await response.text() // Obtém o HTML completo
+    mapHtml.value = data // Define o HTML gerado diretamente no DOM
+  } catch (error) {
+    console.error('Error fetching the heatmap:', error)
+  }
+})
+</script>
