@@ -48,13 +48,11 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Deficiência Física</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.physical_disability ?
-            'Sim' : 'Não' }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.physical_disability ? 'Sim' : 'Não' }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Detalhes da Deficiência</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.disability_details }}
-          </dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.disability_details }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Grau da Deficiência</dt>
@@ -62,8 +60,7 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Transtorno Psicológico</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.psychological_disorder }}
-          </dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.psychological_disorder }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Endereço</dt>
@@ -86,15 +83,14 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Ano de Conclusão do Ensino Médio</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{
-            submission.high_school_graduation_year }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.high_school_graduation_year }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Nome da Universidade</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.university_name }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">Ano de Conclusão da Graduação</dt>
+          <dt class="text-sm font-medium leading-6 text-gray-900">Ano de Conclusão</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.graduation_year }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -111,26 +107,57 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do RG/CPF</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.rg_cpf_copy }}</dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Certificado de Reservista</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.reservista_cert_copy }}
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.rg_cpf_copy" :href="submission.rg_cpf_copy" target="_blank">Visualizar Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Certificado de Alistamento Militar</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.military_certificate_copy
-            }}</dd>
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Certificado de Reservista</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.reservista_cert_copy" :href="submission.reservista_cert_copy" target="_blank">Visualizar Documento</a>
+          </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Título de Eleitor</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.title_copy }}</dd>
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Diploma</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.diploma_copy" :href="submission.diploma_copy" target="_blank">Visualizar Documento</a>
+          </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">Comprovante de Residência</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.proof_of_residence_copy
-            }}</dd>
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia da Certidão de Casamento</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.marriage_certificate_copy" :href="submission.marriage_certificate_copy" target="_blank">Visualizar Documento</a>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de Endereço</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.address_proof_copy" :href="submission.address_proof_copy" target="_blank">Visualizar Documento</a>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de Residência na Internet</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.residence_internet_copy" :href="submission.residence_internet_copy" target="_blank">Visualizar Documento</a>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de UBS na Internet</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <a v-if="submission.ubs_internet_copy" :href="submission.ubs_internet_copy" target="_blank">Visualizar Documento</a>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Velocidade da Internet</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.internet_speed }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Disponibilidade de Internet</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.internet_availability }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Disponibilidade de Energia</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.energy_availability }}</dd>
         </div>
       </dl>
     </div>
@@ -138,46 +165,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+import { API_BASE_URL } from '../environment/environment';
+const route = useRoute();
+const submission = ref(null);
+const error = ref(null);
 
-const submission = ref({
-  birthplace: '',
-  nationality: '',
-  birth_date: '',
-  marital_status: '',
-  mother_name: '',
-  father_name: '',
-  gender: '',
-  blood_type: '',
-  rh_factor: '',
-  ethnicity: '',
-  physical_disability: false,
-  disability_details: '',
-  disability_degree: '',
-  psychological_disorder: '',
-  street_address: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-  postal_code: '',
-  rg: '',
-  birth_city: '',
-  birth_state: '',
-  high_school_graduation_year: '',
-  university_name: '',
-  graduation_year: '',
-  graduation_course: '',
-  current_ubs_name: '',
-  ubs_type: '',
-  rg_cpf_copy: '',
-  reservista_cert_copy: '',
-  military_certificate_copy: '',
-  title_copy: '',
-  proof_of_residence_copy: ''
+const fetchSubmission = async () => {
+  const studentCpf = route.params.cpf;
+  const token = localStorage.getItem(`token`)
+  try {
+    const response = await axios.get(`${API_BASE_URL}/submissions/cpf/${studentCpf}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    submission.value = response.data.submission;
+    console.log(response.data)
+  } catch (err) {
+    error.value = 'Erro ao carregar dados da submissão.';
+    console.error(err);
+  }
+};
+
+onMounted(() => {
+  fetchSubmission();
 });
 </script>
-
-<style scoped>
-</style>

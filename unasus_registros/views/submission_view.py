@@ -144,7 +144,7 @@ def get_submission_by_id(request, submission_id):
 def get_submission_by_cpf(request, student_cpf):
     if request.method == 'GET':
         try:
-            student = Student.objects.get(cpf=student_cpf)
+            student = Student.objects.get(CPF=student_cpf)
             submission = Submission.objects.filter(student=student).first()  # Pega a primeira submissão encontrada
             if submission:
                 return JsonResponse({
@@ -152,7 +152,6 @@ def get_submission_by_cpf(request, student_cpf):
                         "id": submission.id,
                         "student": submission.student.to_dict(),
                         "term_accepted": submission.term_accepted,
-                        "full_name": submission.full_name,
                         "mother_name": submission.mother_name,
                         "father_name": submission.father_name,
                         "blood_type": submission.blood_type,
@@ -189,7 +188,6 @@ def get_submission_by_cpf(request, student_cpf):
                         "internet_speed": submission.internet_speed,
                         "internet_availability": submission.internet_availability,
                         "energy_availability": submission.energy_availability,
-                        "created_at": submission.created_at,
                     }
                 }, safe=False)
             else:
