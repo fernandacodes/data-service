@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def get_api_url():
     base_url = 'http://localhost:8000/api/register/' 
-    environment = 'local' 
+    environment = 'production' 
     
     if environment == 'production':
         base_url = 'http://15.228.45.143/api/register/' 
