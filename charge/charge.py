@@ -107,5 +107,5 @@ def send_requests_from_csv(csv_file):
         progress_bar.close()
 
 if __name__ == '__main__':
-    csv_file_path = '/code/charge/data/students.csv'
+    csv_file_path = './data/students.csv'
     send_requests_from_csv(csv_file_path)
