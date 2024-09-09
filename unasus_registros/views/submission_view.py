@@ -21,6 +21,8 @@ def create_submission(request):
                 student=student,
                 term_accepted=data.get('term_accepted') == 'True',
                 mother_name=data.get('mother_name'),
+                nationality=data.get('nationality'),
+                marital_status=data.get('marital_status'),
                 father_name=data.get('father_name'),
                 blood_type=data.get('blood_type'),
                 birth_date=data.get('birth_date'),
@@ -51,8 +53,7 @@ def create_submission(request):
                 internet_availability=data.get('internet_availability'),
                 energy_availability=data.get('energy_availability'),
             )
-
-            # Salvar arquivos
+            
             document_links = {}
             document_fields = [
                 'rg_cpf_copy', 'reservista_cert_copy', 'diploma_copy',
@@ -101,6 +102,7 @@ def get_submission_by_id(request, submission_id):
                     "id": submission.id,
                     "student": submission.student.to_dict(),
                     "term_accepted": submission.term_accepted,
+                    "nationality": submission.nationality,
                     "mother_name": submission.mother_name,
                     "father_name": submission.father_name,
                     "blood_type": submission.blood_type,
@@ -153,7 +155,10 @@ def get_submission_by_cpf(request, student_cpf):
                         "student": submission.student.to_dict(),
                         "term_accepted": submission.term_accepted,
                         "mother_name": submission.mother_name,
+                        "birth_date": submission.birth_date,
+                        "marital_status": submission.marital_status,
                         "father_name": submission.father_name,
+                        "nationality": submission.nationality,
                         "blood_type": submission.blood_type,
                         "rh_factor": submission.rh_factor,
                         "gender": submission.gender,

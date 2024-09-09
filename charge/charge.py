@@ -11,8 +11,8 @@ def get_api_url():
     base_url = 'http://localhost:8000/api/register/' 
     environment = 'local' 
     
-    if environment == 'docker':
-        base_url = 'http://app:8000/api/register/' 
+    if environment == 'production':
+        base_url = 'http://15.228.45.143/api/register/' 
     
     return base_url
 
