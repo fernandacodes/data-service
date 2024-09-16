@@ -1,5 +1,7 @@
 # serializers.py
 from rest_framework import serializers
+
+from unasus_registros.models.especialty import Specialty
 from ..models.user_model import CustomUser
 from ..models.student_model import Student
 
@@ -15,4 +17,13 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
+        fields = '__all__'
+
+
+# serializers.py
+from rest_framework import serializers
+
+class SpecialtySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialty
         fields = '__all__'
