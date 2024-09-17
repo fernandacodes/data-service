@@ -7,40 +7,71 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div>
-          <label for="state">Estado:</label>
-          <select id="state" v-model="selectedState" @change="updateCities">
-            <option value="">Selecione um estado</option>
-            <option v-for="state in states" :key="state.sigla" :value="state.sigla">{{ state.nome }}</option>
-          </select>
+        <div class="flex justify-center space-x-4">
+          <div>
+            <label for="state">Estado:</label>
+            <select id="state" v-model="selectedState" @change="updateCities">
+              <option value="">Selecione um estado</option>
+              <option v-for="state in states" :key="state.sigla" :value="state.sigla">{{ state.nome }}</option>
+            </select>
+          </div>
 
-          <label for="city">Cidade:</label>
-          <select id="city" v-model="selectedCity" @change="updateUbs">
-            <option value="">Selecione uma cidade</option>
-            <option v-for="city in cities" :key="city.id" :value="city.nome">{{ city.nome }}</option>
-          </select>
+          <div>
+            <label for="city">Cidade:</label>
+            <select id="city" v-model="selectedCity" @change="updateUbs">
+              <option value="">Selecione uma cidade</option>
+              <option v-for="city in cities" :key="city.id" :value="city.nome">{{ city.nome }}</option>
+            </select>
+          </div>
 
-          <label for="ubs">UBS:</label>
-          <select id="ubs" v-model="selectedUbs">
-            <option value="">Selecione uma UBS</option>
-            <option v-for="ubs in ubsList" :key="ubs.id" :value="ubs.id">{{ ubs.name }}</option>
-          </select>
+          <div>
+            <label for="ubs">UBS:</label>
+            <select id="ubs" v-model="selectedUbs">
+              <option value="">Selecione uma UBS</option>
+              <option v-for="ubs in ubsList" :key="ubs.id" :value="ubs.id">{{ ubs.name }}</option>
+            </select>
+          </div>
 
-          <label for="year">Ano:</label>
-          <input type="number" id="year" v-model.number="selectedYear" placeholder="Ano" />
+          <div>
+            <label for="year">Ano:</label>
+            <input type="number" id="year" v-model.number="selectedYear" placeholder="Ano" />
+          </div>
 
-          <label for="month">Mês:</label>
-          <input type="number" id="month" v-model.number="selectedMonth" placeholder="Mês" />
+          <div>
+            <label for="month">Mês:</label>
+            <input type="number" id="month" v-model.number="selectedMonth" placeholder="Mês" />
+          </div>
 
-          <!-- Botão de pesquisar ao lado do select -->
           <button @click="showUbsOnMap" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Pesquisar</button>
         </div>
 
         <div id="map" class="h-96 mt-6"></div>
 
+        <!-- Cards informativos acima do gráfico -->
+        <div class="mt-6 grid grid-cols-3 gap-4">
+          <div class="bg-gray-100 p-4 rounded">
+            <h2 class="font-bold text-lg">Total de Alunos</h2>
+            <p>{{ totalStudents }}</p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded">
+            <h2 class="font-bold text-lg">UBS Selecionada</h2>
+            <p>{{ selectedUbsData?.name || 'Nenhuma UBS Selecionada' }}</p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded">
+            <h2 class="font-bold text-lg">Tipo de UBS</h2>
+            <p>{{ selectedUbsData?.ubs_type || 'N/D' }}</p>
+          </div>
+        </div>
+
         <!-- Gráfico de teleconsultas -->
         <div class="mt-6">
           <canvas id="teleconsultationsChart"></canvas>
+        </div>
+
+        <!-- Gráfico de chamados abaixo do mapa de teleconsultas -->
+        <div class="mt-6">
+          <h2 class="text-xl font-bold">Chamados</h2>
+          <canvas id="callsChart"></canvas>
         </div>
       </div>
     </main>
@@ -49,7 +80,9 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
+import Chart from 'chart.js/auto'; // Importando Chart.js
 import { API_BASE_URL, GOOGLE_MAPS_API_KEY } from '../environment/environment';
+
 const selectedState = ref('');
 const selectedCity = ref('');
 const selectedUbs = ref('');
@@ -59,7 +92,9 @@ const states = ref([]);
 const cities = ref([]);
 const ubsList = ref([]);
 const teleconsultationsData = ref([]);
-import Chart from 'chart.js/auto'; // Importando Chart.js
+const callsData = ref([]);
+const totalStudents = ref(0);
+const selectedUbsData = ref(null);
 
 // Função para carregar o script do Google Maps
 const loadGoogleMapsScript = () => {
@@ -147,10 +182,19 @@ const showUbsOnMap = () => {
               teleconsultationsData.value = data;
               renderTeleconsultationsChart(data);
             });
+
+          // Buscar dados de chamados para o gráfico
+          fetch(`${API_BASE_URL}/calls/report/overall/${selectedYear.value}/${selectedMonth.value}/`)
+            .then((response) => response.json())
+            .then((data) => {
+              callsData.value = data;
+              renderCallsChart(data);
+            });
         }
       });
   }
 };
+
 
 // Função para renderizar o gráfico de teleconsultas
 const renderTeleconsultationsChart = (data) => {
@@ -158,7 +202,7 @@ const renderTeleconsultationsChart = (data) => {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: data.map(item => new Date(item.month).toLocaleString('default', { month: 'long', year: 'numeric' })), // Formatando a data
+      labels: data.map(item => new Date(item.month).toLocaleString('default', { month: 'long', year: 'numeric' })), 
       datasets: [
         {
           label: 'Teleconsultas por Mês',
@@ -179,33 +223,103 @@ const renderTeleconsultationsChart = (data) => {
   });
 };
 
+// Função para renderizar o gráfico de chamados
+const renderCallsChart = (data) => {
+  const ctx = document.getElementById('callsChart').getContext('2d');
+
+  // Preparar dados para o gráfico
+  const statuses = Object.keys(data.report);
+  const totals = statuses.map(status => data.report[status]);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: statuses,  // Statuses como rótulos
+      datasets: [
+        {
+          label: 'Total de Chamados',
+          data: totals,  // Totais para cada status
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Status do Chamado',
+          },
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Número de Chamados',
+          },
+        },
+      },
+    },
+  });
+};
+
+
+// Atualiza as cidades ao selecionar um estado
+const updateCities = () => {
+  if (selectedState.value) {
+    loadCities(selectedState.value);
+  }
+};
+
+// Atualiza as UBSs ao selecionar uma cidade
+const updateUbs = () => {
+  if (selectedCity.value) {
+    loadUbs(selectedCity.value);
+  }
+};
+
+// Executa ao montar o componente
 onMounted(async () => {
-  try {
-    await loadGoogleMapsScript();
-    loadStates();
-    initializeMap();
-  } catch (error) {
-    console.error('Error loading Google Maps:', error);
-  }
-});
-
-watch(selectedState, (newState) => {
-  if (newState) {
-    loadCities(newState);
-  }
-});
-
-watch(selectedCity, (newCity) => {
-  if (newCity) {
-    loadUbs(newCity);
-  }
+  await loadStates();
+  await loadGoogleMapsScript();
+  initializeMap();
 });
 </script>
 
 <style scoped>
-.modal-content {
+select, input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
   width: 100%;
-  height: 60%;
-  max-width: 1000px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#map {
+  height: 400px;
+}
+
+header {
+  background-color: #f8f9fa;
+}
+
+h1 {
+  color: #333;
 }
 </style>
