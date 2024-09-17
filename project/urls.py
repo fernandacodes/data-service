@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from unasus_registros.utils.map import generate_heatmap
+from unasus_registros.views.call_view import *
 from unasus_registros.views.doctor_View import *
 from unasus_registros.views.especialy_view import *
 from unasus_registros.views.submission_view import *
@@ -63,6 +64,18 @@ urlpatterns = [
     path('specialties/<int:id>/', specialty_get_by_id, name='specialty-get-by-id'),
     path('specialties/<int:id>/update/', specialty_update, name='specialty-update'),
     path('specialties/<int:id>/delete/', specialty_delete, name='specialty-delete'),
+
+    path('calls/', get_calls, name='get_calls'),  # Ler todos os chamados
+    path('calls/<int:call_id>/', get_call_by_id, name='get_call_by_id'),  # Ler por ID
+    path('calls/create/', create_call, name='create_call'),  # Cadastrar
+    path('calls/<int:call_id>/update/', update_call, name='update_call'),  # Atualizar
+    path('calls/<int:call_id>/delete/', delete_call, name='delete_call'),  # Deletar
+
+    # Gerar gráfico por UBS
+    path('calls/report/<int:ubs_id>/<int:year>/<int:month>/', get_calls_report_by_ubs, name='get_calls_report_by_ubs'),
+
+    # Gerar gráfico geral para todas as UBS
+    path('calls/report/overall/<int:year>/<int:month>/', get_overall_calls_report, name='get_overall_calls_report'),
 ]
 
 if settings.DEBUG:
