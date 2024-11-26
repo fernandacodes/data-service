@@ -3,7 +3,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from..models.student_model import Student
 
-# Função para criar um novo aluno
 @csrf_exempt
 def create_student(request):
     if request.method == 'POST':
@@ -50,7 +49,6 @@ def create_student(request):
     else:
         return JsonResponse({"error": "Method not allowed."}, status=405)
 
-# Função para listar todos os alunos
 @csrf_exempt
 def get_all_students(request):
     if request.method == 'GET':
@@ -60,7 +58,6 @@ def get_all_students(request):
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
 
-# Função para listar um aluno por ID
 @csrf_exempt
 def get_student_by_cpf(request):
     if request.method == 'POST':
@@ -77,7 +74,6 @@ def get_student_by_cpf(request):
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
 
-# Função para atualizar parcialmente um aluno
 @csrf_exempt
 def update_student(request, student_id):
     if request.method == 'PATCH':
