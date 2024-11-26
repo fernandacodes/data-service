@@ -1,5 +1,9 @@
 from django.db import models
 
+from django.db import models
+
+from unasus_registros.models.ubs import Ubs
+
 class Student(models.Model):
     CPF = models.CharField(max_length=11, unique=True)
     Name = models.CharField(max_length=255)  # Alterado de 'Nome' para 'Name'
@@ -16,7 +20,11 @@ class Student(models.Model):
     Date = models.CharField(max_length=255)   # Mantido, mas você pode querer renomear para 'BirthDate' ou similar
     Condition = models.CharField(max_length=255)  # Alterado de 'Condição' para 'Condition'
     RequestChangeDate = models.DateField(null=True, blank=True)  # Alterado de 'DataSolicitacaoMudanca' para 'RequestChangeDate'
-    
+    ubs = models.ForeignKey(Ubs, on_delete=models.CASCADE, related_name='students', null=True, blank=True)  # Novo campo
+
+    def __str__(self):
+        return f"{self.Name} ({self.CPF})"
+
     def to_dict(self):
         return {
             "CPF": self.CPF,
@@ -34,4 +42,5 @@ class Student(models.Model):
             "Date": self.Date,
             "Condition": self.Condition,
             "RequestChangeDate": self.RequestChangeDate,
+            "UBS": self.ubs.city if self.ubs else None
         }

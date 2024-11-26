@@ -4,17 +4,13 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company" />
-            </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <router-link to="/" :class="isActive('/')">Dashboard</router-link>
-                <router-link to="/submission" :class="isActive('/submission')">Submission</router-link>
-                <router-link to="/profile" :class="isActive('/submission')">Profile</router-link>
+                <router-link to="/" :class="isActive('/')">Painel</router-link>
+                <router-link to="/submission" :class="isActive('/submission')">Submissão</router-link>
+                <router-link to="/profile" :class="isActive('/profile')">Perfil</router-link>
                 <router-link v-if="showStudentsLink" to="/students"
-                  :class="isActive('/students')">Students</router-link>
+                  :class="isActive('/students')">Estudantes</router-link>
               </div>
             </div>
           </div>
@@ -23,7 +19,7 @@
               <button type="button"
                 class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                 <span class="absolute -inset-1.5"></span>
-                <span class="sr-only">View notifications</span>
+                <span class="sr-only">Ver notificações</span>
                 <BellIcon class="h-6 w-6" aria-hidden="true" />
               </button>
 
@@ -32,7 +28,7 @@
                   <MenuButton
                     class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span class="absolute -inset-1.5" />
-                    <span class="sr-only">Open user menu</span>
+                    <span class="sr-only">Abrir menu de usuário</span>
                     <span class="ml-2 text-sm font-medium text-gray-300 truncate"> {{ user.first_name }} {{
                       user.last_name }}</span>
                   </MenuButton>
@@ -46,7 +42,7 @@
                    
                     <MenuItem v-slot="{ active }">
                     <a  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                      @click.prevent="handleLogout()">Sign out</a>
+                      @click.prevent="handleLogout()">Sair</a>
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -54,11 +50,11 @@
             </div>
           </div>
           <div class="-mr-2 flex md:hidden">
-            <!-- Mobile menu button -->
+            <!-- Botão de menu mobile -->
             <DisclosureButton
               class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="absolute -inset-0.5"></span>
-              <span class="sr-only">Open main menu</span>
+              <span class="sr-only">Abrir menu principal</span>
               <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
               <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
             </DisclosureButton>
@@ -68,9 +64,9 @@
 
       <DisclosurePanel class="md:hidden">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-          <router-link to="/" :class="isActive('/')">Dashboard</router-link>
-          <router-link to="/submission" :class="isActive('/submission')">Submission</router-link>
-          <router-link v-if="showStudentsLink" to="/students" :class="isActive('/students')">Students</router-link>
+          <router-link to="/" :class="isActive('/')">Painel</router-link>
+          <router-link to="/submission" :class="isActive('/submission')">Submissão</router-link>
+          <router-link v-if="showStudentsLink" to="/students" :class="isActive('/students')">Estudantes</router-link>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
@@ -81,12 +77,12 @@
             <button type="button"
               class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
+              <span class="sr-only">Ver notificações</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
           <div class="mt-3 space-y-1 px-2">
-            <router-link to="/logout" :class="isActive('/logout')" @click.prevent="handleLogout">Sign out</router-link>
+            <router-link to="/logout" :class="isActive('/logout')" @click.prevent="handleLogout">Sair</router-link>
           </div>
         </div>
       </DisclosurePanel>
@@ -102,7 +98,7 @@ import { useRoute } from 'vue-router';
 import router from '../router';
 import { isAuthenticated, getUserData, logout } from '../utils/auth';
 
-// Variável reativa para controlar a exibição do link de Students
+// Variável reativa para controlar a exibição do link de Estudantes
 const showStudentsLink = ref(false);
 
 let user = {
@@ -125,7 +121,7 @@ onMounted(async () => {
 
       // Verificar se o usuário tem permissão de admin (role === 'admin')
       if (userData.role === 'admin') {
-        showStudentsLink.value = true; // Mostrar o link de Students apenas para administradores
+        showStudentsLink.value = true; // Mostrar o link de Estudantes apenas para administradores
       }
     } catch (error) {
     }

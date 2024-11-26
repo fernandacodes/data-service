@@ -1,36 +1,14 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
-  <!--
-    This example requires updating your template:
-
-    ```
-    <html class="h-full bg-white">
-    <body class="h-full">
-    ```
-  -->
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Sua Empresa" />
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Entrar na sua conta</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="login()">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Cpf</label>
+          <label for="cpf" class="block text-sm font-medium leading-6 text-gray-900">CPF</label>
           <div class="mt-2">
             <input type="text" v-model="cpf" name="cpf" id="cpf" autocomplete="cpf" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="000.000.000-00" />
           </div>
@@ -38,9 +16,9 @@
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
             <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</a>
             </div>
           </div>
           <div class="mt-2">
@@ -49,25 +27,25 @@
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
-        Not have an account?
+        Não tem uma conta?
         <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crie uma</a>
       </p>
     </div>
   </div>
 </template>
 
-
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router';
-import { notify } from 'notiwind'; // Importar notify do notiwind
+import { notify } from 'notiwind';
 import { API_BASE_URL } from '../environment/environment';
+
 const cpf = ref('');
 const password = ref('');
 
@@ -85,19 +63,17 @@ const login = async () => {
     localStorage.setItem('token', response.data.token);
     router.push('/');
 
-    // Exibir mensagem de sucesso
     notify({
       group: 'foo',
-      title: 'Success',
-      text: 'Logged in successfully!'
+      title: 'Sucesso',
+      text: 'Logado com sucesso!'
     });
   } catch (error) {
 
-    // Exibir mensagem de erro
     notify({
       group: 'error',
-      title: 'Error',
-      text: 'Failed to log in. Please check your credentials.'
+      title: 'Erro',
+      text: 'Falha ao fazer login. Verifique suas credenciais.'
     });
   }
 };
@@ -113,5 +89,6 @@ axios.interceptors.request.use(config => {
 });
 </script>
 
-
-  
+<style>
+/* Estilos opcionais */
+</style>

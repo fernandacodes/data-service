@@ -8,7 +8,6 @@ from django.utils.translation import gettext
 django.utils.translation.ugettext = gettext
 
 # Carregar as variáveis de ambiente do arquivo .env
-# Definir o caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Carregar o arquivo .env
@@ -25,10 +24,17 @@ DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 1
-ALLOWED_HOSTS = ["http://localhost:5173", 'http://web', 'http://127.0.0.1:5173', 'http://127.0.0.1', 'web', 'localhost', 'http://127.0.0.1:3000']
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173", 'http://web', 'http://localhost', 'http://127.0.0.1', 'http://127.0.0.1:5173','http://127.0.0.1:3000']
-# Application definition
+DEBUG = False
+
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "web",
+    "15.228.45.143"
+]
+
+# Configuração CORS para aceitar todas as origens
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
@@ -44,18 +50,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'corsheaders',  # Certifique-se de que corsheaders está instalado
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Adicione o middleware do corsheaders aqui
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -80,18 +85,16 @@ TEMPLATES = [
     },
 ]
 
-# settings.py
 REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework_simplejwt.authentication.JWTAuthentication',
-        ],
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.BasicAuthentication',  # enables simple command line authentication
-            'rest_framework.authentication.SessionAuthentication',
-            'rest_framework.authentication.TokenAuthentication',
-        )
-    }
-
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 import datetime
 JWT_AUTH = {
@@ -99,11 +102,9 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
 }
 
-
 WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -111,12 +112,9 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),  # Porta interna do contêiner do PostgreSQL
-    }
+        'PORT': os.getenv('POSTGRES_PORT'),
+    },
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -133,31 +131,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Sao_Paulo'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# settings.py
 AUTH_USER_MODEL = 'unasus_registros.CustomUser'
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = DATA_DIR / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = DATA_DIR / 'media'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
