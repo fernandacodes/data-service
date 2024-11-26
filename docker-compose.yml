@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   app:
@@ -22,14 +22,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "13002:5432"
-    networks:
-      - unasus_network
-
-  charge:
-    build: .
-    command: python charge/charge.py
-    volumes:
-      - .:/code
     networks:
       - unasus_network
 

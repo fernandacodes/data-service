@@ -24,25 +24,17 @@ DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "web",
-    "http://localhost:3000",
     "15.228.45.143"
 ]
 
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1",
-    "http://15.228.45.143",
-    "http://15.228.45.143:8000"
-]
+# Configuração CORS para aceitar todas as origens
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
@@ -58,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'corsheaders',  # Certifique-se de que corsheaders está instalado
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -66,10 +58,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Adicione o middleware do corsheaders aqui
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
