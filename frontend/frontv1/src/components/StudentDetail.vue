@@ -48,11 +48,10 @@
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt class="text-sm font-medium leading-6 text-gray-900">DSEI</dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.DSEI ? 'Sim' : 'Não' }}
-            </dd>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.DSEI ? 'Sim' : 'Não' }}</dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">Matricula</dt>
+            <dt class="text-sm font-medium leading-6 text-gray-900">Matrícula</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.EnrollmentNumber }}</dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -72,8 +71,8 @@
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ student.RequestChangeDate }}</dd>
           </div>
           <router-link :to="{ name: 'SubmissionDetails', params: { cpf: student.CPF } }" class="text-indigo-600 hover:text-indigo-500">
-                Ver Detalhes da Submissão
-              </router-link>
+            Ver Detalhes da Submissão
+          </router-link>
         </dl>
       </div>
     </div>
@@ -87,33 +86,35 @@ import { useRoute } from 'vue-router';
 import { API_BASE_URL } from '../environment/environment';
 import Loader from './Loader.vue';
 import { notify } from 'notiwind';
+import router from '../router';
+
 const route = useRoute();
 const student = ref(null);
 const isLoading = ref(true);
-import router from '../router';
+
 const fetchStudent = async () => {
   isLoading.value = true;
   try {
-    notify({
-      group: 'foo',
-      title: 'Success',
-      text: 'Student loaded sucessfully'
-    });
     const cpf = route.params.cpf;
     const response = await axios.post(`${API_BASE_URL}/students/cpf/`, {
-      cpf : cpf
+      cpf: cpf
     });
     student.value = response.data.student;
+    notify({
+      group: 'foo',
+      title: 'Sucesso',
+      text: 'Aluno carregado com sucesso'
+    });
   } catch (error) {
     notify({
       group: 'error',
-      title: 'Error',
-      text: 'Student with this cpf not found!'
+      title: 'Erro',
+      text: 'Aluno com esse CPF não encontrado!'
     });
-    router.push('/students')
+    router.push('/students');
+  } finally {
     isLoading.value = false;
   }
-  isLoading.value = false;
 };
 
 onMounted(fetchStudent);
