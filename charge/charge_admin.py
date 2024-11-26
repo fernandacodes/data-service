@@ -35,9 +35,6 @@ def generate_password(row):
     first_name = row['Nome'].split()[0]
     return row['CPF'] + first_name[:2].lower()
 
-def generate_enrollment_number(row):
-    return row['Matricula'] if row['Matricula'] else 'X'
-
 def send_requests_from_csv(csv_file, role):
     with open(csv_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -49,11 +46,7 @@ def send_requests_from_csv(csv_file, role):
 
         for row in reader:
             password = generate_password(row)
-            enrollment_number = generate_enrollment_number(row)
-            municipio_padronizado = tratar_cidades.tratar_cidade(
-                tratar_cidades.listar_cidades(),
-                row['Município']
-            )
+            
 
             user_data = {
                 'user': {
@@ -66,28 +59,6 @@ def send_requests_from_csv(csv_file, role):
                     'role': role
                 }
             }
-
-            if role == 'student':
-                student_data = {
-                    'student': {
-                        'CPF': row['CPF'],
-                        'Name': row['Nome'],
-                        'Email': row['Email'],
-                        'Phone': row['Telefone'],
-                        'Municipality': municipio_padronizado,
-                        'State': row['UF'],
-                        'Status': row['Situação'],
-                        'Cycle': row['Ciclo'],
-                        'List': row['Lista'],
-                        'DSEI': row['DSEI'].lower() in ['true', '1', 't', 'yes', 'y', 'sim', 's'],
-                        'EnrollmentNumber': enrollment_number,
-                        'TutorClass': row['TurmaTutor'],
-                        'Date': row['Data'],
-                        'Condition': row['Condição'],
-                        'RequestChangeDate': row.get('RequestChangeDate')
-                    }
-                }
-                user_data.update(student_data)
 
             logger.info(f"Enviando dados do {role}: {user_data}")
             response = register_user(user_data)
@@ -106,5 +77,5 @@ def send_requests_from_csv(csv_file, role):
         progress_bar.close()
 
 if __name__ == '__main__':
-    students_csv_path = 'charge/data/students.csv'
-    send_requests_from_csv(students_csv_path, role='student')
+    admin_csv_path = 'charge/data/admin.csv'
+    send_requests_from_csv(admin_csv_path, role='admin')
