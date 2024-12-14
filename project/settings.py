@@ -105,16 +105,29 @@ JWT_AUTH = {
 WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
-    },
-}
+if os.getenv('ENVIRONMENT', 'development') == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB_LOCAL'),
+            'USER': os.getenv('POSTGRES_USER_LOCAL'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD_LOCAL'),
+            'HOST': os.getenv('POSTGRES_HOST_LOCAL'),
+            'PORT': os.getenv('POSTGRES_PORT_LOCAL'),
+        },
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB_PROD'),
+            'USER': os.getenv('POSTGRES_USER_PROD'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD_PROD'),
+            'HOST': os.getenv('POSTGRES_HOST_PROD'),
+            'PORT': os.getenv('POSTGRES_PORT_PROD'),
+        },
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

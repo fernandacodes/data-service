@@ -6,8 +6,8 @@
           <div class="flex items-center">
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <router-link to="/" :class="isActive('/')">Painel</router-link>
-                <router-link to="/submission" :class="isActive('/submission')">Submissão</router-link>
+                <router-link v-if="showStudentsLink" to="/" :class="isActive('/')">Painel</router-link>
+                <router-link v-if="!showStudentsLink" to="/submission" :class="isActive('/submission')">Submissão</router-link>
                 <router-link to="/profile" :class="isActive('/profile')">Perfil</router-link>
                 <router-link v-if="showStudentsLink" to="/students"
                   :class="isActive('/students')">Estudantes</router-link>
@@ -50,7 +50,6 @@
             </div>
           </div>
           <div class="-mr-2 flex md:hidden">
-            <!-- Botão de menu mobile -->
             <DisclosureButton
               class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="absolute -inset-0.5"></span>
@@ -98,7 +97,6 @@ import { useRoute } from 'vue-router';
 import router from '../router';
 import { isAuthenticated, getUserData, logout } from '../utils/auth';
 
-// Variável reativa para controlar a exibição do link de Estudantes
 const showStudentsLink = ref(false);
 
 let user = {
@@ -108,7 +106,6 @@ let user = {
   last_name: ''
 };
 
-// Função para carregar dados do usuário ao montar o componente
 onMounted(async () => {
   const auth = await isAuthenticated();
   if (auth) {
@@ -119,9 +116,8 @@ onMounted(async () => {
       user.first_name = userData.first_name;
       user.last_name = userData.last_name;
 
-      // Verificar se o usuário tem permissão de admin (role === 'admin')
       if (userData.role === 'admin') {
-        showStudentsLink.value = true; // Mostrar o link de Estudantes apenas para administradores
+        showStudentsLink.value = true; 
       }
     } catch (error) {
     }
@@ -143,5 +139,4 @@ function handleLogout() {
 </script>
 
 <style>
-/* Estilos opcionais */
 </style>

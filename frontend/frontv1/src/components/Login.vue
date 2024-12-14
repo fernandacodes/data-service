@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Sua Empresa" />
+      <img class="mx-auto h-10 w-auto" src="https://unasus.ufam.edu.br/images/headers/banner01.png" alt="UNASUS-UFAM" />
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Entrar na sua conta</h2>
     </div>
 
@@ -18,7 +18,8 @@
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
             <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</a>
+              <!-- Comentado a parte de "Esqueceu sua senha?" -->
+              <!-- <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</a> -->
             </div>
           </div>
           <div class="mt-2">
@@ -32,8 +33,9 @@
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
-        Não tem uma conta?
-        <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crie uma</a>
+                <!-- Não tem uma conta? -->
+        
+        <!-- <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crie uma</a> -->
       </p>
     </div>
   </div>
@@ -61,7 +63,7 @@ const login = async () => {
       password: password.value
     });
     localStorage.setItem('token', response.data.token);
-    router.push('/');
+    router.push('/'); 
 
     notify({
       group: 'foo',
@@ -69,7 +71,6 @@ const login = async () => {
       text: 'Logado com sucesso!'
     });
   } catch (error) {
-
     notify({
       group: 'error',
       title: 'Erro',
@@ -84,11 +85,8 @@ axios.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, error => {
-  return Promise.reject(error);
-});
+})
 </script>
 
 <style>
-/* Estilos opcionais */
 </style>

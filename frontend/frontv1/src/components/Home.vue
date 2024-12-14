@@ -47,7 +47,6 @@
 
         <div id="map" class="h-96 mt-6"></div>
 
-        <!-- Cards informativos acima do gráfico -->
         <div class="mt-6 grid grid-cols-3 gap-4">
           <div class="bg-gray-100 p-4 rounded">
             <h2 class="font-bold text-lg">Total de Alunos</h2>
@@ -63,12 +62,10 @@
           </div>
         </div>
 
-        <!-- Gráfico de teleconsultas -->
         <div class="mt-6">
           <canvas id="teleconsultationsChart"></canvas>
         </div>
 
-        <!-- Gráfico de chamados abaixo do mapa de teleconsultas -->
         <div class="mt-6">
           <h2 class="text-xl font-bold">Chamados</h2>
           <canvas id="callsChart"></canvas>
@@ -80,7 +77,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import Chart from 'chart.js/auto'; // Importando Chart.js
+import Chart from 'chart.js/auto';
 import { API_BASE_URL, GOOGLE_MAPS_API_KEY } from '../environment/environment';
 
 const selectedState = ref('');
@@ -96,22 +93,22 @@ const callsData = ref([]);
 const totalStudents = ref(0);
 const selectedUbsData = ref(null);
 
-// Função para carregar o script do Google Maps
-const loadGoogleMapsScript = () => {
-  return new Promise((resolve, reject) => {
-    if (window.google && window.google.maps) {
-      resolve();
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Failed to load Google Maps script'));
-    document.head.appendChild(script);
-  });
+const loadGoogleMapsScript = (callback) => {
+  if (window.google && window.google.maps) {
+    callback(null); 
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+
+  script.onload = () => callback(null);
+  script.onerror = () => callback(new Error('Failed to load Google Maps script')); // Indica erro
+
+  document.head.appendChild(script);
 };
 
-// Função para carregar os estados
+
 const loadStates = async () => {
   try {
     const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
@@ -122,7 +119,6 @@ const loadStates = async () => {
   }
 };
 
-// Função para carregar as cidades de um estado
 const loadCities = async (stateCode) => {
   try {
     const response = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${stateCode}/municipios`);
@@ -133,7 +129,6 @@ const loadCities = async (stateCode) => {
   }
 };
 
-// Função para carregar UBSs de uma cidade
 const loadUbs = async (cityName) => {
   try {
     const response = await fetch(`${API_BASE_URL}/ubs/city/${cityName}/`);
@@ -144,7 +139,6 @@ const loadUbs = async (cityName) => {
   }
 };
 
-// Função para inicializar o mapa do Google Maps
 const initializeMap = () => {
   if (!window.google) return;
 
@@ -156,7 +150,6 @@ const initializeMap = () => {
   window.map = map;
 };
 
-// Função para exibir a UBS no mapa ao clicar no botão de pesquisar
 const showUbsOnMap = () => {
   if (!window.google) return;
 
@@ -175,7 +168,6 @@ const showUbsOnMap = () => {
             title: ubs.name,
           });
 
-          // Buscar dados de teleconsultas para o gráfico
           fetch(`${API_BASE_URL}/teleconsultations_by_month/${selectedUbs.value}/${selectedYear.value}/${selectedMonth.value}/`)
             .then((response) => response.json())
             .then((data) => {
@@ -183,7 +175,6 @@ const showUbsOnMap = () => {
               renderTeleconsultationsChart(data);
             });
 
-          // Buscar dados de chamados para o gráfico
           fetch(`${API_BASE_URL}/calls/report/overall/${selectedYear.value}/${selectedMonth.value}/`)
             .then((response) => response.json())
             .then((data) => {
@@ -196,7 +187,6 @@ const showUbsOnMap = () => {
 };
 
 
-// Função para renderizar o gráfico de teleconsultas
 const renderTeleconsultationsChart = (data) => {
   const ctx = document.getElementById('teleconsultationsChart').getContext('2d');
   new Chart(ctx, {
@@ -223,22 +213,20 @@ const renderTeleconsultationsChart = (data) => {
   });
 };
 
-// Função para renderizar o gráfico de chamados
 const renderCallsChart = (data) => {
   const ctx = document.getElementById('callsChart').getContext('2d');
 
-  // Preparar dados para o gráfico
   const statuses = Object.keys(data.report);
   const totals = statuses.map(status => data.report[status]);
 
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: statuses,  // Statuses como rótulos
+      labels: statuses, 
       datasets: [
         {
           label: 'Total de Chamados',
-          data: totals,  // Totais para cada status
+          data: totals, 
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
@@ -267,21 +255,18 @@ const renderCallsChart = (data) => {
 };
 
 
-// Atualiza as cidades ao selecionar um estado
 const updateCities = () => {
   if (selectedState.value) {
     loadCities(selectedState.value);
   }
 };
 
-// Atualiza as UBSs ao selecionar uma cidade
 const updateUbs = () => {
   if (selectedCity.value) {
     loadUbs(selectedCity.value);
   }
 };
 
-// Executa ao montar o componente
 onMounted(async () => {
   await loadStates();
   await loadGoogleMapsScript();
