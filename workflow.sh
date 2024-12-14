@@ -9,7 +9,7 @@ git pull origin || { echo "Erro ao executar git pull. Verifique o repositório."
 
 # Parar os containers
 echo "Parando os containers..."
-sudo docker compose stop data-service-web-1 data-service-app-1 data-service-nginx-1 || {
+sudo docker compose stop web data-service-app-1 data-service-nginx-1 || {
   echo "Erro ao parar os containers. Verifique o estado do Docker."; exit 1;
 }
 
@@ -21,7 +21,7 @@ done
 
 # Remover os containers
 echo "Removendo os containers..."
-sudo docker rm data-service-web-1 data-service-app-1 data-service-nginx-1 || {
+sudo docker rm web data-service-app-1 data-service-nginx-1 || {
   echo "Erro ao remover os containers. Verifique se eles já estão removidos."; exit 1;
 }
 
