@@ -48,6 +48,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Bloqueia tipos de conteúdo inseguros
 CSRF_COOKIE_SECURE = True  # Torna o cookie de CSRF acessível apenas via HTTPS
 SESSION_COOKIE_SECURE = True  # Torna o cookie de sessão acessível apenas via HTTPS
 X_FRAME_OPTIONS = 'DENY'  # Evita que o site seja carregado em um iframe (cliquejacking)
+#CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
@@ -56,15 +57,15 @@ SIMPLE_JWT = {
 }
 
 INSTALLED_APPS = [
-    'sslserver',
     'unasus_registros',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',  # Certifique-se de que corsheaders está instalado
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
