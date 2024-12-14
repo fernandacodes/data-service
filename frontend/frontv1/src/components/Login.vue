@@ -1,26 +1,25 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://unasus.ufam.edu.br/images/headers/banner01.png" alt="UNASUS-UFAM" />
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Entrar na sua conta</h2>
-    </div>
+    <!-- Caixa de Login com fundo personalizado -->
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm bg-[#1b2131] p-8 rounded-lg shadow-lg">
+      <!-- Logo -->
+      <img class="mx-auto h-30 w-auto" src="../assets/unasus-ufam-logo.jpg" alt="UNASUS-UFAM" />
+      
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Entrar na sua conta</h2>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" @submit.prevent="login()">
+      <form class="space-y-6 mt-6" @submit.prevent="login()">
         <div>
-          <label for="cpf" class="block text-sm font-medium leading-6 text-gray-900">CPF</label>
+          <!-- Label e Input do CPF -->
+          <label for="cpf" class="block text-sm font-medium leading-6 text-white">CPF</label>
           <div class="mt-2">
             <input type="text" v-model="cpf" name="cpf" id="cpf" autocomplete="cpf" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="000.000.000-00" />
           </div>
         </div>
 
         <div>
+          <!-- Label e Input da Senha -->
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
-            <div class="text-sm">
-              <!-- Comentado a parte de "Esqueceu sua senha?" -->
-              <!-- <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</a> -->
-            </div>
+            <label for="password" class="block text-sm font-medium leading-6 text-white">Senha</label>
           </div>
           <div class="mt-2">
             <input type="password" v-model="password" name="password" id="password" autocomplete="current-password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="••••••••" />
@@ -28,17 +27,20 @@
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
+          <!-- Botão de Login -->
+          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Entrar
+          </button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
-                <!-- Não tem uma conta? -->
-        
+        <!-- Não tem uma conta? -->
         <!-- <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Crie uma</a> -->
       </p>
     </div>
   </div>
+  <footer></footer>
 </template>
 
 <script setup>
@@ -47,14 +49,17 @@ import { ref } from 'vue';
 import router from '../router';
 import { notify } from 'notiwind';
 import { API_BASE_URL } from '../environment/environment';
+import Footer from './Footer.vue';
 
 const cpf = ref('');
 const password = ref('');
 
+// Função para remover a formatação do CPF
 const removeCpfFormatting = (cpf) => {
   return cpf.replace(/[.-]/g, '');
 };
 
+// Função de login
 const login = async () => {
   var cpfFormatted = removeCpfFormatting(cpf.value);
   try {
@@ -79,6 +84,7 @@ const login = async () => {
   }
 };
 
+// Interceptor para adicionar o token no cabeçalho das requisições
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -89,4 +95,14 @@ axios.interceptors.request.use(config => {
 </script>
 
 <style>
+/* Estilos adicionais */
+img {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+}
+
+/* Customizando a caixa de login */
+.bg-[#1b2131] {
+  background-color: #1b2131;
+}
+
 </style>
