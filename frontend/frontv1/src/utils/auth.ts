@@ -9,7 +9,7 @@ export const isAuthenticated = async () => {
     return false;
   }
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/token/verify/`, { token });
+    const response = await axios.post(`${API_BASE_URL}/token/verify/`, { token });
     return response.status === 200;
   } catch (error) {
     return false;

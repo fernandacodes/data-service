@@ -63,7 +63,7 @@ const removeCpfFormatting = (cpf) => {
 const login = async () => {
   var cpfFormatted = removeCpfFormatting(cpf.value);
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/token/`, {
+    const response = await axios.post(`${API_BASE_URL}/token/`, {
       username: cpfFormatted,
       password: password.value
     });
