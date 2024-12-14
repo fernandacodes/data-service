@@ -1,47 +1,51 @@
 #!/bin/bash
 
-# Exibir mensagem de início do script
-echo "Iniciando o processo de atualização e reinício dos containers..."
-
-# Atualizar o repositório local com o código mais recente
-echo "Atualizando o código com git pull..."
-git pull origin || { echo "Erro ao executar git pull. Verifique o repositório."; exit 1; }
-
-# Parar os containers
-echo "Parando os containers..."
-sudo docker compose stop web data-service-app-1 data-service-nginx-1 || {
-  echo "Erro ao parar os containers. Verifique o estado do Docker."; exit 1;
+# Função para exibir mensagens com timestamp
+log_message() {
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# Aguardar os containers pararem completamente
-echo "Aguardando containers pararem..."
+log_message "Iniciando o processo de atualização..."
+
+# 1. Parar os containers individualmente
+log_message "Parando o container web..."
+sudo docker compose stop data-service-web-1 || log_message "Falha ao parar o container web."
+
+log_message "Parando o container app..."
+sudo docker compose stop data-service-app-1 || log_message "Falha ao parar o container app."
+
+log_message "Parando o container nginx..."
+sudo docker compose stop data-service-nginx-1 || log_message "Falha ao parar o container nginx."
+
+# 2. Aguardar os containers pararem completamente
+log_message "Aguardando os containers pararem..."
 while sudo docker ps | grep -qE 'data-service-(web|app|nginx)-1'; do
-  sleep 2
+  sleep 3
 done
+log_message "Containers parados com sucesso."
 
-# Remover os containers
-echo "Removendo os containers..."
-sudo docker rm web data-service-app-1 data-service-nginx-1 || {
-  echo "Erro ao remover os containers. Verifique se eles já estão removidos."; exit 1;
-}
+# 3. Remover os containers individualmente
+log_message "Removendo o container web..."
+sudo docker rm data-service-web-1 || log_message "Falha ao remover o container web."
 
-# Remover as imagens
-echo "Removendo as imagens..."
-sudo docker rmi data-service-app nginx data-service-web || {
-  echo "Erro ao remover as imagens. Verifique se elas já foram removidas."; exit 1;
-}
+log_message "Removendo o container app..."
+sudo docker rm data-service-app-1 || log_message "Falha ao remover o container app."
 
-# Subir os containers (app)
-echo "Subindo o container do app..."
-sudo docker compose up app -d || { echo "Erro ao subir o container do app."; exit 1; }
+log_message "Removendo o container nginx..."
+sudo docker rm data-service-nginx-1 || log_message "Falha ao remover o container nginx."
 
-# Subir os containers (web)
-echo "Subindo o container da web..."
-sudo docker compose up web -d || { echo "Erro ao subir o container da web."; exit 1; }
+# 4. Remover as imagens
+log_message "Removendo as imagens..."
+sudo docker rmi data-service-web data-service-app nginx || log_message "Falha ao remover algumas imagens. Verifique manualmente."
 
-# Subir o nginx por último
-echo "Subindo o container do nginx..."
-sudo docker compose up nginx -d || { echo "Erro ao subir o container do nginx."; exit 1; }
+# 5. Subir os containers individualmente
+log_message "Subindo o container app..."
+sudo docker compose up app -d || { log_message "Erro ao subir o container app."; exit 1; }
 
-# Finalização
-echo "Processo de atualização e reinício concluído com sucesso!"
+log_message "Subindo o container web..."
+sudo docker compose up web -d || { log_message "Erro ao subir o container web."; exit 1; }
+
+log_message "Subindo o container nginx..."
+sudo docker compose up nginx -d || { log_message "Erro ao subir o container nginx."; exit 1; }
+
+log_message "Processo de atualização concluído com sucesso!"
