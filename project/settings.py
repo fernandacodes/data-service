@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Configurações de HTTPS e Segurança
-SECURE_SSL_REDIRECT = False  # Redireciona automaticamente HTTP para HTTPS
+SECURE_SSL_REDIRECT = True  # Redireciona automaticamente HTTP para HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Suporte para HTTPS atrás de um proxy
 SECURE_HSTS_SECONDS = 31536000  # Habilita HTTP Strict Transport Security (1 ano)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Inclui subdomínios no HSTS
@@ -56,6 +56,7 @@ SIMPLE_JWT = {
 }
 
 INSTALLED_APPS = [
+    'sslserver',
     'unasus_registros',
     'django.contrib.admin',
     'django.contrib.auth',
