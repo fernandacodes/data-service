@@ -30,11 +30,24 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "web",
-    "15.228.45.143"
+    "15.228.45.143",
+    "sistemaunasus.ufam.edu.br",
 ]
 
 # Configuração CORS para aceitar todas as origens
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Configurações de HTTPS e Segurança
+SECURE_SSL_REDIRECT = True  # Redireciona automaticamente HTTP para HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Suporte para HTTPS atrás de um proxy
+SECURE_HSTS_SECONDS = 31536000  # Habilita HTTP Strict Transport Security (1 ano)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Inclui subdomínios no HSTS
+SECURE_HSTS_PRELOAD = True  # Prepara o site para a lista HSTS Preload
+SECURE_BROWSER_XSS_FILTER = True  # Proteção contra XSS no navegador
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Bloqueia tipos de conteúdo inseguros
+CSRF_COOKIE_SECURE = True  # Torna o cookie de CSRF acessível apenas via HTTPS
+SESSION_COOKIE_SECURE = True  # Torna o cookie de sessão acessível apenas via HTTPS
+X_FRAME_OPTIONS = 'DENY'  # Evita que o site seja carregado em um iframe (cliquejacking)
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
