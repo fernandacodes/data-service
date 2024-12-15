@@ -9,7 +9,7 @@ remove:
 remove-i:
 	sudo docker rmi data-service-app
 	sudo docker rmi data-service-web
-	sudo docker rmi data-service-nginx
+	sudo docker rmi nginx
 start:
 	sudo docker compose up app -d
 	sudo docker compose up web -d
