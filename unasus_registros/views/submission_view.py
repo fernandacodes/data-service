@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from ..models.submission import Submission
 from ..models.student_model import Student
+from django.core.files.storage import default_storage
 
 @csrf_exempt
 def create_submission(request):
@@ -63,9 +64,14 @@ def create_submission(request):
             for field_name in document_fields:
                 file = request.FILES.get(field_name)
                 if file:
-                    setattr(submission, field_name, file)
+                    file_name = f"{student_cpf}/{file.name}"
+                    file_storage_path = default_storage.save(file_name, file)
+                    # Atribuindo o caminho do arquivo ao modelo
+                    setattr(submission, field_name, file_storage_path)
                     submission.save()
-                    document_links[field_name] = request.build_absolute_uri(getattr(submission, field_name).url)
+
+                    # Gerando a URL completa do arquivo
+                    document_links[field_name] = request.build_absolute_uri(default_storage.url(file_storage_path))
 
             return JsonResponse({"Message": "Successfully created submission", "document_links": document_links}, status=201)
         except Student.DoesNotExist:
@@ -74,8 +80,7 @@ def create_submission(request):
             return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Method not allowed."}, status=405)
-
-
+    
 @csrf_exempt
 def get_all_submissions(request):
     if request.method == 'GET':

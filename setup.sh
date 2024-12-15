@@ -15,13 +15,20 @@ read -p "Escolha uma opção (1-3): " opcao
 configurar_ambiente() {
   echo "🔧 Configurando o ambiente..."
 
-  # Verifica se o Python está instalado
-  if ! command -v python3 &> /dev/null; then
-    echo "🚨 Python3 não encontrado. Instalando..."
+  # Verifica se o Python 3.11 está instalado
+  if ! command -v python3.11 &> /dev/null; then
+    echo "🚨 Python 3.11 não encontrado. Instalando..."
     sudo apt update
-    sudo apt install -y python3 python3-pip
+    sudo apt install -y software-properties-common
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt update
+    sudo apt install -y python3.11 python3.11-venv python3.11-dev python3.11-distutils python3-pip
+
+    # Configura o Python 3.11 como padrão
+    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
+    sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
   else
-    echo "✅ Python3 já está instalado."
+    echo "✅ Python 3.11 já está instalado."
   fi
 
   # Verifica se o módulo venv está instalado
@@ -35,8 +42,8 @@ configurar_ambiente() {
 
   # Criação do ambiente virtual
   if [ ! -d "venv_charge" ]; then
-    echo "🔧 Criando ambiente virtual Python..."
-    python3 -m venv venv_charge
+    echo "🔧 Criando ambiente virtual Python 3.11..."
+    python3.11 -m venv venv_charge
   fi
 
   # Ativa o ambiente virtual
@@ -62,7 +69,7 @@ configurar_ambiente() {
 case $opcao in
   1)
     configurar_ambiente
-    
+
     # Verificação do arquivo CSV de alunos
     if [ ! -f "charge/data/students.csv" ]; then
       echo "❌ Arquivo CSV não encontrado: charge/data/students.csv"
@@ -72,15 +79,16 @@ case $opcao in
 
     # Executa o script Python para alunos
     echo "🚀 Populando banco com alunos..."
-    python charge/charge.py
+    python -m charge.main_students
 
     # Desativa o ambiente virtual
     deactivate
     echo "✅ População de alunos concluída!"
     ;;
+
   2)
     configurar_ambiente
-    
+
     # Verificação do arquivo CSV de administradores
     if [ ! -f "charge/data/admin.csv" ]; then
       echo "❌ Arquivo CSV não encontrado: charge/data/admin.csv"
@@ -90,16 +98,18 @@ case $opcao in
 
     # Executa o script Python para administradores
     echo "🚀 Populando banco com administradores..."
-    python charge/charge_admin.py
+    python -m charge.main_admins
 
     # Desativa o ambiente virtual
     deactivate
     echo "✅ População de administradores concluída!"
     ;;
+
   3)
     echo "Saindo..."
     exit 0
     ;;
+
   *)
     echo "Opção inválida! Tente novamente."
     ;;

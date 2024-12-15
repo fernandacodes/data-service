@@ -37,7 +37,9 @@ ALLOWED_HOSTS = [
 # Configuração CORS para aceitar todas as origens
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Configurações de HTTPS e Segurança
+"""
+Configurações de HTTPS e Segurança (Desabilitado para Desenvolvimento)
+
 SECURE_SSL_REDIRECT = True  # Redireciona automaticamente HTTP para HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Suporte para HTTPS atrás de um proxy
 SECURE_HSTS_SECONDS = 31536000  # Habilita HTTP Strict Transport Security (1 ano)
@@ -48,7 +50,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Bloqueia tipos de conteúdo inseguros
 CSRF_COOKIE_SECURE = True  # Torna o cookie de CSRF acessível apenas via HTTPS
 SESSION_COOKIE_SECURE = True  # Torna o cookie de sessão acessível apenas via HTTPS
 X_FRAME_OPTIONS = 'DENY'  # Evita que o site seja carregado em um iframe (cliquejacking)
-#CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']
+CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']  # Apenas se necessário para produção
+
+"""
+
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
@@ -69,6 +74,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -158,18 +164,23 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
-
 AUTH_USER_MODEL = 'unasus_registros.CustomUser'
-
-STATIC_URL = '/static/'
-STATIC_ROOT = DATA_DIR / 'static'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = DATA_DIR / 'media'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
