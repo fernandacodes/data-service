@@ -6,20 +6,29 @@ WORKDIR /code
 # Copia e instala as dependências
 COPY requirements.txt /code/
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install django-extensions
+
+# Instala o gunicorn
+RUN pip install gunicorn
 
 # Copia o código da aplicação
 COPY . /code/
 
-# Expõe a porta 8000
+# Copia os certificados SSL para dentro do container
+COPY ssl /code/ssl/
+
+# Expõe a porta 8000 (para HTTPS)
 EXPOSE 8000
 
 # Define variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Comando para rodar a aplicação
+# Comando para rodar a aplicação com gunicorn utilizando HTTPS
 CMD ["sh", "-c", "python manage.py makemigrations && \
                    python manage.py migrate && \
                    python manage.py create_users_groups && \
-                   python manage.py runserver_plus --cert-file=/code/ssl/fullchain.crt --key-file=/code/ssl/privkey.key 0.0.0.0:8000"]
+                   gunicorn project.wsgi:application \
+                   --bind 0.0.0.0:8000 \
+                   --workers 3 \
+                   --certfile=/code/ssl/fullchain.crt \
+                   --keyfile=/code/ssl/privkey.key"]
