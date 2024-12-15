@@ -7,9 +7,9 @@ remove:
 	sudo docker rm data-service-web-1
 	sudo docker rm data-service-nginx-1
 remove-i:
-	sudo docker rmi data-service-app-1
-	sudo docker rmi data-service-web-1
-	sudo docker rmi data-service-nginx-1
+	sudo docker rmi data-service-app
+	sudo docker rmi data-service-web
+	sudo docker rmi data-service-nginx
 start:
 	sudo docker compose up app -d
 	sudo docker compose up web -d
