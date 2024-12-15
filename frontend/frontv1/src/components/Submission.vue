@@ -594,7 +594,7 @@ export default {
         let user = await getUserData();
 
         const token = localStorage.getItem('token');
-        const profileResponse = await axios.get(`${API_BASE_URL}/api/user/`, {
+        const profileResponse = await axios.get(`${API_BASE_URL}/user/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
