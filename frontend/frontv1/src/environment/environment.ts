@@ -1,6 +1,6 @@
-let environment = "development";
+let environment = "production";
 const BASE_URL_DEV = 'http://localhost:8000/api';
-const BASE_URL_PRD = 'https://54.232.202.170:8000/api';
+const BASE_URL_PRD = 'https://18.230.236.221:8000/api';
 
 const API_KEY = "AIzaSyDM40vfVqAgs1QUC08K8uCqtQ_r0mEdAyI";
 

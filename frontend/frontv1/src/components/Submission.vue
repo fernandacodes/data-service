@@ -1,13 +1,26 @@
 <template>
+  <div v-if="isLoading">
+    <Loader></Loader>
+  </div>
   <div>
     <div class="container mx-auto mt-8 px-4">
-      <form @submit.prevent="handleSubmit()">
+      <div v-if="hasSubmitted" class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="text-center">
+          <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m-3-3h6" />
+          </svg>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">Você já enviou a submissão</h3>
+          <p class="mt-1 text-sm text-gray-500">Você já realizou sua submissão anteriormente. Não é possível enviar
+            novamente.</p>
+        </div>
+      </div>
+      <form @submit.prevent="handleSubmit()" v-if="!hasSubmitted && !isLoading">
         <div class="space-y-12">
           <div class="border-b border-gray-900/10 pb-12">
             <h2 class="text-base font-semibold leading-7 text-gray-900">Formulário de Envio</h2>
             <p class="mt-1 text-sm leading-6 text-gray-600">Por favor, preencha o formulário abaixo.</p>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
               <div class="sm:col-span-3">
                 <label for="birth_city" class="block text-sm font-medium leading-6 text-gray-900">Cidade de
                   Nascimento</label>
@@ -27,8 +40,6 @@
                   </select>
                 </div>
               </div>
-
-
               <div class="sm:col-span-3">
                 <label for="birth_date" class="block text-sm font-medium leading-6 text-gray-900">Data de
                   Nascimento</label>
@@ -37,7 +48,6 @@
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
-
               <div class="sm:col-span-3">
                 <label for="marital_status" class="block text-sm font-medium leading-6 text-gray-900">Estado
                   Civil</label>
@@ -216,9 +226,11 @@
                 <label for="postal_code" class="block text-sm font-medium leading-6 text-gray-900">CEP</label>
                 <div class="mt-2">
                   <input type="text" name="postal_code" id="postal_code" maxlength="10" v-model="postal_code"
+                    @input="formatPostalCode"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
               </div>
+
 
               <div class="sm:col-span-3">
                 <label for="rg" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
@@ -316,6 +328,7 @@
                     <label for="rg_cpf_copy" class="block text-sm font-medium leading-6 text-gray-900">Cópia do
                       RG/CPF</label>
                     <input type="file" name="rg_cpf_copy" id="rg_cpf_copy" accept=".pdf" ref="rg_cpf_copy"
+                      @change="validateFile($event, 'rg_cpf_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -323,13 +336,14 @@
                     <label for="reservista_cert_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Certificado de Reservista</label>
                     <input type="file" name="reservista_cert_copy" id="reservista_cert_copy" accept=".pdf"
-                      ref="reservista_cert_copy"
+                      ref="reservista_cert_copy" @change="validateFile($event, 'reservista_cert_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
                   <div>
                     <label for="diploma_copy" class="block text-sm font-medium leading-6 text-gray-900">Diploma</label>
                     <input type="file" name="diploma_copy" id="diploma_copy" accept=".pdf" ref="diploma_copy"
+                      @change="validateFile($event, 'diploma_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -337,7 +351,7 @@
                     <label for="marriage_certificate_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Certidão de Casamento</label>
                     <input type="file" name="marriage_certificate_copy" id="marriage_certificate_copy" accept=".pdf"
-                      ref="marriage_certificate_copy"
+                      ref="marriage_certificate_copy" @change="validateFile($event, 'marriage_certificate_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -345,7 +359,7 @@
                     <label for="address_proof_copy"
                       class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Endereço</label>
                     <input type="file" name="address_proof_copy" id="address_proof_copy" accept=".pdf"
-                      ref="address_proof_copy"
+                      ref="address_proof_copy" @change="validateFile($event, 'address_proof_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -354,7 +368,7 @@
                       class="block text-sm font-medium leading-6 text-gray-900">Comprovante de Residência e
                       Internet</label>
                     <input type="file" name="residence_internet_copy" id="residence_internet_copy" accept=".pdf"
-                      ref="residence_internet_copy"
+                      ref="residence_internet_copy" @change="validateFile($event, 'residence_internet_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
 
@@ -362,7 +376,7 @@
                     <label for="ubs_internet_copy" class="block text-sm font-medium leading-6 text-gray-900">Comprovante
                       de UBS</label>
                     <input type="file" name="ubs_internet_copy" id="ubs_internet_copy" accept=".pdf"
-                      ref="ubs_internet_copy"
+                      ref="ubs_internet_copy" @change="validateFile($event, 'ubs_internet_copy')"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
@@ -372,10 +386,12 @@
                 <label for="internet_speed" class="block text-sm font-medium leading-6 text-gray-900">Velocidade da
                   Internet</label>
                 <div class="mt-2">
-                  <input type="text" name="internet_speed" id="internet_speed" maxlength="10" v-model="internet_speed"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <input type="number" name="internet_speed" id="internet_speed" maxlength="10" v-model="internet_speed"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    min="0" max="9999999999" />
                 </div>
               </div>
+
 
               <div class="sm:col-span-3">
                 <label for="internet_availability">Disponibilidade de Internet:</label>
@@ -397,7 +413,7 @@
 
               <div class="sm:col-span-3">
                 <div class="flex items-center gap-x-3">
-                  <input id="terms_accepted" name="terms_accepted" type="checkbox" v-model="terms_accepted"
+                  <input id="terms_accepted" name="terms_accepted" type="checkbox" v-model="term_accepted"
                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                   <label for="terms_accepted" class="text-sm font-medium leading-6 text-gray-900">Aceito os termos e
                     condições</label>
@@ -422,6 +438,10 @@ import axios from 'axios';
 import { notify } from 'notiwind';
 import { API_BASE_URL } from '../environment/environment';
 import { UbsType } from '../enums/submission.enum';
+import { hasStudentSubmitted } from '../modules/students';
+import { onMounted } from 'vue';
+import { ref } from 'vue';
+import Loader from './Loader.vue';
 
 export default {
   name: 'Submission',
@@ -470,7 +490,38 @@ export default {
       ubs_internet_copy: null,
       residence_internet_copy: null,
     };
+
   },
+
+  setup() {
+    const hasSubmitted = ref(false);
+    const isLoading = ref(true);
+    onMounted(async () => {
+      try {
+        const user = await getUserData();
+        const token = sessionStorage.getItem('token');
+        await axios.get(`${API_BASE_URL}/user/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        hasSubmitted.value = await hasStudentSubmitted(user.cpf)
+      } catch (error) {
+        console.error('Erro ao verificar submissão:', error);
+        notify({
+          group: 'error',
+          title: 'Erro',
+          text: 'Não foi possível verificar o status da submissão.',
+        });
+      }
+      isLoading.value = false;
+    });
+    return {
+      isLoading,
+      hasSubmitted,
+    };
+  },
+
   created() {
     this.loadFormData();
   },
@@ -516,6 +567,44 @@ export default {
     military_certificate_copy(val) { this.saveFormData(); },
   },
   methods: {
+    formatPostalCode(event) {
+      let input = event.target.value;
+
+      input = input.replace(/\D/g, '');
+
+      if (input.length > 5) {
+        input = input.substring(0, 5) + '-' + input.substring(5, 8);
+      }
+
+      event.target.value = input;
+    },
+    validateFile(event, fieldName) {
+      const file = event.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      if (file.type != 'application/pdf') {
+        notify({
+          group: 'error',
+          title: 'Erro',
+          text: 'Somente arquivos PDF são permitidos.'
+        });
+        event.target.value = '';
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        notify({
+          group: 'error',
+          title: 'Erro',
+          text: 'O arquivo deve ter no máximo 5MB.'
+        });
+        event.target.value = '';
+        return;
+      }
+    },
     saveFormData() {
       const formData = {
         term_accepted: this.term_accepted,
@@ -552,6 +641,7 @@ export default {
       };
       localStorage.setItem('formData', JSON.stringify(formData));
     },
+
     loadFormData() {
       const formData = JSON.parse(localStorage.getItem('formData'));
       if (formData) {
@@ -591,112 +681,135 @@ export default {
     },
     async handleSubmit() {
       try {
-        let user = await getUserData();
+        // Mapeia os campos obrigatórios com seus respectivos rótulos
+        const requiredFields = {
+          mother_name: "Nome da mãe",
+          father_name: "Nome do pai",
+          blood_type: "Tipo sanguíneo",
+          rh_factor: "Fator RH",
+          gender: "Gênero",
+          ethnicity: "Etnia",
+          birth_date: "Data de nascimento",
+          nationality: "Nacionalidade",
+          birth_city: "Cidade de nascimento",
+          birth_state: "Estado de nascimento",
+          street_address: "Endereço",
+          number: "Número",
+          neighborhood: "Bairro",
+          city: "Cidade",
+          state: "Estado",
+          postal_code: "CEP",
+          rg: "RG",
+          high_school_graduation_year: "Ano de conclusão do ensino médio",
+          university_name: "Nome da universidade",
+          graduation_year: "Ano de graduação",
+          graduation_course: "Curso de graduação",
+          current_ubs_name: "Nome da UBS atual",
+          ubs_type: "Tipo de UBS",
+          internet_speed: "Velocidade da internet",
+          internet_availability: "Disponibilidade de internet",
+          energy_availability: "Disponibilidade de energia",
+          marital_status: "Estado civil",
+          physical_disability: "Possui deficiência física",
+          psychological_disorder: "Possui transtorno psicológico",
+        };
 
-        const token = localStorage.getItem('token');
-        const profileResponse = await axios.get(`${API_BASE_URL}/user/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const cpf = profileResponse.data.cpf;
+        // Verifica se o termo foi aceito
+        if (!this.term_accepted) {
+          notify({
+            group: "error",
+            title: "Erro",
+            text: "É necessário aceitar os termos para continuar.",
+          });
+          return;
+        }
 
+        // Valida se todos os campos obrigatórios estão preenchidos
+        for (const [field, label] of Object.entries(requiredFields)) {
+          if (!this[field]) {
+            notify({
+              group: "error",
+              title: "Erro",
+              text: `O campo "${label}" não pode estar vazio.`,
+            });
+            return; // Impede o envio do formulário
+          }
+        }
+
+        const user = await getUserData();
         const formData = new FormData();
-        formData.append('student', user.id);
-        formData.append('term_accepted', this.term_accepted ? 'True' : 'False');
-        formData.append('mother_name', this.mother_name);
-        formData.append('father_name', this.father_name);
-        formData.append('blood_type', this.blood_type);
-        formData.append('rh_factor', this.rh_factor);
-        formData.append('gender', this.gender);
-        formData.append('ethnicity', this.ethnicity);
-        formData.append('birth_date', this.birth_date);
-        formData.append('nationality', this.nationality);
-        formData.append('birth_city', this.birth_city);
-        formData.append('birth_state', this.birth_state);
-        formData.append('street_address', this.street_address);
-        formData.append('number', this.number);
-        formData.append('complement', this.complement);
-        formData.append('neighborhood', this.neighborhood);
-        formData.append('city', this.city);
-        formData.append('state', this.state);
-        formData.append('postal_code', this.postal_code);
-        formData.append('rg', this.rg);
-        formData.append('high_school_graduation_year', this.high_school_graduation_year);
-        formData.append('university_name', this.university_name);
-        formData.append('graduation_year', this.graduation_year);
-        formData.append('graduation_course', this.graduation_course);
-        formData.append('current_ubs_name', this.current_ubs_name);
-        formData.append('ubs_type', this.ubs_type);
-        formData.append('internet_speed', this.internet_speed);
-        formData.append('internet_availability', this.internet_availability);
-        formData.append('energy_availability', this.energy_availability);
-        formData.append('marital_status', this.marital_status);
-        formData.append('physical_disability', this.physical_disability);
-        formData.append('disability_details', this.disability_details);
-        formData.append('disability_degree', this.disability_degree);
-        formData.append('psychological_disorder', this.psychological_disorder);
-        formData.append('cpf', cpf);
+        formData.append("student", user.cpf);
+        formData.append("cpf", user.cpf);
+        formData.append("term_accepted", this.term_accepted ? "True" : "False");
 
-        if (this.$refs.rg_cpf_copy && this.$refs.rg_cpf_copy.files.length > 0) {
-          formData.append('rg_cpf_copy', this.$refs.rg_cpf_copy.files[0]);
-        }
-        if (this.$refs.marriage_certificate_copy && this.$refs.marriage_certificate_copy.files.length > 0) {
-          formData.append('marriage_certificate_copy', this.$refs.marriage_certificate_copy.files[0]);
-        }
-        if (this.$refs.diploma_copy && this.$refs.diploma_copy.files.length > 0) {
-          formData.append('diploma_copy', this.$refs.diploma_copy.files[0]);
-        }
-        if (this.$refs.residence_internet_copy && this.$refs.residence_internet_copy.files.length > 0) {
-          formData.append('residence_internet_copy', this.$refs.residence_internet_copy.files[0]);
-        }
-        if (this.$refs.ubs_internet_copy && this.$refs.ubs_internet_copy.files.length > 0) {
-          formData.append('ubs_internet_copy', this.$refs.ubs_internet_copy.files[0]);
-        }
-        if (this.$refs.reservista_cert_copy && this.$refs.reservista_cert_copy.files.length > 0) {
-          formData.append('reservista_cert_copy', this.$refs.reservista_cert_copy.files[0]);
-        }
-        if (this.$refs.military_certificate_copy && this.$refs.military_certificate_copy.files.length > 0) {
-          formData.append('military_certificate_copy', this.$refs.military_certificate_copy.files[0]);
-        }
-        if (this.$refs.address_proof_copy && this.$refs.address_proof_copy.files.length > 0) {
-          formData.append('address_proof_copy', this.$refs.address_proof_copy.files[0]);
+        // Adiciona os campos obrigatórios
+        for (const field of Object.keys(requiredFields)) {
+          formData.append(field, this[field]);
         }
 
+        // Adiciona os campos opcionais (detalhes e grau da deficiência) somente se preenchidos
+        if (this.disability_details) {
+          formData.append("disability_details", this.disability_details);
+        }
+        if (this.disability_degree) {
+          formData.append("disability_degree", this.disability_degree);
+        }
+
+        // Adiciona os documentos apenas se selecionados
+        const documentFields = [
+          { ref: "rg_cpf_copy", key: "rg_cpf_copy" },
+          { ref: "marriage_certificate_copy", key: "marriage_certificate_copy" },
+          { ref: "diploma_copy", key: "diploma_copy" },
+          { ref: "residence_internet_copy", key: "residence_internet_copy" },
+          { ref: "ubs_internet_copy", key: "ubs_internet_copy" },
+          { ref: "reservista_cert_copy", key: "reservista_cert_copy" },
+          { ref: "military_certificate_copy", key: "military_certificate_copy" },
+          { ref: "address_proof_copy", key: "address_proof_copy" },
+        ];
+
+        documentFields.forEach(({ ref, key }) => {
+          if (this.$refs[ref] && this.$refs[ref].files.length > 0) {
+            formData.append(key, this.$refs[ref].files[0]);
+          }
+        });
+
+        const token = sessionStorage.getItem("token");
         const response = await axios.post(`${API_BASE_URL}/submissions/`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         });
 
         notify({
-          group: 'foo',
-          title: 'Sucesso',
-          text: 'Inscrição criada com sucesso!',
+          group: "foo",
+          title: "Sucesso",
+          text: "Inscrição criada com sucesso!",
         });
 
         this.clearForm();
       } catch (error) {
-        let errorMessage = 'Erro ao enviar a inscrição. Por favor, tente novamente.';
+        let errorMessage = "Erro ao enviar a inscrição. Por favor, tente novamente.";
         if (error.response) {
           errorMessage = `Erro: ${error.response.status} - ${error.response.data.message || errorMessage}`;
-          console.error('Erro na resposta do servidor:', error.response);
+          console.error("Erro na resposta do servidor:", error.response);
         } else if (error.request) {
-          errorMessage = 'Não foi possível obter resposta do servidor.';
-          console.error('Erro na requisição:', error.request);
+          errorMessage = "Não foi possível obter resposta do servidor.";
+          console.error("Erro na requisição:", error.request);
         } else {
           errorMessage = `Erro: ${error.message}`;
-          console.error('Erro desconhecido:', error.message);
+          console.error("Erro desconhecido:", error.message);
         }
 
         notify({
-          group: 'error',
-          title: 'Erro',
+          group: "error",
+          title: "Erro",
           text: errorMessage,
         });
       }
-    },
+    }
+
+    ,
     clearForm() {
       this.term_accepted = false;
       this.mother_name = '';

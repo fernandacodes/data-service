@@ -43,7 +43,7 @@ const userProfile = ref({});
 
 onMounted(async () => {
   try {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const response = await axios.get(`${API_BASE_URL}/user/`, {
       headers: {
         Authorization: `Bearer ${token}`,

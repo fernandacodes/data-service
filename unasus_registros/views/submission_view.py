@@ -6,6 +6,17 @@ from ..models.student_model import Student
 from django.core.files.storage import default_storage
 
 @csrf_exempt
+def has_submission(request, student_cpf): 
+    try:
+        student = Student.objects.get(CPF=student_cpf)
+        if Submission.objects.filter(student=student).exists():
+            return JsonResponse({"has_submission": True})
+        else:
+            return JsonResponse({"has_submission": False})
+    except Student.DoesNotExist:
+        return JsonResponse({"error": "Student not found."}, status=404)
+
+@csrf_exempt
 def create_submission(request):
     if request.method == 'POST':
         try:

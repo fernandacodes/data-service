@@ -29,7 +29,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Condição para verificar se estamos no ambiente de produção ou de desenvolvimento.
 # Para desenvolvimento, não executa o Gunicorn, apenas os comandos de migração e criação de usuários/grupos.
-CMD ["sh", "-c", "if [ \"$ENVIRONMENT\" = \"PRODUION\" ]; then \
+CMD ["sh", "-c", "if [ \"$ENVIRONMENT\" = \"PRODUCTION\" ]; then \
                    python manage.py makemigrations && \
                    python manage.py migrate && \
                    python manage.py create_users_groups && \

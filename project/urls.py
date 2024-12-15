@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/submissions/', create_submission, name='create_submission'),
     path('api/submissions/all/', get_all_submissions, name='get_all_submissions'),
     path('api/submissions/<int:submission_id>/', get_submission_by_id, name='get_submission_by_id'),
+    path('api/submissions/has_submission/<str:student_cpf>/', has_submission, name='has_submission'),  # Nova rota
 
     # UBS routes
     path('api/ubs/create/', create_ubs, name='create_ubs'),

@@ -38,7 +38,7 @@
         </div>
       </div>
       <ul role="list" class="divide-y divide-gray-200">
-        <li v-for="student in students" :key="student.CPF" class="py-4">
+        <li v-for="student in paginatedStudents" :key="student.CPF" class="py-4">
           <router-link :to="{ name: 'StudentDetails', params: { cpf: student.CPF } }" class="flex items-center">
             <div class="ml-3">
               <p class="text-sm font-medium text-gray-900">{{ student.Name }}</p>
@@ -47,19 +47,75 @@
           </router-link>
         </li>
       </ul>
+      <div class="flex justify-center mt-4">
+        <button
+          :disabled="currentPage === 1"
+          @click="changePage(currentPage - 1)"
+          class="px-4 py-2 mx-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50">
+          Anterior
+        </button>
+        <button
+          v-for="page in visiblePages"
+          :key="page"
+          @click="changePage(page)"
+          :class="{'bg-indigo-500 text-white': page === currentPage, 'bg-gray-200': page !== currentPage}"
+          class="px-4 py-2 mx-1 rounded-md">
+          {{ page }}
+        </button>
+        <button
+          :disabled="currentPage === totalPages"
+          @click="changePage(currentPage + 1)"
+          class="px-4 py-2 mx-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50">
+          Próximo
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { API_BASE_URL } from '../environment/environment';
+import Loader from './Loader.vue';
+
 const students = ref([]);
 const searchTerm = ref('');
 const filterType = ref('all');
-import Loader from './Loader.vue';
-const isLoading = ref(true); // Estado de carregamento
+const isLoading = ref(true);
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
+const totalPages = computed(() => Math.ceil(students.value.length / itemsPerPage.value));
+
+const visiblePages = computed(() => {
+  const maxVisible = 5;
+  let pages = [];
+  if (totalPages.value <= maxVisible) {
+    for (let i = 1; i <= totalPages.value; i++) {
+      pages.push(i);
+    }
+  } else if (currentPage.value <= 3) {
+    pages = [1, 2, 3, 4, 5];
+  } else if (currentPage.value > totalPages.value - 3) {
+    pages = [totalPages.value - 4, totalPages.value - 3, totalPages.value - 2, totalPages.value - 1, totalPages.value];
+  } else {
+    pages = [currentPage.value - 2, currentPage.value - 1, currentPage.value, currentPage.value + 1, currentPage.value + 2];
+  }
+  return pages;
+});
+
+const paginatedStudents = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return students.value.slice(start, end);
+});
+
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
 
 const searchStudents = async () => {
   isLoading.value = true;
@@ -83,17 +139,8 @@ const searchStudents = async () => {
       }
     }
     students.value = response.data.students;
-  } catch (error) {
-    students.value = [];
-  }
-  isLoading.value = false;
-};
-
-const loadStudents = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/students/all/`);
-    students.value = response.data.students;
-  } catch (error) {
+    currentPage.value = 1;
+  } catch {
     students.value = [];
   }
   isLoading.value = false;
@@ -104,8 +151,15 @@ const filterStudents = (filter) => {
   searchStudents();
 };
 
+const loadStudents = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/students/all/`);
+    students.value = response.data.students;
+  } catch {
+    students.value = [];
+  }
+  isLoading.value = false;
+};
+
 onMounted(loadStudents);
 </script>
-
-<style scoped>
-</style>

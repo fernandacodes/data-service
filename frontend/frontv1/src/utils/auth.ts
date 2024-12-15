@@ -4,17 +4,10 @@ import axios from 'axios';
 import { API_BASE_URL } from '../environment/environment';
 
 export const isAuthenticated = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return false;
-  }
-  try {
-    const response = await axios.post(`${API_BASE_URL}/token/verify/`, { token });
-    return response.status === 200;
-  } catch (error) {
-    return false;
-  }
+  const token = sessionStorage.getItem('token');
+  return !!token;
 };
+
 
 export const isAdm = async () => {
   const userData = await getUserData();
@@ -22,7 +15,7 @@ export const isAdm = async () => {
 };
 
 export const getUserData = async () => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (!token) {
     throw new Error('Usuário não autenticado');
   }
@@ -41,5 +34,5 @@ export const getUserData = async () => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('token');
+  sessionStorage.removeItem('token');
 };

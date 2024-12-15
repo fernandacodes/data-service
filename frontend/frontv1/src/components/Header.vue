@@ -9,11 +9,11 @@
           <div class="flex items-center">
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <router-link v-if="showStudentsLink" to="/" :class="isActive('/')">Painel</router-link>
-                <router-link v-if="!showStudentsLink" to="/submission" :class="isActive('/submission')">Submissão</router-link>
+                <router-link v-if="showOptions" to="/" :class="isActive('/')">Painel</router-link>
+                <router-link v-if="!showOptions" to="/submission"
+                  :class="isActive('/submission')">Submissão</router-link>
                 <router-link to="/profile" :class="isActive('/profile')">Perfil</router-link>
-                <router-link v-if="showStudentsLink" to="/students"
-                  :class="isActive('/students')">Estudantes</router-link>
+                <router-link v-if="showOptions" to="/students" :class="isActive('/students')">Estudantes</router-link>
               </div>
             </div>
           </div>
@@ -40,15 +40,12 @@
                   enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                   leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
                   leave-to-class="transform opacity-0 scale-95">
-                  <MenuItems
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                   
-                    <MenuItem v-slot="{ active }">
-                    <a  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                      @click.prevent="handleLogout()">Sair</a>
-                    </MenuItem>
-                  </MenuItems>
                 </transition>
+                <a href="#"
+                  class="block rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  @click.prevent="handleLogout">
+                  Sair
+                </a>
               </Menu>
             </div>
           </div>
@@ -66,9 +63,10 @@
 
       <DisclosurePanel class="md:hidden">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-          <router-link to="/" :class="isActive('/')">Painel</router-link>
-          <router-link to="/submission" :class="isActive('/submission')">Submissão</router-link>
-          <router-link v-if="showStudentsLink" to="/students" :class="isActive('/students')">Estudantes</router-link>
+          <router-link v-if="showOptions" to="/" :class="isActive('/')">Painel</router-link>
+          <router-link v-if="!showOptions" to="/submission" :class="isActive('/submission')">Submissão</router-link>
+          <router-link v-if="showOptions" to="/students" :class="isActive('/students')">Estudantes</router-link>
+          <router-link to="/profile" :class="isActive('/profile')">Perfil</router-link>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
@@ -84,7 +82,11 @@
             </button>
           </div>
           <div class="mt-3 space-y-1 px-2">
-            <router-link to="/logout" :class="isActive('/logout')" @click.prevent="handleLogout">Sair</router-link>
+            <a href="#"
+              class="block rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              @click.prevent="handleLogout">
+              Sair
+            </a>
           </div>
         </div>
       </DisclosurePanel>
@@ -96,11 +98,10 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 import router from '../router';
-import { isAuthenticated, getUserData, logout } from '../utils/auth';
+import { isAuthenticated, logout } from '../utils/auth';
 
-const showStudentsLink = ref(false);
+let showOptions = ref(false);
 
 let user = {
   name: '',
@@ -112,18 +113,10 @@ let user = {
 onMounted(async () => {
   const auth = await isAuthenticated();
   if (auth) {
-    try {
-      const userData = await getUserData();
-      user.name = userData.name;
-      user.email = userData.email;
-      user.first_name = userData.first_name;
-      user.last_name = userData.last_name;
-
-      if (userData.role === 'admin') {
-        showStudentsLink.value = true; 
-      }
-    } catch (error) {
-    }
+    const role = sessionStorage.getItem('role');
+    showOptions.value = role === 'admin';
+  } else {
+    showOptions.value = false;
   }
 });
 
@@ -141,5 +134,4 @@ function handleLogout() {
 }
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="footer-caption">
     <div class="text-center">
-      <p class="text-black text-sm">&copy; 2024 Todos os direitos reservados @unasusufam</p>
+      <p class="text-white text-sm">&copy; 2024 Todos os direitos reservados @unasusufam</p>
     </div>
   </div>
 </template>
@@ -10,10 +10,12 @@
 </script>
 
 <style scoped>
-footer {
+.footer-caption {
+  width: 100%;
+  background-color: #1b2131;
+  padding: 20px;
   color: white;
 }
-
 footer p {
   font-size: 0.875rem;
   font-weight: 500;

@@ -24,21 +24,29 @@ DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('ENVIRONMENT') != 'PRODUCTION'
+
+STORAGES = {
+    'default':{
+        "BACKEND": 'storages.backends.s3boto3.S3Boto3Storage',
+    },
+    'staticfiles':{
+        "BACKEND":'storages.backends.s3boto3.S3Boto3Storage'
+    }
+}
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "web",
-    "54.232.202.170",
+    "18.230.236.221",
     "sistemaunasus.ufam.edu.br",
 ]
 
 # Configuração CORS para aceitar todas as origens
 CORS_ALLOW_ALL_ORIGINS = True
 
-"""
-Configurações de HTTPS e Segurança (Desabilitado para Desenvolvimento)
+#Configurações de HTTPS e Segurança (Desabilitado para Desenvolvimento)
 
 SECURE_SSL_REDIRECT = True  # Redireciona automaticamente HTTP para HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Suporte para HTTPS atrás de um proxy
@@ -52,7 +60,6 @@ SESSION_COOKIE_SECURE = True  # Torna o cookie de sessão acessível apenas via 
 X_FRAME_OPTIONS = 'DENY'  # Evita que o site seja carregado em um iframe (cliquejacking)
 CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']  # Apenas se necessário para produção
 
-"""
 
 
 SIMPLE_JWT = {
@@ -167,15 +174,11 @@ AUTH_PASSWORD_VALIDATORS = [
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
-AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 LANGUAGE_CODE = 'pt-br'
