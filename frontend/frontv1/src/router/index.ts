@@ -3,7 +3,7 @@ import Login from '../components/Login.vue';
 import Submission from '../components/Submission.vue';
 import Students from '../components/Students.vue';
 import Home from '../components/Home.vue';
-import { isAuthenticated, isAdm } from '../utils/auth';
+import { isAuthenticated} from '../utils/auth';
 import Profile from '../components/Profile.vue';
 import StudentDetail from '../components/StudentDetail.vue';
 import SubmissionDetail from '../components/SubmissionDetail.vue';
@@ -57,7 +57,8 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to,from,next) => {
+  console.log(from)
   if (to.meta.requiresAuth) {
     const authenticated = await isAuthenticated();
     if (!authenticated) {
