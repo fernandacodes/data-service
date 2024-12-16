@@ -1,5 +1,3 @@
-// routes/index.ts
-
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Login from '../components/Login.vue';
 import Submission from '../components/Submission.vue';
@@ -20,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresAdmin: true }
   },
   {
     path: '/profile',
@@ -32,13 +30,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/student/:cpf',
     name: 'StudentDetails',
     component: StudentDetail,
-    meta: { requiresAuth: true, requiresAdmin: true}
+    meta: { requiresAuth: true, requiresAdmin: true }
   },
   {
     path: '/submission/:cpf',
     name: 'SubmissionDetails',
-    component:SubmissionDetail,
-    meta: { requiresAuth: true, requiresAdmin: true}
+    component: SubmissionDetail,
+    meta: { requiresAuth: true, requiresAdmin: true }
   },
   {
     path: '/submission',
@@ -46,7 +44,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Submission,
     meta: { requiresAuth: true }
   },
-  
   {
     path: '/students',
     name: 'Students',
@@ -60,10 +57,7 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to : any, from : any, next) => {
-  if(from){
-    from
-  }
+router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     const authenticated = await isAuthenticated();
     if (!authenticated) {
@@ -71,16 +65,17 @@ router.beforeEach(async (to : any, from : any, next) => {
     }
   }
 
-  // Verifica se a rota requer administrador
   if (to.meta.requiresAdmin) {
     try {
-      const isAdmin = await isAdm();
+      const role = sessionStorage.getItem('role');
+      const isAdmin = role === 'admin';
+
       if (!isAdmin) {
-        return next('/');
+        return next('/submission');
       }
     } catch (error) {
       console.error('Erro ao verificar permissões de administrador:', error);
-      return next('/');
+      return next('/submission');
     }
   }
 

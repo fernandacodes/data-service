@@ -23,9 +23,16 @@
           </div>
         </div>
         <div>
-          <button type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Entrar
+          <button 
+            type="submit" 
+            :disabled="isLoading"
+            :class="{
+              'bg-gray-400 cursor-not-allowed': isLoading,
+              'bg-indigo-600 hover:bg-indigo-500': !isLoading
+            }"
+            class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <span v-if="isLoading">Entrando...</span>
+            <span v-else>Entrar</span>
           </button>
         </div>
       </form>
@@ -43,52 +50,48 @@ import router from '../router';
 import { notify } from 'notiwind';
 import { API_BASE_URL } from '../environment/environment';
 import Footer from './Footer.vue';
-import { isAuthenticated, getUserData, logout } from '../utils/auth';
+import { getUserData } from '../utils/auth';
 
 const cpf = ref('');
 const password = ref('');
+const isLoading = ref(false);
 
 const removeCpfFormatting = (cpf) => {
   return cpf.replace(/[.-]/g, '');
 };
 
 const login = async () => {
-  var cpfFormatted = removeCpfFormatting(cpf.value);
+  if (isLoading.value) return;
+  isLoading.value = true;
+
+  const cpfFormatted = removeCpfFormatting(cpf.value);
   try {
     const response = await axios.post(`${API_BASE_URL}/token/`, {
       username: cpfFormatted,
-      password: password.value
+      password: password.value,
     });
+
     sessionStorage.setItem('token', response.data.token);
-    try {
-      const user = await getUserData();
-      sessionStorage.setItem("role", user.role);
-    } catch (e) {
-      throw (e);
-    }
+
+    const user = await getUserData();
+    sessionStorage.setItem("role", user.role);
 
     router.push('/');
     notify({
       group: 'foo',
       title: 'Sucesso',
-      text: 'Logado com sucesso!'
+      text: 'Logado com sucesso!',
     });
   } catch (error) {
     notify({
       group: 'error',
       title: 'Erro',
-      text: 'Falha ao fazer login. Verifique suas credenciais.'
+      text: 'Falha ao fazer login. Verifique suas credenciais.',
     });
+  } finally {
+    isLoading.value = false;
   }
 };
-
-axios.interceptors.request.use(config => {
-  const token = sessionStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-})
 </script>
 
 <style>

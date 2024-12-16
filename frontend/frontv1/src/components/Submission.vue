@@ -445,6 +445,9 @@ import Loader from './Loader.vue';
 
 export default {
   name: 'Submission',
+  components:{
+    Loader,
+  },
   data() {
     return {
       term_accepted: false,
