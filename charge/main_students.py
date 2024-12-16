@@ -60,24 +60,24 @@ def clean_row_values(row):
     for key, value in row.items():
         if value == "" or value == "Não":
             if key == "DSEI":
-                cleaned_row[key] = False
-            elif key == "Matricula":
-                cleaned_row[key] = "X"
+                cleaned_row[key] = False  # Se o valor for vazio ou "Não", coloca False
+            elif key == "Matricula" or key == "TurmaTutor" or key == "Data" or key == "Condição":
+                cleaned_row[key] = "X"  # Valor padrão para essas colunas
             elif key == "Situação":
                 cleaned_row[key] = "INATIVO"
             elif key == "Telefone":
                 cleaned_row[key] = "00000000000"
-            elif key == "Data":
-                cleaned_row[key] = datetime.now(pytz.timezone('America/Sao_Paulo')).strftime('%Y-%m-%d %H:%M:%S')
             else:
                 cleaned_row[key] = None
         else:
             # Verificar DSEI e tratar valores diferentes de "sim" ou "não"
-            if key == "DSEI" and value not in ["sim", "não", "Sim", "Não"]:
-                cleaned_row[key] = False
+            if key == "DSEI":
+                # Se o valor for "Sim", transforma em True, senão False
+                cleaned_row[key] = value.lower() == "sim"
             else:
                 cleaned_row[key] = value
     return cleaned_row
+
 
 # Função para inserir os dados do aluno na tabela 'customuser' com role 'student'
 def insert_student_customuser_data(cursor, row):
@@ -133,23 +133,24 @@ def insert_student_data(cursor, row):
     # Obter a data atual formatada
     current_date = datetime.now(pytz.timezone('America/Sao_Paulo')).strftime('%Y-%m-%d %H:%M:%S')
 
+    # Para lidar com a ausência de algumas colunas, preenchemos com valores padrão
     data = (
-        row['CPF'],                        # CPF
-        row['Nome'],                       # Name
-        row['Email'],                      # Email
-        row['Telefone'],                   # Phone
-        row['Município'],                  # Municipality
-        row['UF'],                         # State
-        row['Situação'],                   # Status
-        row['Ciclo'],                      # Cycle
-        row['Lista'],                      # List
-        row['DSEI'],                       # DSEI
-        row['Matricula'],                  # EnrollmentNumber
-        row['TurmaTutor'],                 # TutorClass
-        row['Data'],                       # Date
-        row['Condição'],                   # Condition
-        current_date,                      # RequestChangeDate
-        None                               # ubs_id (assumindo como None por padrão)
+        row.get('CPF', ''),                        # CPF
+        row.get('Nome', ''),                       # Name
+        row.get('Email', ''),                      # Email
+        row.get('Telefone', ''),                   # Phone
+        row.get('Município', ''),                  # Municipality
+        row.get('UF', ''),                         # State
+        row.get('Situação', 'INATIVO'),            # Status (valor padrão se não houver)
+        row.get('Ciclo', '0'),                     # Cycle
+        row.get('Lista', ''),                      # List
+        row.get('DSEI', False),                    # DSEI
+        row.get('Matricula', 'X'),                 # EnrollmentNumber
+        row.get('TurmaTutor', 'X'),                # TutorClass
+        row.get('Data', current_date),             # Date
+        row.get('Condição', 'X'),                  # Condition
+        current_date,                              # RequestChangeDate
+        None                                       # ubs_id (assumindo como None por padrão)
     )
 
     # Executar a query no banco
@@ -194,7 +195,7 @@ def process_csv_and_insert(csv_file):
 
                 progress_bar.set_postfix({'status': 'success'})
             except Exception as e:
-                logger.error(f"Erro ao inserir dados do aluno {row['Nome']}: {e}")
+                logger.error(f"Erro ao inserir dados do aluno {row.get('Nome', '')}: {e}")
                 progress_bar.set_postfix({'status': 'error'})
             progress_bar.update(1)
 
