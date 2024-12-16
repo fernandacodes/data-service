@@ -1,5 +1,7 @@
 services:
   app:
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
     build: .
     volumes:
       - .:/code
