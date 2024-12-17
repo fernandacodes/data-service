@@ -57,8 +57,9 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to,from,next) => {
-  console.log(from)
+router.beforeEach(async (to, from, next) => {
+  console.log(`Navegando de ${from.fullPath} para ${to.fullPath}`); 
+
   if (to.meta.requiresAuth) {
     const authenticated = await isAuthenticated();
     if (!authenticated) {
@@ -82,5 +83,6 @@ router.beforeEach(async (to,from,next) => {
 
   next();
 });
+
 
 export default router;

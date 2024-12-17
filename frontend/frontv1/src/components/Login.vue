@@ -97,7 +97,6 @@ const login = async () => {
 <style>
 img {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  /* Sombras suaves */
 }
 
 .bg-[#1b2131] {

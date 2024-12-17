@@ -1,6 +1,6 @@
 let environment = "production";
 const BASE_URL_DEV = 'http://localhost:8000/api';
-const BASE_URL_PRD = 'https://sistemaunasus.ufam.edu.br/:8000/api';
+const BASE_URL_PRD = 'https://sistemaunasus.ufam.edu.br:8000/api';
 
 const API_KEY = "AIzaSyDM40vfVqAgs1QUC08K8uCqtQ_r0mEdAyI";
 
