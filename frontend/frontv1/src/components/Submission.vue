@@ -958,10 +958,12 @@ export default {
     },
     UbsType() {
       return {
-        "PRIMARY": 'Unidade Básica de Saúde',
-        "SECONDARY": 'Unidade de Saúde Secundária',
-        "TERTIARY": 'Unidade de Saúde Terciária',
-      };
+        URBANA: 'UBS Urbana',
+        RURAL: 'UBS Rural',
+        RIBEIRINHA: 'UBS Ribeirinha',
+        FLUVIAL: 'UBS Fluvial',
+        DSEI: 'DSEI',
+    };
     },
   },
 };

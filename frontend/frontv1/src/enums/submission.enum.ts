@@ -92,9 +92,11 @@ export enum State {
 }
 
 export enum UbsType {
-    PRIMARY = 'Unidade Básica de Saúde',
-    SECONDARY = 'Unidade de Saúde Secundária',
-    TERTIARY = 'Unidade de Saúde Terciária',
+    URBANA = 'UBS Urbana ',
+    RURAL = 'UBS Rural',
+    RIBEIRINHA = 'UBS Rebeirinha',
+    FLUVIAL = 'UBS Fluvial',
+    DSEI = "DSEI"
 }
 
 
