@@ -29,13 +29,17 @@ urlpatterns = [
     path('api/students/update/<int:student_id>/', update_student, name='update_student'),
     path('api/students/with-submissions/', search_students_with_submissions, name='search_students_with_submissions'),
     path('api/students/search/', search_student_by_name, name='search_student_by_name'),
+    path('api/students/without-submissions/export/', export_students_without_submissions, name='export_students_without_submissions'),
+    path('api/students/with-submissions/export/', export_students_with_submissions, name='export_students_with_submissions'),
+
 
     # Submission routes
     path('api/submissions/cpf/<str:student_cpf>/', get_submission_by_cpf, name='get_submission_by_cpf'),
     path('api/submissions/', create_submission, name='create_submission'),
     path('api/submissions/all/', get_all_submissions, name='get_all_submissions'),
     path('api/submissions/<int:submission_id>/', get_submission_by_id, name='get_submission_by_id'),
-    path('api/submissions/has_submission/<str:student_cpf>/', has_submission, name='has_submission'),  # Nova rota
+    path('api/submissions/has_submission/<str:student_cpf>/', has_submission, name='has_submission'),  
+    path('api/submissions/delete/<str:student_cpf>/', delete_submission, name='delete_submission'),
 
     # UBS routes
     path('api/ubs/create/', create_ubs, name='create_ubs'),

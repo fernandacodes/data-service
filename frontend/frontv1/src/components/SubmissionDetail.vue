@@ -48,11 +48,13 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Deficiência Física</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.physical_disability ? 'Sim' : 'Não' }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.physical_disability ?
+            'Sim' : 'Não' }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Detalhes da Deficiência</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.disability_details }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.disability_details }}
+          </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Grau da Deficiência</dt>
@@ -60,7 +62,8 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Transtorno Psicológico</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.psychological_disorder }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.psychological_disorder }}
+          </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Endereço</dt>
@@ -83,7 +86,8 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Ano de Conclusão do Ensino Médio</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.high_school_graduation_year }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{
+            submission.high_school_graduation_year }}</dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Nome da Universidade</dt>
@@ -114,7 +118,8 @@
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Certificado de Reservista</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <a v-if="submission.reservista_cert_copy" :href="submission.reservista_cert_copy" target="_blank">Visualizar Documento</a>
+            <a v-if="submission.reservista_cert_copy" :href="submission.reservista_cert_copy" target="_blank">Visualizar
+              Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -126,25 +131,29 @@
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia da Certidão de Casamento</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <a v-if="submission.marriage_certificate_copy" :href="submission.marriage_certificate_copy" target="_blank">Visualizar Documento</a>
+            <a v-if="submission.marriage_certificate_copy" :href="submission.marriage_certificate_copy"
+              target="_blank">Visualizar Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de Endereço</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <a v-if="submission.address_proof_copy" :href="submission.address_proof_copy" target="_blank">Visualizar Documento</a>
+            <a v-if="submission.address_proof_copy" :href="submission.address_proof_copy" target="_blank">Visualizar
+              Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de Residência na Internet</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <a v-if="submission.residence_internet_copy" :href="submission.residence_internet_copy" target="_blank">Visualizar Documento</a>
+            <a v-if="submission.residence_internet_copy" :href="submission.residence_internet_copy"
+              target="_blank">Visualizar Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Cópia do Comprovante de UBS na Internet</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <a v-if="submission.ubs_internet_copy" :href="submission.ubs_internet_copy" target="_blank">Visualizar Documento</a>
+            <a v-if="submission.ubs_internet_copy" :href="submission.ubs_internet_copy" target="_blank">Visualizar
+              Documento</a>
           </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -153,22 +162,36 @@
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Disponibilidade de Internet</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.internet_availability }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.internet_availability }}
+          </dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm font-medium leading-6 text-gray-900">Disponibilidade de Energia</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.energy_availability }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ submission.energy_availability }}
+          </dd>
         </div>
       </dl>
     </div>
+    <div class="mt-6 flex justify-end">
+      <button
+        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+        :disabled="isDeleting"
+        @click="showConfirmModal = true"
+      >
+        Excluir Submissão
+      </button>
+    </div>
   </div>
-  
+
   <div v-else-if="noSubmission" class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="bg-red-50 border-l-4 border-red-400 p-4">
       <div class="flex">
         <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.998-.446 1.364 0l5.51 6.684A1 1 0 0115.11 11H4.89a1 1 0 01-.82-1.217l5.51-6.684zM11 13a1 1 0 10-2 0v2a1 1 0 102 0v-2z" clip-rule="evenodd"/>
+          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+            aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M8.257 3.099c.366-.446.998-.446 1.364 0l5.51 6.684A1 1 0 0115.11 11H4.89a1 1 0 01-.82-1.217l5.51-6.684zM11 13a1 1 0 10-2 0v2a1 1 0 102 0v-2z"
+              clip-rule="evenodd" />
           </svg>
         </div>
         <div class="ml-3">
@@ -182,25 +205,48 @@
 
   <div v-else class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="text-center">
-      <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 9a4 4 0 014-4h10a4 4 0 014 4M8 9v4m8-4v4m-4-4v4" />
+      <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 9a4 4 0 014-4h10a4 4 0 014 4M8 9v4m8-4v4m-4-4v4" />
       </svg>
       <h3 class="mt-2 text-sm font-medium text-gray-900">Carregando detalhes da submissão...</h3>
-      <p class="mt-1 text-sm text-gray-500">Por favor, aguarde enquanto os detalhes da submissão estão sendo carregados.</p>
+      <p class="mt-1 text-sm text-gray-500">Por favor, aguarde enquanto os detalhes da submissão estão sendo carregados.
+      </p>
+    </div>
+  </div> <!-- Modal de Confirmação -->
+  <div v-if="showConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div class="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+      <h3 class="text-lg font-semibold text-gray-900">Confirmar Exclusão</h3>
+      <p class="mt-2 text-sm text-gray-600">Tem certeza de que deseja excluir esta submissão?</p>
+      <div class="mt-4 flex justify-end space-x-2">
+        <button class="bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400" @click="showConfirmModal = false">
+          Cancelar
+        </button>
+        <button
+          class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          :disabled="isDeleting" @click="deleteSubmission">
+          {{ isDeleting ? 'Excluindo...' : 'Excluir' }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { API_BASE_URL } from '../environment/environment';
 
 const route = useRoute();
-const submissionId = String(route.params.cpf);
+const router = useRouter();
+const submissionId = route.params.cpf;
+
 const submission = ref(null);
 const noSubmission = ref(false);
+const showConfirmModal = ref(false);
+const isDeleting = ref(false);
 
 const fetchSubmissionDetails = async () => {
   try {
@@ -209,8 +255,20 @@ const fetchSubmissionDetails = async () => {
   } catch (error) {
     if (error.response && error.response.status === 404) {
       noSubmission.value = true;
-    } else {
     }
+  }
+};
+
+const deleteSubmission = async () => {
+  isDeleting.value = true;
+  try {
+    await axios.delete(`${API_BASE_URL}/submissions/delete/${submissionId}/`);
+    router.back();
+  } catch (error) {
+    console.error('Erro ao excluir submissão:', error);
+  } finally {
+    isDeleting.value = false;
+    showConfirmModal.value = false;
   }
 };
 

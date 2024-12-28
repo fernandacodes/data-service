@@ -1,6 +1,11 @@
-from django.http import JsonResponse
+import csv
+from django.db import connection
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models import Q
+
+from unasus_registros import models
 from ..models.submission import Submission
 from ..models.student_model import Student
 from django.core.files.storage import default_storage
@@ -217,3 +222,132 @@ def get_submission_by_cpf(request, student_cpf):
             return JsonResponse({"error": "Student not found."}, status=404)
     else:
         return JsonResponse({"error": "Invalid method"}, status=405)
+    
+@csrf_exempt
+def export_students_without_submissions(request):
+    if request.method == 'GET':
+        # Selecionar alunos que não têm submissões
+        students_without_submissions = Student.objects.filter(
+            ~Q(id__in=Submission.objects.values_list('student_id', flat=True))
+        )
+
+        # Configurar a resposta HTTP para exportação CSV
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos_sem_submissao.csv"'
+
+        # Configurar o escritor CSV
+        writer = csv.writer(response)
+        writer.writerow([
+            'CPF', 'Nome', 'Email', 'Telefone', 'Município', 'Estado',
+            'Situação', 'Ciclo', 'Lista', 'DSEI', 'Número de Matrícula',
+            'Turma do Tutor', 'Data', 'Condição', 'Data de Solicitação de Mudança', 'UBS'
+        ])
+
+        # Preencher as linhas do CSV
+        for student in students_without_submissions:
+            writer.writerow([
+                student.CPF,
+                student.Name,
+                student.Email,
+                student.Phone,
+                student.Municipality,
+                student.State,
+                student.Status,
+                student.Cycle,
+                student.List,
+                'Sim' if student.DSEI else 'Não',
+                student.EnrollmentNumber,
+                student.TutorClass,
+                student.Date,
+                student.Condition,
+                student.RequestChangeDate.strftime('%d/%m/%Y') if student.RequestChangeDate else '',
+                student.ubs.city if student.ubs else ''
+            ])
+
+        return response
+    else:
+        return JsonResponse({"error": "Método não permitido."}, status=405)
+
+@csrf_exempt
+def export_students_with_submissions(request):
+    if request.method == 'GET':
+        # Definição do SQL
+        sql_query = """
+        SELECT 
+            s.id,
+            s."CPF",
+            s."Name",
+            s."Email",
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.rg_cpf_copy) AS rg_cpf_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.reservista_cert_copy) AS reservista_cert_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.diploma_copy) AS diploma_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.marriage_certificate_copy) AS marriage_certificate_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.address_proof_copy) AS address_proof_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.residence_internet_copy) AS residence_internet_url,
+            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.ubs_internet_copy) AS ubs_internet_url
+        FROM unasus_registros_student s
+        INNER JOIN unasus_registros_submission sub
+            ON sub.student_id = s.id;
+        """
+
+        # Executando a query no banco
+        with connection.cursor() as cursor:
+            cursor.execute(sql_query)
+            results = cursor.fetchall()
+
+        # Configurar a resposta HTTP para exportação CSV
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="students_with_submissions.csv"'
+
+        # Configurar o escritor CSV
+        writer = csv.writer(response)
+        writer.writerow([
+            'ID', 'CPF', 'Nome', 'Email', 'RG CPF URL', 'Reservista Cert URL',
+            'Diploma', 'Certificado de casamento', 'Comprovante de endereco',
+            'Comprovante de internet', 'comprovante de internet da UBS'
+        ])
+
+        # Escrever os dados no CSV
+        for row in results:
+            writer.writerow(row)
+
+        return response
+    else:
+        return JsonResponse({"error": "Método não permitido."}, status=405)
+
+@csrf_exempt
+def delete_submission(request, student_cpf):
+    if request.method == 'DELETE':
+        try:
+            # Verifica se o estudante existe
+            student = Student.objects.get(CPF=student_cpf)
+            
+            # Obtém a submissão associada ao estudante
+            submission = Submission.objects.filter(student=student).first()
+            
+            if not submission:
+                return JsonResponse({"error": "No submission found for this student."}, status=404)
+            
+            # Lista de campos de arquivos na submissão
+            document_fields = [
+                'rg_cpf_copy', 'reservista_cert_copy', 'diploma_copy',
+                'marriage_certificate_copy', 'address_proof_copy',
+                'residence_internet_copy', 'ubs_internet_copy'
+            ]
+
+            # Remove os arquivos associados do S3
+            for field in document_fields:
+                file_path = getattr(submission, field)
+                if file_path:
+                    default_storage.delete(file_path)
+            
+            submission.delete()
+            
+            return JsonResponse({"message": "Submission and associated documents successfully deleted."}, status=200)
+        
+        except Student.DoesNotExist:
+            return JsonResponse({"error": "Student not found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    else:
+        return JsonResponse({"error": "Method not allowed."}, status=405)

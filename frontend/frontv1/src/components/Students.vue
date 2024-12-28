@@ -17,25 +17,36 @@
           </button>
         </div>
       </div>
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Filtrar por:</label>
-        <div class="mt-1 flex space-x-2">
-          <button @click="filterStudents('all')"
-            :class="{'bg-indigo-500 text-white': filterType === 'all', 'bg-white text-indigo-500': filterType !== 'all'}"
-            class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Todos
-          </button>
-          <button @click="filterStudents('withSubmission')"
-            :class="{'bg-indigo-500 text-white': filterType === 'withSubmission', 'bg-white text-indigo-500': filterType !== 'withSubmission'}"
-            class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Com Submissão
-          </button>
-          <button @click="filterStudents('withoutSubmission')"
-            :class="{'bg-indigo-500 text-white': filterType === 'withoutSubmission', 'bg-white text-indigo-500': filterType !== 'withoutSubmission'}"
-            class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Sem Submissão
-          </button>
+      <div class="mb-4 flex items-center space-x-2">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Filtrar por:</label>
+          <div class="mt-1 flex space-x-2">
+            <button @click="filterStudents('all')"
+              :class="{ 'bg-indigo-500 text-white': filterType === 'all', 'bg-white text-indigo-500': filterType !== 'all' }"
+              class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Todos
+            </button>
+            <button @click="filterStudents('withSubmission')"
+              :class="{ 'bg-indigo-500 text-white': filterType === 'withSubmission', 'bg-white text-indigo-500': filterType !== 'withSubmission' }"
+              class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Com Submissão
+            </button>
+            <button @click="filterStudents('withoutSubmission')"
+              :class="{ 'bg-indigo-500 text-white': filterType === 'withoutSubmission', 'bg-white text-indigo-500': filterType !== 'withoutSubmission' }"
+              class="px-4 py-2 rounded-md border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Sem Submissão
+            </button>
+            <button @click="downloadSubmitted"
+              class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              Download Submetidos
+            </button>
+            <button @click="downloadNotSubmitted"
+              class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              Download Não Submetidos
+            </button>
+          </div>
         </div>
+
       </div>
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="student in paginatedStudents" :key="student.CPF" class="py-4">
@@ -48,23 +59,16 @@
         </li>
       </ul>
       <div class="flex justify-center mt-4">
-        <button
-          :disabled="currentPage === 1"
-          @click="changePage(currentPage - 1)"
+        <button :disabled="currentPage === 1" @click="changePage(currentPage - 1)"
           class="px-4 py-2 mx-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50">
           Anterior
         </button>
-        <button
-          v-for="page in visiblePages"
-          :key="page"
-          @click="changePage(page)"
-          :class="{'bg-indigo-500 text-white': page === currentPage, 'bg-gray-200': page !== currentPage}"
+        <button v-for="page in visiblePages" :key="page" @click="changePage(page)"
+          :class="{ 'bg-indigo-500 text-white': page === currentPage, 'bg-gray-200': page !== currentPage }"
           class="px-4 py-2 mx-1 rounded-md">
           {{ page }}
         </button>
-        <button
-          :disabled="currentPage === totalPages"
-          @click="changePage(currentPage + 1)"
+        <button :disabled="currentPage === totalPages" @click="changePage(currentPage + 1)"
           class="px-4 py-2 mx-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50">
           Próximo
         </button>
@@ -149,6 +153,38 @@ const searchStudents = async () => {
 const filterStudents = (filter) => {
   filterType.value = filter;
   searchStudents();
+};
+
+const downloadSubmitted = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/students/with-submissions/export/`, {
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'alunos-submetidos.csv');
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error('Erro ao baixar os alunos submetidos:', error);
+  }
+};
+
+const downloadNotSubmitted = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/students/without-submissions/export/`, {
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'alunos-nao-submetidos.csv');
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error('Erro ao baixar os alunos não submetidos:', error);
+  }
 };
 
 const loadStudents = async () => {
