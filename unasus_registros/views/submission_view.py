@@ -271,20 +271,14 @@ def export_students_without_submissions(request):
 @csrf_exempt
 def export_students_with_submissions(request):
     if request.method == 'GET':
-        # Definição do SQL
+        # Definição do SQL para incluir todos os campos de Submission
         sql_query = """
         SELECT 
-            s.id,
+            s.id AS student_id,
             s."CPF",
             s."Name",
             s."Email",
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.rg_cpf_copy) AS rg_cpf_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.reservista_cert_copy) AS reservista_cert_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.diploma_copy) AS diploma_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.marriage_certificate_copy) AS marriage_certificate_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.address_proof_copy) AS address_proof_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.residence_internet_copy) AS residence_internet_url,
-            CONCAT('https://unasus-bucket.s3.amazonaws.com/', sub.ubs_internet_copy) AS ubs_internet_url
+            sub.*
         FROM unasus_registros_student s
         INNER JOIN unasus_registros_submission sub
             ON sub.student_id = s.id;
@@ -293,19 +287,69 @@ def export_students_with_submissions(request):
         # Executando a query no banco
         with connection.cursor() as cursor:
             cursor.execute(sql_query)
+            columns = [col[0] for col in cursor.description]  # Obtem os nomes das colunas
             results = cursor.fetchall()
+
+        # Mapeamento de cabeçalhos para português
+        column_headers_ptbr = {
+            "student_id": "ID do Aluno",
+            "CPF": "CPF",
+            "Name": "Nome",
+            "Email": "Email",
+            "timestamp": "Data e Hora da Submissão",
+            "term_accepted": "Termo Aceito",
+            "birthplace": "Local de Nascimento",
+            "nationality": "Nacionalidade",
+            "birth_date": "Data de Nascimento",
+            "marital_status": "Estado Civil",
+            "mother_name": "Nome da Mãe",
+            "father_name": "Nome do Pai",
+            "gender": "Gênero",
+            "blood_type": "Tipo Sanguíneo",
+            "rh_factor": "Fator RH",
+            "ethnicity": "Etnia",
+            "physical_disability": "Deficiência Física",
+            "disability_details": "Detalhes da Deficiência",
+            "disability_degree": "Grau da Deficiência",
+            "psychological_disorder": "Transtorno Psicológico",
+            "street_address": "Endereço",
+            "number": "Número",
+            "complement": "Complemento",
+            "neighborhood": "Bairro",
+            "city": "Cidade",
+            "state": "Estado",
+            "postal_code": "CEP",
+            "rg": "RG",
+            "birth_city": "Cidade de Nascimento",
+            "birth_state": "Estado de Nascimento",
+            "high_school_graduation_year": "Ano de Conclusão do Ensino Médio",
+            "university_name": "Nome da Universidade",
+            "graduation_year": "Ano de Graduação",
+            "graduation_course": "Curso de Graduação",
+            "current_ubs_name": "Nome da UBS Atual",
+            "ubs_type": "Tipo de UBS",
+            "rg_cpf_copy": "Cópia do RG/CPF",
+            "reservista_cert_copy": "Cópia do Certificado de Reservista",
+            "diploma_copy": "Cópia do Diploma",
+            "marriage_certificate_copy": "Cópia do Certificado de Casamento",
+            "address_proof_copy": "Comprovante de Endereço",
+            "residence_internet_copy": "Comprovante de Internet Residencial",
+            "ubs_internet_copy": "Comprovante de Internet da UBS",
+            "internet_speed": "Velocidade da Internet",
+            "internet_availability": "Disponibilidade de Internet",
+            "energy_availability": "Disponibilidade de Energia",
+        }
+
+        # Traduzir os nomes das colunas para português
+        column_headers = [column_headers_ptbr.get(col, col) for col in columns]
 
         # Configurar a resposta HTTP para exportação CSV
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="students_with_submissions.csv"'
+        response['Content-Disposition'] = 'attachment; filename="students_with_submissions_ptbr.csv"'
 
         # Configurar o escritor CSV
         writer = csv.writer(response)
-        writer.writerow([
-            'ID', 'CPF', 'Nome', 'Email', 'RG CPF URL', 'Reservista Cert URL',
-            'Diploma', 'Certificado de casamento', 'Comprovante de endereco',
-            'Comprovante de internet', 'comprovante de internet da UBS'
-        ])
+        writer.writerow(column_headers)  # Escreve os nomes traduzidos das colunas no cabeçalho
 
         # Escrever os dados no CSV
         for row in results:

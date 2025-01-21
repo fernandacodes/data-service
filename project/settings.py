@@ -24,7 +24,7 @@ DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('ENVIRONMENT') != 'PRODUCTION'
+DEBUG = os.getenv('ENVIRONMENT')
 
 STORAGES = {
     'default':{
@@ -48,18 +48,17 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 #Configurações de HTTPS e Segurança (Desabilitado para Desenvolvimento)
 
-SECURE_SSL_REDIRECT = True  # Redireciona automaticamente HTTP para HTTPS
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Suporte para HTTPS atrás de um proxy
-SECURE_HSTS_SECONDS = 31536000  # Habilita HTTP Strict Transport Security (1 ano)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Inclui subdomínios no HSTS
-SECURE_HSTS_PRELOAD = True  # Prepara o site para a lista HSTS Preload
-SECURE_BROWSER_XSS_FILTER = True  # Proteção contra XSS no navegador
-SECURE_CONTENT_TYPE_NOSNIFF = True  # Bloqueia tipos de conteúdo inseguros
-CSRF_COOKIE_SECURE = True  # Torna o cookie de CSRF acessível apenas via HTTPS
-SESSION_COOKIE_SECURE = True  # Torna o cookie de sessão acessível apenas via HTTPS
-X_FRAME_OPTIONS = 'DENY'  # Evita que o site seja carregado em um iframe (cliquejacking)
-CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']  # Apenas se necessário para produção
-
+SECURE_SSL_REDIRECT = True 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') 
+SECURE_HSTS_SECONDS = 31536000 
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True 
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY' 
+CSRF_TRUSTED_ORIGINS = ['https://sistemaunasus.ufam.edu.br']
 
 
 SIMPLE_JWT = {
@@ -133,15 +132,15 @@ JWT_AUTH = {
 WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
-if os.getenv('ENVIRONMENT', 'development') == 'development':
+if os.getenv('ENVIRONMENT', 'DEVELOPMENT') == 'DEVELOPMENT':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DB_LOCAL'),
-            'USER': os.getenv('POSTGRES_USER_LOCAL'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD_LOCAL'),
-            'HOST': os.getenv('POSTGRES_HOST_LOCAL'),
-            'PORT': os.getenv('POSTGRES_PORT_LOCAL'),
+            'NAME': os.getenv('POSTGRES_DB'),
+            'USER': os.getenv('POSTGRES_USER'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+            'HOST': os.getenv('POSTGRES_HOST'),
+            'PORT': os.getenv('POSTGRES_PORT'),
         },
     }
 else:
